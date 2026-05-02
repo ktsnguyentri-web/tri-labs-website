@@ -41,20 +41,24 @@ async function build() {
   }
 
   const researchFiles = fs.existsSync(researchDir) ? fs.readdirSync(researchDir) : [];
-  const parsedResearch = researchFiles.map(fileName => {
+  const parsedResearch = await Promise.all(researchFiles.map(async (fileName) => {
     const fullPath = path.join(researchDir, fileName);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const matterResult = matter(fileContents);
-    return { ...matterResult.data, category: matterResult.data.category || 'Research' };
-  });
+    const processedContent = await remark().use(html).process(matterResult.content);
+    const contentHtml = processedContent.toString();
+    return { ...matterResult.data, contentHtml, category: matterResult.data.category || 'Research' };
+  }));
 
   const toolFiles = fs.existsSync(toolsDir) ? fs.readdirSync(toolsDir) : [];
-  const parsedTools = toolFiles.map(fileName => {
+  const parsedTools = await Promise.all(toolFiles.map(async (fileName) => {
     const fullPath = path.join(toolsDir, fileName);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const matterResult = matter(fileContents);
-    return { ...matterResult.data, category: matterResult.data.category || 'Tool' };
-  });
+    const processedContent = await remark().use(html).process(matterResult.content);
+    const contentHtml = processedContent.toString();
+    return { ...matterResult.data, contentHtml, category: matterResult.data.category || 'Tool' };
+  }));
 
   const research = [...parsedResearch, ...parsedTools]
     .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());

@@ -23,6 +23,7 @@ export interface ResearchData {
   featured?: boolean;
   slug: string;
   category: string;
+  contentHtml: string;
 }
 
 export async function getProjects(): Promise<ProjectData[]> {
