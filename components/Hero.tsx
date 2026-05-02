@@ -1,7 +1,6 @@
 "use client";
 
 import { useState, useEffect, useCallback } from "react";
-import { useMenu } from "./MenuContext";
 
 const PROJECTS = [
   {
@@ -86,7 +85,6 @@ function ProgressBars({
 }
 
 export function Hero() {
-  const { isMenuOpen } = useMenu();
   const [currentIndex, setCurrentIndex] = useState(0);
 
   const handleComplete = useCallback(() => {
@@ -96,14 +94,12 @@ export function Hero() {
   const currentProject = PROJECTS[currentIndex];
 
   return (
-    <div className="flex relative w-full h-screen overflow-hidden bg-white">
+    <div className="flex relative w-full h-[calc(100vh-60px)] overflow-hidden bg-white px-[10px] pb-[10px]">
       <section 
-        className={`relative overflow-hidden flex-shrink-0 flex items-center justify-center min-h-screen transition-all duration-500 ease-in-out ${
-          isMenuOpen ? "w-full md:w-1/2" : "w-full"
-        }`} 
+        className="relative overflow-hidden flex-shrink-0 flex items-center justify-center h-full transition-all duration-500 ease-in-out w-full" 
         id="hero-main"
       >
-        <div className="absolute z-0 rounded-3xl overflow-hidden top-[40px] right-[13px] bottom-[13px] left-[13px]">
+        <div className="relative z-0 w-full h-full rounded-[24px] overflow-hidden">
           {PROJECTS.map((project, index) => (
             <img 
               key={project.id}

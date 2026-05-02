@@ -1,7 +1,6 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/styles/globals.css";
-import { MenuProvider } from "@/components/MenuContext";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -9,8 +8,8 @@ const inter = Inter({
 });
 
 export const metadata: Metadata = {
-  title: "TRI NGUYEN - Portfolio",
-  description: "Architectural Mischief Portfolio",
+  title: "Tri Labs",
+  description: "Tri Labs Portfolio",
 };
 
 export default function RootLayout({
@@ -21,12 +20,10 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} h-full antialiased`}
+      className={`${inter.variable} h-full antialiased scroll-smooth`}
     >
       <body className="min-h-full flex flex-col">
-        <MenuProvider>
-          {children}
-        </MenuProvider>
+        {children}
       </body>
     </html>
   );
