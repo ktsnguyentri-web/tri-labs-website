@@ -1,35 +1,98 @@
-import { ArrowRight } from "lucide-react";
+"use client";
+
+import { Mail, ExternalLink, ArrowRight, Link2 } from "lucide-react";
+import { Button } from "@/components/ui/button";
+import Image from "next/image";
+import Link from "next/link";
 
 export function Contact() {
   return (
     <section 
-      className="bg-card pt-0 pb-32 px-[5vw] w-full mx-auto relative border-t border-border scroll-mt-[60px]" 
+      className="w-full bg-background pt-12 pb-8 px-[5vw] scroll-mt-[60px]" 
       id="contact"
     >
-      <div className="flex flex-col gap-16 w-full max-w-[1440px] mx-auto">
-        <div className="flex flex-col gap-8 items-start">
-          <h2 className="text-6xl md:text-[100px] font-bold tracking-tighter text-foreground leading-none">
-            Let&apos;s build<br />something.
-          </h2>
-          <a 
-            className="text-2xl md:text-4xl font-medium text-foreground hover:text-accent transition-colors inline-flex items-center gap-4 group" 
-            href="mailto:hello@tringuyen.studio"
-          >
-            hello@tringuyen.studio
-            <ArrowRight className="w-8 h-8 md:w-10 md:h-10 group-hover:translate-x-2 transition-transform" strokeWidth={1.5} />
-          </a>
-        </div>
+      {/* Hero Contact Area */}
+      <div className="relative w-full h-[500px] md:h-[600px] rounded-[40px] overflow-hidden group mb-16">
+        {/* Background Image */}
+        <Image
+          src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
+          alt="Architectural background"
+          fill
+          className="object-cover transition-transform duration-1000 group-hover:scale-105"
+        />
         
-        <div className="flex flex-col md:flex-row justify-between items-start md:items-end pt-16 border-t border-foreground w-full gap-8">
-          <div className="flex flex-col gap-4">
-            <h4 className="font-mono text-xs uppercase tracking-widest text-muted-foreground font-bold">Social</h4>
-            <div className="flex flex-col gap-2">
-              <a className="font-sans text-lg text-foreground hover:text-accent transition-colors" href="#">Instagram</a>
-              <a className="font-sans text-lg text-foreground hover:text-accent transition-colors" href="#">LinkedIn</a>
-            </div>
+        {/* Dark Overlay */}
+        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-colors group-hover:bg-black/50" />
+        
+        {/* Content */}
+        <div className="relative h-full flex flex-col items-center justify-center text-center px-6 gap-10">
+          
+          {/* Quick Links (Left - Desktop only) */}
+          <div className="absolute left-16 bottom-16 hidden lg:flex flex-col gap-5 text-left">
+            {[
+              { label: 'About', href: '/#about' },
+              { label: 'Research & Insights', href: '/research' },
+              { label: 'Work', href: '/work' },
+              { label: 'CV', href: '/cv' }
+            ].map((link) => (
+              <Link 
+                key={link.label}
+                href={link.href}
+                className="text-white/60 hover:text-white transition-colors text-[13px] font-medium tracking-[0.1em] uppercase"
+              >
+                {link.label}
+              </Link>
+            ))}
           </div>
-          <div className="font-mono text-xs text-muted-foreground uppercase tracking-widest">
-            © 2024 Tri Nguyen Studio. All rights reserved.
+
+          <h2 className="text-5xl md:text-7xl lg:text-8xl font-serif text-white tracking-tight leading-[1.1] max-w-4xl">
+            Let&apos;s build<br />something together
+          </h2>
+          
+          <Button 
+            asChild 
+            className="bg-white text-black hover:bg-white/90 px-10 py-6 rounded-full text-lg md:text-xl font-medium tracking-normal h-auto gap-3"
+          >
+            <a href="mailto:hello@tri-labs.com">
+              hello@tri-labs.com
+              <ArrowRight className="w-5 h-5 shrink-0" strokeWidth={2.5} />
+            </a>
+          </Button>
+        </div>
+      </div>
+
+      {/* Footer Area */}
+      <div className="w-full max-w-[1440px] mx-auto border-t border-border pt-12">
+        <div className="flex flex-col md:flex-row justify-between items-center gap-10 md:gap-0">
+          
+          {/* Logo */}
+          <div className="flex flex-col gap-2">
+            <Link href="/" className="text-2xl font-bold tracking-[0.2em] text-foreground">
+              TRI LABS
+            </Link>
+            <p className="font-mono text-[10px] text-muted-foreground uppercase tracking-widest">
+              Architectural Excellence
+            </p>
+          </div>
+
+          {/* Copyright */}
+          <div className="text-center md:text-left">
+            <p className="font-sans text-[13px] text-muted-foreground tracking-tight">
+              © 2026 Tri Nguyen Minh. All rights reserved.
+            </p>
+          </div>
+
+          {/* Social Icons */}
+          <div className="flex items-center gap-6">
+            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors p-2 border border-transparent hover:border-border rounded-full">
+              <ExternalLink className="w-5 h-5" />
+            </a>
+            <a href="#" className="text-muted-foreground hover:text-foreground transition-colors p-2 border border-transparent hover:border-border rounded-full">
+              <Link2 className="w-5 h-5" />
+            </a>
+            <a href="mailto:hello@tri-labs.com" className="text-muted-foreground hover:text-foreground transition-colors p-2 border border-transparent hover:border-border rounded-full">
+              <Mail className="w-5 h-5" />
+            </a>
           </div>
         </div>
       </div>
