@@ -1,7 +1,7 @@
-import { Navbar } from "@/components/Navbar";
-import { Contact } from "@/components/Contact";
+import { Navbar } from "@/components/layout/Navbar";
+import { Contact } from "@/components/sections/Contact";
 import { getAllResearchInsights } from "@/lib/cms";
-import { ResearchGallery } from "@/components/ResearchGallery";
+import { ResearchGallery } from "@/components/sections/ResearchGallery";
 import { Metadata } from "next";
 
 export const metadata: Metadata = {

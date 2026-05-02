@@ -1,17 +1,24 @@
 "use client";
 
 import { useState } from "react";
-import { ResearchData } from "@/lib/cms";
-import { ArticleModal } from "./ArticleModal";
+import Image from "next/image";
+import type { ResearchArticle } from "@/types/cms";
+import { ArticleModal } from "@/components/modals/ArticleModal";
 
 interface ResearchGalleryProps {
-  researchArticles: ResearchData[];
-  toolArticles: ResearchData[];
+  researchArticles: ResearchArticle[];
+  toolArticles: ResearchArticle[];
 }
 
-function GridItem({ item, onClick }: { item: ResearchData; onClick: () => void }) {
+function GridItem({
+  item,
+  onClick,
+}: {
+  item: ResearchArticle;
+  onClick: () => void;
+}) {
   return (
-    <div 
+    <div
       onClick={onClick}
       className="flex flex-col gap-4 group cursor-pointer h-full text-left"
     >
@@ -26,40 +33,46 @@ function GridItem({ item, onClick }: { item: ResearchData; onClick: () => void }
           {item.excerpt}
         </p>
       </div>
-      <div className="w-full aspect-[16/10] overflow-hidden rounded-2xl mt-auto">
-        <img
-          src={item.img}
+      {/* aspect-[16/10] + relative enables fill Image */}
+      <div className="w-full aspect-[16/10] overflow-hidden rounded-2xl mt-auto relative">
+        <Image
+          src={item.coverImage}
           alt={item.title}
-          className="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
+          fill
+          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
         />
       </div>
     </div>
   );
 }
 
-export function ResearchGallery({ researchArticles, toolArticles }: ResearchGalleryProps) {
-  const [selectedArticle, setSelectedArticle] = useState<ResearchData | null>(null);
+export function ResearchGallery({
+  researchArticles,
+  toolArticles,
+}: ResearchGalleryProps) {
+  const [selectedArticle, setSelectedArticle] = useState<ResearchArticle | null>(null);
 
   return (
-    <div className="w-full max-w-[1440px] mx-auto px-10 pt-40 pb-24 flex flex-col gap-32">
-      
+    <div className="w-full max-w-[1440px] mx-auto px-10 pt-0 pb-24 flex flex-col gap-32">
+
       {/* Section 1: Research & Insights */}
       {researchArticles.length > 0 && (
         <div className="w-full">
           <div className="flex flex-col md:flex-row md:items-end gap-6 mb-24">
             <h1 className="text-4xl md:text-[52px] leading-none font-normal text-black">
-              Research & Insights
+              Research &amp; Insights
             </h1>
             <p className="font-mono text-[14px] text-[#4C4546] mb-1 md:mb-2">
               Updates and news from the Tri Labs team.
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {researchArticles.map(item => (
-              <GridItem 
-                key={item.slug} 
-                item={item} 
-                onClick={() => setSelectedArticle(item)} 
+            {researchArticles.map((item) => (
+              <GridItem
+                key={item.slug}
+                item={item}
+                onClick={() => setSelectedArticle(item)}
               />
             ))}
           </div>
@@ -78,11 +91,11 @@ export function ResearchGallery({ researchArticles, toolArticles }: ResearchGall
             </p>
           </div>
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {toolArticles.map(item => (
-              <GridItem 
-                key={item.slug} 
-                item={item} 
-                onClick={() => setSelectedArticle(item)} 
+            {toolArticles.map((item) => (
+              <GridItem
+                key={item.slug}
+                item={item}
+                onClick={() => setSelectedArticle(item)}
               />
             ))}
           </div>
@@ -90,9 +103,9 @@ export function ResearchGallery({ researchArticles, toolArticles }: ResearchGall
       )}
 
       {selectedArticle && (
-        <ArticleModal 
-          article={selectedArticle} 
-          onClose={() => setSelectedArticle(null)} 
+        <ArticleModal
+          article={selectedArticle}
+          onClose={() => setSelectedArticle(null)}
         />
       )}
     </div>

@@ -1,13 +1,19 @@
-import { Navbar } from "@/components/Navbar";
-import { Hero } from "@/components/Hero";
-import { Statement } from "@/components/Statement";
-import { WorkSpans } from "@/components/WorkSpans";
-import { FeaturedWorks } from "@/components/FeaturedWorks";
-import { ResearchSection } from "@/components/ResearchSection";
-import { CVPreview } from "@/components/CVPreview";
-import { Contact } from "@/components/Contact";
+import { Navbar } from "@/components/layout/Navbar";
+import { Hero } from "@/components/sections/Hero";
+import { Statement } from "@/components/sections/Statement";
+import { WorkSpans } from "@/components/sections/WorkSpans";
+import { FeaturedWorks } from "@/components/sections/FeaturedWorks";
+import { ResearchSection } from "@/components/sections/ResearchSection";
+import { CVPreview } from "@/components/sections/CVPreview";
+import { Contact } from "@/components/sections/Contact";
+import { getProjects, getResearchInsights } from "@/lib/cms";
 
-export default function Home() {
+export default async function Home() {
+  const [works, insights] = await Promise.all([
+    getProjects(),
+    getResearchInsights(),
+  ]);
+
   return (
     <div className="min-h-screen bg-background text-foreground font-sans selection:bg-accent selection:text-black">
       <Navbar />
@@ -15,13 +21,11 @@ export default function Home() {
         <Hero />
         <Statement />
         <WorkSpans />
-        <FeaturedWorks />
-        <ResearchSection />
+        <FeaturedWorks works={works} />
+        <ResearchSection insights={insights} />
         <CVPreview />
         <Contact />
       </main>
     </div>
   );
 }
-
-
