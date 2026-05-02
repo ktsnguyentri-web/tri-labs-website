@@ -1,7 +1,9 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useEffect } from "react";
+import { useSearchParams } from "next/navigation";
 import { Plus, List } from "lucide-react";
+import { ProjectModal, ModalProject } from "./ProjectModal";
 
 type Category = "All" | "Architecture" | "Interior" | "Design";
 
@@ -15,7 +17,17 @@ export interface WorkItem {
 }
 
 export function WorkGallery({ works }: { works: WorkItem[] }) {
-  const [activeFilter, setActiveFilter] = useState<Category>("All");
+  const searchParams = useSearchParams();
+  const categoryParam = searchParams.get('category') as Category | null;
+
+  const [activeFilter, setActiveFilter] = useState<Category>(categoryParam || "All");
+  const [selectedProject, setSelectedProject] = useState<ModalProject | null>(null);
+
+  useEffect(() => {
+    if (categoryParam) {
+      setActiveFilter(categoryParam);
+    }
+  }, [categoryParam]);
   
   const filters: Category[] = ["All", "Architecture", "Interior", "Design"];
 
@@ -50,7 +62,16 @@ export function WorkGallery({ works }: { works: WorkItem[] }) {
       {/* Grid Gallery - Bento Box */}
       <div className="grid grid-cols-1 md:grid-cols-4 auto-rows-[280px] gap-6 grid-flow-dense">
         {filteredWorks.map(work => (
-          <div key={work.id} className={`${work.span} group cursor-pointer relative overflow-hidden rounded-2xl bg-secondary w-full h-full`}>
+          <button 
+            key={work.id} 
+            onClick={() => setSelectedProject({
+              title: work.title,
+              img: work.img,
+              category: work.category,
+              year: work.year
+            })}
+            className={`${work.span} group cursor-pointer relative overflow-hidden rounded-2xl bg-secondary w-full h-full text-left`}
+          >
             <img 
               src={work.img} 
               alt={work.title}
@@ -61,10 +82,13 @@ export function WorkGallery({ works }: { works: WorkItem[] }) {
               <h4 className="text-white text-[15px] font-medium tracking-tight mb-2 leading-snug">{work.title}</h4>
               <p className="text-white/70 text-[10px] font-mono uppercase tracking-widest">{work.year}</p>
             </div>
-          </div>
+          </button>
         ))}
       </div>
       
+      {selectedProject && (
+        <ProjectModal project={selectedProject} onClose={() => setSelectedProject(null)} />
+      )}
     </div>
   );
 }

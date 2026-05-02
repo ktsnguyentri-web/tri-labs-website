@@ -69,7 +69,7 @@ export default async function ResearchPage() {
 
           {/* Section 2: Tool */}
           {toolArticles.length > 0 && (
-            <div className="w-full">
+            <div className="w-full scroll-mt-[100px]" id="tool">
               <div className="flex flex-col md:flex-row md:items-end gap-6 mb-24">
                 <h2 className="text-4xl md:text-[52px] leading-none font-normal text-black">
                   Tool

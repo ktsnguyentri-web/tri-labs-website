@@ -1,4 +1,5 @@
 import { ArrowRight } from "lucide-react";
+import Link from "next/link";
 
 export function WorkSpans() {
   return (
@@ -12,12 +13,13 @@ export function WorkSpans() {
         
         <div className="w-full flex gap-1 md:gap-4 items-start justify-center h-[450px] md:h-[550px] group/container">
           {[
-            { title: "Design", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80" },
-            { title: "Tool", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80" },
-            { title: "Art", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80" }
+            { title: "Architecture", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80", href: "/work?category=Architecture" },
+            { title: "Design", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80", href: "/work?category=Design" },
+            { title: "Tool", img: "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=800&q=80", href: "/research#tool" }
           ].map((item, i) => (
-            <div 
+            <Link 
               key={i} 
+              href={item.href}
               className="w-full h-full relative cursor-pointer flex-1 transition-all duration-700 ease-in-out group-hover/container:opacity-40 hover:!opacity-100 hover:!flex-[3] flex flex-col group/item"
             >
               <div className="relative w-full h-full overflow-hidden rounded-2xl bg-secondary shadow-lg transition-shadow duration-700 group-hover/item:shadow-2xl">
@@ -34,7 +36,7 @@ export function WorkSpans() {
                   <ArrowRight className="w-0 h-6 opacity-0 group-hover/item:w-6 group-hover/item:opacity-100 transition-all duration-700 overflow-hidden" strokeWidth={1.5} />
                 </h3>
               </div>
-            </div>
+            </Link>
           ))}
         </div>
       </div>
