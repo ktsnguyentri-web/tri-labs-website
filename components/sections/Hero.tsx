@@ -2,38 +2,18 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 import type { HeroSlide } from "@/types/cms";
 
-const SESSION_KEY = "introPlayed";
+const SESSION_KEY = "intro_played";
 
 /**
- * Hero.tsx — Cinematic Expansion (Safety-First Logic)
+ * Hero.tsx — One-time cinematic expansion per session.
  * 
- * 1. Mount Check: uses hasMounted to handle SSR/Hydration safely.
- * 2. Animation Logic: Scale-in transition played once per session.
- * 3. Rule #3: Strictly maintains rounded-[24px] and overflow-hidden.
+ * Rules Adherence:
+ * - Rule #3: Main container must have rounded-[24px] and overflow-hidden.
+ * - Flicker Prevention: Section is opacity: 0 until hasMounted is true.
  */
-
-const heroVariants: Variants = {
-  initial: { scale: 0, opacity: 0 },
-  animate: {
-    scale: 1,
-    opacity: 1,
-    transition: { type: "spring", damping: 15, stiffness: 40, duration: 1.2 },
-  },
-  static: { scale: 1, opacity: 1 },
-};
-
-const cardVariants: Variants = {
-  initial: { opacity: 0, y: 20 },
-  animate: { 
-    opacity: 1, 
-    y: 0, 
-    transition: { delay: 1.0, duration: 0.6, ease: "easeOut" } 
-  },
-  static: { opacity: 1, y: 0 },
-};
 
 const SLIDES: HeroSlide[] = [
   {
@@ -114,16 +94,17 @@ function ProgressBars({
 export function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [hasMounted, setHasMounted] = useState(false);
-  const [shouldAnimate, setShouldAnimate] = useState(false);
+  const [isFirstTime, setIsFirstTime] = useState(false);
 
   useEffect(() => {
     setHasMounted(true);
-    const introPlayed = sessionStorage.getItem(SESSION_KEY);
-    if (!introPlayed) {
-      setShouldAnimate(true);
-      // Key is set here, ensuring synchronized check with Navbar
+    const played = sessionStorage.getItem(SESSION_KEY);
+    const firstTime = !played;
+    if (firstTime) {
+      setIsFirstTime(true);
       sessionStorage.setItem(SESSION_KEY, "true");
     }
+    console.log('Intro Playing:', firstTime);
   }, []);
 
   const handleComplete = useCallback(() => {
@@ -132,21 +113,21 @@ export function Hero() {
 
   const currentSlide = SLIDES[currentIndex];
 
-  // Determine variants - force static during hydration
-  const activeVariant = shouldAnimate ? "animate" : "static";
-  const initialVariant = shouldAnimate ? "initial" : false;
-
   return (
-    <div className="flex relative w-full h-[calc(100vh-60px)] overflow-hidden bg-white px-[10px] pb-[10px]">
+    <div className={`flex relative w-full h-[calc(100vh-60px)] overflow-hidden bg-white px-[10px] pb-[10px] transition-opacity duration-300 ${hasMounted ? 'opacity-100' : 'opacity-0'}`}>
       <section
         className="relative overflow-hidden flex-shrink-0 flex items-center justify-center h-full transition-all duration-500 ease-in-out w-full"
         id="hero-main"
       >
+        {/* Main image expansion (One-time animation) - Rule #3: rounded-[24px], overflow-hidden */}
         <motion.div
           className="relative z-0 w-full h-full rounded-[24px] overflow-hidden"
-          variants={heroVariants}
-          initial={initialVariant}
-          animate={activeVariant}
+          initial={isFirstTime ? { scale: 0, opacity: 0 } : { scale: 1, opacity: 1 }}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={isFirstTime ? { 
+            scale: { duration: 1.5, ease: [0.16, 1, 0.3, 1] },
+            opacity: { duration: 0.4, ease: "linear" }
+          } : { duration: 0 }}
         >
           {SLIDES.map((slide, index) => (
             <div
@@ -167,12 +148,12 @@ export function Hero() {
             </div>
           ))}
 
-          {/* Info card — staggered fade-up after hero expansion */}
+          {/* Info card - staggered animation */}
           <motion.div
             className="absolute bottom-8 left-8 z-30 w-[272px] h-[130px] bg-black/50 backdrop-blur-2xl rounded-[24px] border border-white/10 p-4 text-white shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex flex-col justify-between"
-            variants={cardVariants}
-            initial={initialVariant}
-            animate={activeVariant}
+            initial={isFirstTime ? { opacity: 0, y: 20 } : { opacity: 1, y: 0 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={isFirstTime ? { delay: 1.0, duration: 0.6 } : { duration: 0 }}
           >
             <ProgressBars
               currentIndex={currentIndex}

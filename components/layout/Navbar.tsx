@@ -3,52 +3,32 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import { motion, Variants } from "framer-motion";
+import { motion } from "framer-motion";
 
-const SESSION_KEY = "introPlayed";
+const SESSION_KEY = "intro_played";
 
 /**
- * Navbar.tsx — Cinematic Entrance (Safety-First Logic)
+ * Navbar.tsx — One-time cinematic entrance per session.
  * 
- * 1. Mount Check: uses hasMounted to ensure sessionStorage is only accessed client-side.
- * 2. Animation Logic: plays only once per session via introPlayed key.
- * 3. Static States: avoids flickering by rendering the static final state during SSR/Hydration.
+ * Rules Adherence:
+ * - Rule #1: Navbar height is exactly 60px, bg-white.
+ * - Flicker Prevention: Content is opacity: 0 until hasMounted is true.
  */
-
-const logoVariants: Variants = {
-  initial: { y: -100, opacity: 0 },
-  animate: {
-    y: 0,
-    opacity: 1,
-    transition: { type: "spring", bounce: 0.4, delay: 0.8 },
-  },
-  static: { y: 0, opacity: 1 },
-};
-
-function makeLinkVariants(delaySeconds: number): Variants {
-  return {
-    initial: { opacity: 0, x: 20 },
-    animate: {
-      opacity: 1,
-      x: 0,
-      transition: { delay: delaySeconds, duration: 0.4, ease: "easeOut" },
-    },
-    static: { opacity: 1, x: 0 },
-  };
-}
 
 export function Navbar() {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
-  const [shouldAnimate, setShouldAnimate] = useState(false);
+  const [isFirstTime, setIsFirstTime] = useState(false);
 
   useEffect(() => {
     setHasMounted(true);
-    const introPlayed = sessionStorage.getItem(SESSION_KEY);
-    if (!introPlayed) {
-      setShouldAnimate(true);
+    const played = sessionStorage.getItem(SESSION_KEY);
+    const firstTime = !played;
+    if (firstTime) {
+      setIsFirstTime(true);
       sessionStorage.setItem(SESSION_KEY, "true");
     }
+    console.log('Intro Playing:', firstTime);
   }, []);
 
   const links = [
@@ -59,24 +39,18 @@ export function Navbar() {
     { label: "Contact", href: "/#contact" },
   ];
 
-  const linkCount = links.length;
-
-  // Determine variant based on state
-  // During hydration (hasMounted is false), we show the "static" state to avoid flicker
-  const activeVariant = shouldAnimate ? "animate" : "static";
-  const initialVariant = shouldAnimate ? "initial" : false;
-
   return (
     <>
-      {/* Rule #1: bg-white, h-[60px], fixed, items-center */}
+      {/* Rule #1: bg-white, h-[60px], fixed */}
       <nav className="fixed top-0 left-0 w-full z-50 bg-white h-[60px]">
-        <div className="flex h-full items-center justify-between px-6 md:px-12">
+        {/* Flicker prevention: Only show content when mounted */}
+        <div className={`flex h-full items-center justify-between px-6 md:px-12 transition-opacity duration-300 ${hasMounted ? 'opacity-100' : 'opacity-0'}`}>
           
-          {/* Logo Drop-down */}
+          {/* Logo Drop-down (One-time animation) */}
           <motion.div
-            variants={logoVariants}
-            initial={initialVariant}
-            animate={activeVariant}
+            initial={isFirstTime ? { y: -100, opacity: 0 } : { y: 0, opacity: 1 }}
+            animate={{ y: 0, opacity: 1 }}
+            transition={isFirstTime ? { type: "spring", bounce: 0.4, delay: 1.0 } : { duration: 0 }}
           >
             <Link
               href="/"
@@ -87,26 +61,23 @@ export function Navbar() {
             </Link>
           </motion.div>
 
-          {/* Desktop Links - Staggered */}
+          {/* Desktop Links */}
           <div className="hidden md:flex gap-8 items-center h-full">
-            {links.map((item, i) => {
-              const staggerDelay = 1.0 + (linkCount - 1 - i) * 0.1;
-              return (
-                <motion.div
-                  key={item.label}
-                  variants={makeLinkVariants(staggerDelay)}
-                  initial={initialVariant}
-                  animate={activeVariant}
+            {links.map((item, i) => (
+              <motion.div
+                key={item.label}
+                initial={isFirstTime ? { opacity: 0 } : { opacity: 1 }}
+                animate={{ opacity: 1 }}
+                transition={isFirstTime ? { delay: 0.8 + i * 0.1 } : { duration: 0 }}
+              >
+                <Link
+                  href={item.href}
+                  className="font-sans text-sm text-gray-500 hover:text-black transition-colors duration-300"
                 >
-                  <Link
-                    href={item.href}
-                    className="font-sans text-sm text-gray-500 hover:text-black transition-colors duration-300"
-                  >
-                    {item.label}
-                  </Link>
-                </motion.div>
-              );
-            })}
+                  {item.label}
+                </Link>
+              </motion.div>
+            ))}
           </div>
 
           {/* Mobile Toggle */}
