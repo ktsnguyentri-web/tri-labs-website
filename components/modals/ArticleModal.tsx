@@ -61,7 +61,7 @@ export function ArticleModal({ article, onClose }: ArticleModalProps) {
 
             {/* Body — Prose HTML from CMS */}
             <div
-              className="prose prose-lg max-w-none prose-headings:text-black prose-headings:font-medium prose-p:text-gray-600 prose-p:leading-[1.8] prose-p:font-sans prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-2xl prose-strong:text-black"
+              className="prose prose-lg max-w-none prose-headings:text-black prose-headings:font-medium prose-p:text-gray-600 prose-p:leading-[1.8] prose-p:font-sans prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-[24px] prose-strong:text-black"
               dangerouslySetInnerHTML={{ __html: article.contentHtml }}
             />
 

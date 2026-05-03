@@ -2,7 +2,9 @@
 
 import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
+import { motion } from "framer-motion";
 import type { HeroSlide } from "@/types/cms";
+import { useIntroAnimation } from "@/lib/intro-animation-context";
 
 const SLIDES: HeroSlide[] = [
   {
@@ -82,6 +84,7 @@ function ProgressBars({
 
 export function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
+  const { shouldAnimate } = useIntroAnimation();
 
   const handleComplete = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % SLIDES.length);
@@ -95,8 +98,29 @@ export function Hero() {
         className="relative overflow-hidden flex-shrink-0 flex items-center justify-center h-full transition-all duration-500 ease-in-out w-full"
         id="hero-main"
       >
-        <div className="relative z-0 w-full h-full rounded-[24px] overflow-hidden">
-
+        {/*
+          Phase 1 — Hero Expansion
+          When `shouldAnimate` is true (first session visit): the container
+          starts at scale:0 / opacity:0 and springs open.
+          When false (return visit): renders instantly at full size with no
+          motion overhead. Rule #3 is strictly observed — rounded-[24px] and
+          overflow-hidden are always present on the inner div.
+        */}
+        <motion.div
+          className="relative z-0 w-full h-full rounded-[24px] overflow-hidden"
+          initial={shouldAnimate ? { scale: 0, opacity: 0 } : false}
+          animate={{ scale: 1, opacity: 1 }}
+          transition={
+            shouldAnimate
+              ? {
+                  type: "spring",
+                  damping: 15,
+                  stiffness: 40,
+                  duration: 1.2,
+                }
+              : { duration: 0 }
+          }
+        >
           {/* Slideshow — each slide is an absolutely-positioned div wrapping a fill Image */}
           {SLIDES.map((slide, index) => (
             <div
@@ -109,7 +133,7 @@ export function Hero() {
                 src={slide.image}
                 alt={slide.title}
                 fill
-                className="object-cover object-center"
+                className="object-cover object-center rounded-[24px]"
                 style={{ filter: "grayscale(100%) contrast(120%)" }}
                 sizes="100vw"
                 priority={index === 0}
@@ -118,7 +142,16 @@ export function Hero() {
           ))}
 
           {/* Info card */}
-          <div className="absolute bottom-8 left-8 z-30 w-[272px] h-[130px] bg-black/50 backdrop-blur-2xl rounded-xl border border-white/10 p-4 text-white shadow-[0_8px_32px_rgba(0,0,0,0.4)] animate-in slide-in-from-left-8 duration-1000 flex flex-col justify-between">
+          <motion.div
+            className="absolute bottom-8 left-8 z-30 w-[272px] h-[130px] bg-black/50 backdrop-blur-2xl rounded-[24px] border border-white/10 p-4 text-white shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex flex-col justify-between"
+            initial={shouldAnimate ? { opacity: 0, y: 20 } : false}
+            animate={{ opacity: 1, y: 0 }}
+            transition={
+              shouldAnimate
+                ? { delay: 1.0, duration: 0.6, ease: "easeOut" }
+                : { duration: 0 }
+            }
+          >
             <ProgressBars
               currentIndex={currentIndex}
               total={SLIDES.length}
@@ -141,8 +174,8 @@ export function Hero() {
                 {currentSlide.tag}
               </div>
             </div>
-          </div>
-        </div>
+          </motion.div>
+        </motion.div>
       </section>
     </div>
   );

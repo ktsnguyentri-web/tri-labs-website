@@ -16,7 +16,7 @@ export function ResearchSectionClient({ insights }: ResearchSectionClientProps) 
 
   return (
     <>
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 w-full">
+      <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
         {insights.map((item) => (
           <div
             key={item.slug}
@@ -35,12 +35,12 @@ export function ResearchSectionClient({ insights }: ResearchSectionClientProps) 
               </p>
             </div>
             {/* Image container — aspect-video + relative enables fill */}
-            <div className="w-full aspect-video relative overflow-hidden rounded-2xl mt-auto">
+            <div className="w-full aspect-video relative overflow-hidden rounded-[24px] mt-auto">
               <Image
                 src={item.coverImage}
                 alt={item.title}
                 fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
+                className="object-cover rounded-[24px] transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, 33vw"
               />
             </div>

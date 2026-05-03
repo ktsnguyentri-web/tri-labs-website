@@ -71,12 +71,12 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
         {/* Right Panel — Image (~65%) */}
         <div className="w-full md:w-[65%] h-full p-4 pl-0">
-          <div className="w-full h-full rounded-2xl overflow-hidden relative">
+          <div className="w-full h-full rounded-[24px] overflow-hidden relative">
             <Image
               src={project.coverImage}
               alt={project.title}
               fill
-              className="object-cover"
+              className="object-cover rounded-[24px]"
               sizes="(max-width: 768px) 100vw, 65vw"
             />
           </div>

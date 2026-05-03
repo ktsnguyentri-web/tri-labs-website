@@ -12,17 +12,17 @@ export function Contact() {
       id="contact"
     >
       {/* Hero Contact Area */}
-      <div className="relative w-full h-[500px] md:h-[600px] rounded-[40px] overflow-hidden group mb-16">
+      <div className="relative w-full h-[500px] md:h-[600px] rounded-[24px] overflow-hidden group mb-16">
         {/* Background Image */}
         <Image
           src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
           alt="Architectural background"
           fill
-          className="object-cover transition-transform duration-1000 group-hover:scale-105"
+          className="object-cover rounded-[24px] transition-transform duration-1000 group-hover:scale-105"
         />
         
         {/* Dark Overlay */}
-        <div className="absolute inset-0 bg-black/40 backdrop-blur-[2px] transition-colors group-hover:bg-black/50" />
+        <div className="absolute inset-0 rounded-[24px] bg-black/40 backdrop-blur-[2px] transition-colors group-hover:bg-black/50" />
         
         {/* Content */}
         <div className="relative h-full flex flex-col items-center justify-center text-center px-6 gap-10">

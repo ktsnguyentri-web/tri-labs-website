@@ -31,12 +31,12 @@ export function CVPreview() {
 
         {/* Right Column — Portrait */}
         <div className="w-full md:w-1/2 flex justify-center md:justify-end">
-          <div className="w-full max-w-[500px] aspect-[4/5] rounded-2xl overflow-hidden bg-secondary relative">
+          <div className="w-full max-w-[500px] aspect-[4/5] rounded-[24px] overflow-hidden bg-secondary relative">
             <Image
               src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?auto=format&fit=crop&w=1200&q=80"
               alt="Portrait of Tri Nguyen"
               fill
-              className="object-cover transition-transform duration-700 hover:scale-105"
+              className="object-cover rounded-[24px] transition-transform duration-700 hover:scale-105"
               style={{ filter: "grayscale(100%)" }}
               sizes="(max-width: 768px) 100vw, 500px"
             />

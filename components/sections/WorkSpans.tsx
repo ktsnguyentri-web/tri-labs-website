@@ -38,12 +38,12 @@ export function WorkSpans() {
               className="w-full h-full relative cursor-pointer flex-1 transition-all duration-700 ease-in-out group-hover/container:opacity-40 hover:!opacity-100 hover:!flex-[3] flex flex-col group/item"
             >
               {/* Image container — relative + h-full enables fill */}
-              <div className="relative w-full h-full overflow-hidden rounded-2xl bg-secondary shadow-lg transition-shadow duration-700 group-hover/item:shadow-2xl">
+              <div className="relative w-full h-full overflow-hidden rounded-[24px] bg-secondary shadow-lg transition-shadow duration-700 group-hover/item:shadow-2xl">
                 <Image
                   src={item.img}
                   alt={item.title}
                   fill
-                  className="object-cover transition-all duration-700 group-hover/item:scale-110"
+                  className="object-cover rounded-[24px] transition-all duration-700 group-hover/item:scale-110"
                   style={{ filter: "grayscale(100%) contrast(120%)" }}
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />

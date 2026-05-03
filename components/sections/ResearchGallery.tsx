@@ -34,12 +34,12 @@ function GridItem({
         </p>
       </div>
       {/* aspect-[16/10] + relative enables fill Image */}
-      <div className="w-full aspect-[16/10] overflow-hidden rounded-2xl mt-auto relative">
+      <div className="w-full aspect-[16/10] overflow-hidden rounded-[24px] mt-auto relative">
         <Image
           src={item.coverImage}
           alt={item.title}
           fill
-          className="object-cover transition-transform duration-700 group-hover:scale-105"
+          className="object-cover rounded-[24px] transition-transform duration-700 group-hover:scale-105"
           sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
         />
       </div>
@@ -67,7 +67,7 @@ export function ResearchGallery({
               Updates and news from the Tri Labs team.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {researchArticles.map((item) => (
               <GridItem
                 key={item.slug}
@@ -90,7 +90,7 @@ export function ResearchGallery({
               Internal tools and computational workflows developed by Tri Labs.
             </p>
           </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
             {toolArticles.map((item) => (
               <GridItem
                 key={item.slug}
