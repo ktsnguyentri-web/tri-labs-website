@@ -23,7 +23,7 @@ const logoVariants = {
     transition: { type: 'spring', damping: 12, stiffness: 50, delay: 0.8 } 
   },
   static: { y: 0, opacity: 1 }
-};
+} as const;
 
 const menuContainerVariants = {
   initial: { opacity: 0 },
@@ -32,18 +32,18 @@ const menuContainerVariants = {
     transition: { staggerChildren: 0.1, delayChildren: 1.2 } 
   },
   static: { opacity: 1 }
-};
+} as const;
 
 const menuItemVariants = {
   initial: { x: 50, opacity: 0 },
   animate: { x: 0, opacity: 1 },
   static: { x: 0, opacity: 1 }
-};
+} as const;
 
 const navVariants = {
   visible: { y: 0 },
   hidden: { y: "-100%" },
-};
+} as const;
 
 export function Navbar() {
   const pathname = usePathname();

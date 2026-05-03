@@ -1,9 +1,13 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import React from "react";
+import React, { ReactElement } from "react";
 
-export function ModalWrapper({ children }: { children: React.ReactElement }) {
+interface ChildProps {
+  onClose?: () => void;
+}
+
+export function ModalWrapper({ children }: { children: ReactElement<ChildProps> }) {
   const router = useRouter();
 
   return React.cloneElement(children, {
