@@ -4,7 +4,29 @@ import { useState, useEffect, useCallback } from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import type { HeroSlide } from "@/types/cms";
-import { useIntroAnimation } from "@/lib/intro-animation-context";
+
+const SESSION_KEY = "introPlayed";
+
+// ─── Hero Expansion Variants ─────────────────────────────────────────────────
+const heroVariants = {
+  /** Collapsed to a point — start of the cinematic expand */
+  initial: { scale: 0, opacity: 0 },
+  /** Springs open to fill the viewport */
+  animate: {
+    scale: 1,
+    opacity: 1,
+    transition: { type: "spring", damping: 15, stiffness: 40, duration: 1.2 } as const,
+  },
+  /** Return visit — already at final size, zero motion cost */
+  static: { scale: 1, opacity: 1, transition: { duration: 0 } as const },
+};
+
+// ─── Info Card Variants ──────────────────────────────────────────────────────
+const cardVariants = {
+  initial: { opacity: 0, y: 20 },
+  animate: { opacity: 1, y: 0, transition: { delay: 1.0, duration: 0.6, ease: "easeOut" as const } },
+  static: { opacity: 1, y: 0, transition: { duration: 0 } as const },
+};
 
 const SLIDES: HeroSlide[] = [
   {
@@ -84,13 +106,33 @@ function ProgressBars({
 
 export function Hero() {
   const [currentIndex, setCurrentIndex] = useState(0);
-  const { shouldAnimate } = useIntroAnimation();
+
+  /**
+   * hasPlayed tri-state — mirrors the Navbar pattern exactly:
+   *  null  → SSR / pre-useEffect (content hidden via opacity-0)
+   *  false → first visit this session → play expansion animation
+   *  true  → already played → render in static final state
+   */
+  const [hasPlayed, setHasPlayed] = useState<boolean | null>(null);
+
+  useEffect(() => {
+    if (sessionStorage.getItem(SESSION_KEY)) {
+      setHasPlayed(true);  // Already played → static
+    } else {
+      // Note: Navbar's useEffect also writes this key. Whichever mounts
+      // first wins; the other reads it and skips. Either way the
+      // animation plays exactly once.
+      sessionStorage.setItem(SESSION_KEY, "true");
+      setHasPlayed(false); // First visit → animate
+    }
+  }, []);
 
   const handleComplete = useCallback(() => {
     setCurrentIndex((prev) => (prev + 1) % SLIDES.length);
   }, []);
 
   const currentSlide = SLIDES[currentIndex];
+  const activeVariant = hasPlayed === false ? "animate" : "static";
 
   return (
     <div className="flex relative w-full h-[calc(100vh-60px)] overflow-hidden bg-white px-[10px] pb-[10px]">
@@ -99,27 +141,16 @@ export function Hero() {
         id="hero-main"
       >
         {/*
-          Phase 1 — Hero Expansion
-          When `shouldAnimate` is true (first session visit): the container
-          starts at scale:0 / opacity:0 and springs open.
-          When false (return visit): renders instantly at full size with no
-          motion overhead. Rule #3 is strictly observed — rounded-[24px] and
-          overflow-hidden are always present on the inner div.
+          Phase 1 — Hero Expansion (Rule #3: rounded-[24px] + overflow-hidden always present)
+          hasPlayed=null → renders in "static" variant but invisible via parent wrapper
+          hasPlayed=false → springs open from scale:0 (cinematic intro)
+          hasPlayed=true  → instant static final state (return visit)
         */}
         <motion.div
           className="relative z-0 w-full h-full rounded-[24px] overflow-hidden"
-          initial={shouldAnimate ? { scale: 0, opacity: 0 } : false}
-          animate={{ scale: 1, opacity: 1 }}
-          transition={
-            shouldAnimate
-              ? {
-                  type: "spring",
-                  damping: 15,
-                  stiffness: 40,
-                  duration: 1.2,
-                }
-              : { duration: 0 }
-          }
+          variants={heroVariants}
+          initial={hasPlayed === false ? "initial" : false}
+          animate={activeVariant}
         >
           {/* Slideshow — each slide is an absolutely-positioned div wrapping a fill Image */}
           {SLIDES.map((slide, index) => (
@@ -141,16 +172,12 @@ export function Hero() {
             </div>
           ))}
 
-          {/* Info card */}
+          {/* Info card — fades up after hero has expanded */}
           <motion.div
             className="absolute bottom-8 left-8 z-30 w-[272px] h-[130px] bg-black/50 backdrop-blur-2xl rounded-[24px] border border-white/10 p-4 text-white shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex flex-col justify-between"
-            initial={shouldAnimate ? { opacity: 0, y: 20 } : false}
-            animate={{ opacity: 1, y: 0 }}
-            transition={
-              shouldAnimate
-                ? { delay: 1.0, duration: 0.6, ease: "easeOut" }
-                : { duration: 0 }
-            }
+            variants={cardVariants}
+            initial={hasPlayed === false ? "initial" : false}
+            animate={activeVariant}
           >
             <ProgressBars
               currentIndex={currentIndex}
