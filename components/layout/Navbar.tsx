@@ -3,33 +3,89 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import { motion } from "framer-motion";
-
-const SESSION_KEY = "intro_played";
+import { usePathname } from "next/navigation";
+import { motion, useScroll, useMotionValueEvent } from "framer-motion";
 
 /**
- * Navbar.tsx — One-time cinematic entrance per session.
+ * Navbar.tsx — One-time cinematic entrance + Smart Scroll behavior.
  * 
  * Rules Adherence:
- * - Rule #1: Navbar height is exactly 60px, bg-white.
- * - Flicker Prevention: Content is opacity: 0 until hasMounted is true.
+ * - bg-white, h-[60px], fixed.
+ * - Vertically centered (items-center).
+ * - No blur or transparency on Navbar background (Rule 1).
  */
 
+const logoVariants = {
+  initial: { y: -100, opacity: 0 },
+  animate: { 
+    y: 0, 
+    opacity: 1, 
+    transition: { type: 'spring', damping: 12, stiffness: 50, delay: 0.8 } 
+  },
+  static: { y: 0, opacity: 1 }
+};
+
+const menuContainerVariants = {
+  initial: { opacity: 0 },
+  animate: { 
+    opacity: 1, 
+    transition: { staggerChildren: 0.1, delayChildren: 1.2 } 
+  },
+  static: { opacity: 1 }
+};
+
+const menuItemVariants = {
+  initial: { x: 50, opacity: 0 },
+  animate: { x: 0, opacity: 1 },
+  static: { x: 0, opacity: 1 }
+};
+
+const navVariants = {
+  visible: { y: 0 },
+  hidden: { y: "-100%" },
+};
+
 export function Navbar() {
+  const pathname = usePathname();
+  const isHomePage = pathname === "/";
+  
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const [shouldAnimate, setShouldAnimate] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
-  const [isFirstTime, setIsFirstTime] = useState(false);
+  const [isIntroFinished, setIsIntroFinished] = useState(false);
+  const [hidden, setHidden] = useState(false);
+
+  const { scrollY } = useScroll();
 
   useEffect(() => {
     setHasMounted(true);
-    const played = sessionStorage.getItem(SESSION_KEY);
-    const firstTime = !played;
-    if (firstTime) {
-      setIsFirstTime(true);
-      sessionStorage.setItem(SESSION_KEY, "true");
+    const played = sessionStorage.getItem('intro_played');
+    
+    if (isHomePage && played === null) {
+      setShouldAnimate(true);
+      sessionStorage.setItem('intro_played', 'true');
+      
+      // Delay scroll behavior until intro finishes (approx 2.5s total)
+      const timer = setTimeout(() => setIsIntroFinished(true), 2500);
+      return () => clearTimeout(timer);
+    } else {
+      setShouldAnimate(false);
+      setIsIntroFinished(true);
     }
-    console.log('Intro Playing:', firstTime);
-  }, []);
+  }, [isHomePage]);
+
+  useMotionValueEvent(scrollY, "change", (latest) => {
+    const previous = scrollY.getPrevious() ?? 0;
+    
+    // Only allow hiding if intro is done and not at top
+    if (!isIntroFinished) return;
+
+    if (latest > previous && latest > 100) {
+      setHidden(true);
+    } else {
+      setHidden(false);
+    }
+  });
 
   const links = [
     { label: "About", href: "/#about" },
@@ -39,18 +95,32 @@ export function Navbar() {
     { label: "Contact", href: "/#contact" },
   ];
 
+  // Prevent hydration mismatch: render a static shell on server/first-pass
+  if (!hasMounted) {
+    return (
+      <nav className="fixed top-0 left-0 w-full z-50 bg-white h-[60px] px-[5vw]">
+        <div className="flex h-full items-center justify-between max-w-[1440px] mx-auto w-full opacity-0">
+          <div className="text-lg font-bold tracking-[0.2em] text-black">TRI LABS</div>
+        </div>
+      </nav>
+    );
+  }
+
   return (
     <>
-      {/* Rule #1: bg-white, h-[60px], fixed */}
-      <nav className="fixed top-0 left-0 w-full z-50 bg-white h-[60px]">
-        {/* Flicker prevention: Only show content when mounted */}
-        <div className={`flex h-full items-center justify-between px-6 md:px-12 transition-opacity duration-300 ${hasMounted ? 'opacity-100' : 'opacity-0'}`}>
+      <motion.nav 
+        variants={navVariants}
+        animate={hidden ? "hidden" : "visible"}
+        transition={{ duration: 0.3, ease: "easeInOut" }}
+        className="fixed top-0 left-0 w-full z-50 bg-white h-[60px] px-[5vw]"
+      >
+        <div className="flex h-full items-center justify-between max-w-[1440px] mx-auto w-full">
           
-          {/* Logo Drop-down (One-time animation) */}
+          {/* Logo Entrance */}
           <motion.div
-            initial={isFirstTime ? { y: -100, opacity: 0 } : { y: 0, opacity: 1 }}
-            animate={{ y: 0, opacity: 1 }}
-            transition={isFirstTime ? { type: "spring", bounce: 0.4, delay: 1.0 } : { duration: 0 }}
+            variants={logoVariants}
+            initial={shouldAnimate ? "initial" : "static"}
+            animate={shouldAnimate ? "animate" : "static"}
           >
             <Link
               href="/"
@@ -61,24 +131,25 @@ export function Navbar() {
             </Link>
           </motion.div>
 
-          {/* Desktop Links */}
-          <div className="hidden md:flex gap-8 items-center h-full">
-            {links.map((item, i) => (
-              <motion.div
-                key={item.label}
-                initial={isFirstTime ? { opacity: 0 } : { opacity: 1 }}
-                animate={{ opacity: 1 }}
-                transition={isFirstTime ? { delay: 0.8 + i * 0.1 } : { duration: 0 }}
-              >
+          {/* Desktop Menu Entrance (Staggered) */}
+          <motion.div 
+            className="hidden md:flex gap-8 items-center h-full"
+            variants={menuContainerVariants}
+            initial={shouldAnimate ? "initial" : "static"}
+            animate={shouldAnimate ? "animate" : "static"}
+          >
+            {links.map((item) => (
+              <motion.div key={item.label} variants={menuItemVariants}>
                 <Link
                   href={item.href}
-                  className="font-sans text-sm text-gray-500 hover:text-black transition-colors duration-300"
+                  className="label-caps text-gray-500 hover:text-black transition-colors duration-300"
                 >
                   {item.label}
                 </Link>
+
               </motion.div>
             ))}
-          </div>
+          </motion.div>
 
           {/* Mobile Toggle */}
           <div className="block md:hidden text-black flex items-center h-full">
@@ -91,11 +162,11 @@ export function Navbar() {
             </button>
           </div>
         </div>
-      </nav>
+      </motion.nav>
 
-      {/* Mobile Menu Dropdown */}
+      {/* Mobile Menu Dropdown — Solid Opaque per Rule 1 */}
       <div
-        className={`fixed inset-0 z-40 bg-white/95 backdrop-blur-sm transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 z-40 bg-white transition-opacity duration-300 md:hidden ${
           isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsMenuOpen(false)}
@@ -121,3 +192,6 @@ export function Navbar() {
     </>
   );
 }
+
+
+

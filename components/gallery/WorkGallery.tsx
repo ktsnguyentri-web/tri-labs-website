@@ -2,9 +2,10 @@
 
 import { useState, useEffect } from "react";
 import { useSearchParams } from "next/navigation";
+import Link from "next/link";
 import Image from "next/image";
-import type { WorkItem, ModalProject } from "@/types/cms";
-import { ProjectModal } from "@/components/modals/ProjectModal";
+import type { WorkItem } from "@/types/cms";
+
 
 // Re-export so app/work/page.tsx can import WorkItem from here (backwards compat)
 export type { WorkItem } from "@/types/cms";
@@ -16,7 +17,6 @@ export function WorkGallery({ works }: { works: WorkItem[] }) {
   const categoryParam = searchParams.get("category") as Category | null;
 
   const [activeFilter, setActiveFilter] = useState<Category>(categoryParam || "All");
-  const [selectedProject, setSelectedProject] = useState<ModalProject | null>(null);
 
   useEffect(() => {
     if (categoryParam) {
@@ -30,7 +30,8 @@ export function WorkGallery({ works }: { works: WorkItem[] }) {
     activeFilter === "All" ? works : works.filter((w) => w.category === activeFilter);
 
   return (
-    <div className="w-full max-w-[1440px] mx-auto px-[5vw] pt-0 pb-24">
+    <div className="w-full max-w-[1440px] mx-auto px-[5vw] pt-12 pb-24">
+
 
       {/* Filters */}
       <div className="flex flex-col gap-8 mb-24">
@@ -39,14 +40,15 @@ export function WorkGallery({ works }: { works: WorkItem[] }) {
             <button
               key={filter}
               onClick={() => setActiveFilter(filter)}
-              className={`text-4xl md:text-[52px] leading-none transition-colors ${
+              className={`text-[40px] md:text-[48px] leading-none tracking-tight uppercase transition-colors ${
                 activeFilter === filter
-                  ? "font-normal text-black"
+                  ? "font-light text-black"
                   : "font-light text-[#9CA3AF] hover:text-black"
               }`}
             >
               {filter}
             </button>
+
           ))}
         </div>
       </div>
@@ -54,17 +56,11 @@ export function WorkGallery({ works }: { works: WorkItem[] }) {
       {/* Bento Grid */}
       <div className="grid grid-cols-1 md:grid-cols-4 auto-rows-[280px] gap-6 grid-flow-dense">
         {filteredWorks.map((work) => (
-          <button
+          <Link
             key={work.id}
-            onClick={() =>
-              setSelectedProject({
-                title: work.title,
-                coverImage: work.coverImage,
-                category: work.category,
-                completionYear: work.completionYear,
-              })
-            }
-            className={`${work.span} cursor-pointer relative w-full h-full text-left`}
+            href={`/work/${work.slug}`}
+            scroll={false}
+            className={`${work.span} cursor-pointer relative w-full h-full text-left block`}
           >
             <div className="relative w-full h-full rounded-[24px] overflow-hidden group bg-secondary">
               <Image
@@ -86,16 +82,10 @@ export function WorkGallery({ works }: { works: WorkItem[] }) {
                 </div>
               </div>
             </div>
-          </button>
+          </Link>
         ))}
       </div>
-
-      {selectedProject && (
-        <ProjectModal
-          project={selectedProject}
-          onClose={() => setSelectedProject(null)}
-        />
-      )}
     </div>
   );
 }
+

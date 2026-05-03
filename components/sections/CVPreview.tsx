@@ -12,13 +12,18 @@ export function CVPreview() {
 
         {/* Left Column — Text */}
         <div className="w-full md:w-1/2 flex flex-col items-start">
-          <h2 className="text-5xl md:text-6xl lg:text-[72px] leading-[1.1] font-light text-foreground mb-8">
-            Inspired by<br />Nature, Driven by<br />Innovation
+          <h2 className="text-[clamp(48px,6vw,84px)] font-light leading-[1.05] tracking-[-0.04em] text-black mb-16">
+            Architecture as Foundation Tech as Playground
           </h2>
+
+
+
+
+
           <p className="font-sans text-lg text-muted-foreground max-w-md leading-relaxed mb-12">
-            Tri Nguyen is a multidisciplinary designer working across architecture,
-            urbanism, and technology from large-scale cities and buildings to computational design.
+            I weave architectural rigour with emerging tech—from real-time rendering to automation—to discover new ways of visualizing our world. At Tri-Labs, every project is a lab for exploration.
           </p>
+
           <div className="flex flex-row gap-4 items-center">
             <Button asChild>
               <Link href="/cv">VIEW MY CV</Link>
@@ -34,7 +39,7 @@ export function CVPreview() {
           <div className="w-full max-w-[500px] aspect-[4/5] rounded-[24px] overflow-hidden bg-secondary relative">
             <Image
               src="https://images.unsplash.com/photo-1544928147-79a2dbc1f389?auto=format&fit=crop&w=1200&q=80"
-              alt="Portrait of Tri Nguyen"
+              alt="Portrait of Tri Nguyen Minh"
               fill
               className="object-cover rounded-[24px] transition-transform duration-700 hover:scale-105"
               style={{ filter: "grayscale(100%)" }}

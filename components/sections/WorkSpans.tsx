@@ -22,23 +22,27 @@ const SPANS = [
 
 export function WorkSpans() {
   return (
-    <section className="bg-card pt-24 pb-16 px-[5vw] w-full mx-auto overflow-hidden relative">
-      <div className="flex flex-col gap-12 items-center w-full mb-16 md:mb-32 max-w-[1440px] mx-auto">
-        <div className="w-full text-center pt-4">
-          <h2 className="text-2xl md:text-3xl font-light tracking-tight text-foreground">
+    <section className="bg-card pt-12 pb-32 px-[5vw] w-full mx-auto overflow-hidden relative">
+
+      <div className="flex flex-col gap-16 items-start w-full max-w-[1440px] mx-auto">
+        <div className="w-full text-left">
+          <h2 className="text-[28px] font-light tracking-[-0.02em] text-black">
             My work spans
           </h2>
+
+
+
         </div>
 
-        <div className="w-full flex gap-1 md:gap-4 items-start justify-center h-[450px] md:h-[550px] group/container">
+        <div className="w-full flex gap-4 items-start justify-between h-[450px] md:h-[600px] group/container">
           {SPANS.map((item, i) => (
             <Link
               key={i}
               href={item.href}
-              className="w-full h-full relative cursor-pointer flex-1 transition-all duration-700 ease-in-out group-hover/container:opacity-40 hover:!opacity-100 hover:!flex-[3] flex flex-col group/item"
+              className="w-full h-full relative cursor-pointer flex-1 transition-all duration-700 ease-in-out group-hover/container:opacity-40 hover:!opacity-100 hover:!flex-[2.5] flex flex-col group/item"
             >
-              {/* Image container — relative + h-full enables fill */}
-              <div className="relative w-full h-full overflow-hidden rounded-[24px] bg-secondary shadow-lg transition-shadow duration-700 group-hover/item:shadow-2xl">
+              {/* Image container — relative + h-full enables fill — Rule #3: rounded-[24px] */}
+              <div className="relative w-full flex-1 overflow-hidden rounded-[24px] bg-secondary shadow-sm transition-shadow duration-700 group-hover/item:shadow-xl">
                 <Image
                   src={item.img}
                   alt={item.title}
@@ -48,15 +52,18 @@ export function WorkSpans() {
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
-              <div className="mt-6 text-center w-full flex justify-center">
-                <h3 className="text-2xl font-bold tracking-tight text-foreground flex items-center gap-0 group-hover/item:gap-2 transition-all duration-700">
+
+              {/* Image Labels — Left Aligned + Large Scale (40px) */}
+              <div className="mt-8 text-left w-full">
+                <h3 className="text-[clamp(32px,3vw,40px)] font-light tracking-[-0.02em] text-foreground flex items-center gap-2 group-hover/item:gap-4 transition-all duration-700">
                   {item.title}
                   <ArrowRight
-                    className="w-0 h-6 opacity-0 group-hover/item:w-6 group-hover/item:opacity-100 transition-all duration-700 overflow-hidden"
-                    strokeWidth={1.5}
+                    className="w-0 h-8 opacity-0 group-hover/item:w-8 group-hover/item:opacity-100 transition-all duration-700 overflow-hidden"
+                    strokeWidth={1}
                   />
                 </h3>
               </div>
+
             </Link>
           ))}
         </div>
@@ -64,3 +71,4 @@ export function WorkSpans() {
     </section>
   );
 }
+

@@ -27,9 +27,10 @@ export function ResearchSectionClient({ insights }: ResearchSectionClientProps) 
               <span className="font-mono text-[14px] uppercase tracking-[0.05em] text-[#4C4546]">
                 {item.date} | {item.category}
               </span>
-              <h3 className="font-sans text-[32px] font-medium tracking-[-0.02em] leading-[1.2] text-black group-hover:text-[#4C4546] transition-colors truncate">
+              <h3 className="text-heading-lg font-bold tracking-tight text-black group-hover:text-on-surface-variant transition-colors truncate">
                 {item.title}
               </h3>
+
               <p className="font-sans text-[16px] leading-[1.6] text-[#4C4546] line-clamp-2">
                 {item.excerpt}
               </p>

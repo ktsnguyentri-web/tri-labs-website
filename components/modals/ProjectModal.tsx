@@ -1,17 +1,29 @@
 "use client";
 
+import { useRouter } from "next/navigation";
 import { useEffect } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
+import { motion, AnimatePresence } from "framer-motion";
 import type { ModalProject } from "@/types/cms";
 import { Button } from "@/components/ui/button";
 
 interface ProjectModalProps {
   project: ModalProject;
-  onClose: () => void;
+  onClose?: () => void;
 }
 
 export function ProjectModal({ project, onClose }: ProjectModalProps) {
+  const router = useRouter();
+
+  const handleClose = () => {
+    if (onClose) {
+      onClose();
+    } else {
+      router.back();
+    }
+  };
+
   // Lock body scroll when modal is open
   useEffect(() => {
     document.body.style.overflow = "hidden";
@@ -24,15 +36,24 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
     "Exploring the intersection of architectural scale and digital fidelity. This project represents a comprehensive investigation into material, light, and geometry to establish a new paradigm in spatial experience.";
 
   return (
-    <div className="fixed inset-0 z-[100] bg-black/20 backdrop-blur-md flex items-center justify-center p-4 md:p-10 animate-in fade-in duration-300">
-      <div
-        className="absolute inset-0 cursor-pointer"
-        onClick={onClose}
-        aria-label="Close modal background"
+    <div className="fixed inset-0 z-40 flex items-center justify-center p-4 md:p-10">
+      {/* Backdrop */}
+      <motion.div
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+        exit={{ opacity: 0 }}
+        className="absolute inset-0 bg-black/20 backdrop-blur-md cursor-pointer"
+        onClick={handleClose}
       />
 
-      <div className="bg-white w-full max-w-7xl h-[85vh] rounded-[24px] overflow-hidden flex flex-col md:flex-row shadow-2xl relative z-10 scale-in-95 duration-300">
-
+      {/* Modal Window */}
+      <motion.div
+        initial={{ scale: 0.9, opacity: 0 }}
+        animate={{ scale: 1, opacity: 1 }}
+        exit={{ scale: 0.9, opacity: 0 }}
+        transition={{ type: "spring", damping: 25, stiffness: 300 }}
+        className="bg-white w-full max-w-7xl h-[85vh] rounded-[24px] overflow-hidden flex flex-col md:flex-row shadow-2xl relative z-10"
+      >
         {/* Left Panel — Info (~35%) */}
         <div className="w-full md:w-[35%] p-10 flex flex-col h-full overflow-y-auto">
           <div className="flex justify-between items-center mb-16">
@@ -40,7 +61,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               Gallery
             </span>
             <button
-              onClick={onClose}
+              onClick={handleClose}
               className="p-2 hover:bg-gray-100 rounded-full transition-colors"
               aria-label="Close"
             >
@@ -48,7 +69,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             </button>
           </div>
 
-          <h2 className="text-4xl md:text-[52px] font-normal leading-none tracking-tight text-black mb-8">
+          <h2 className="text-4xl md:text-[52px] font-light leading-none tracking-tight text-black mb-8">
             {project.title}
           </h2>
 
@@ -71,7 +92,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
         {/* Right Panel — Image (~65%) */}
         <div className="w-full md:w-[65%] h-full p-4 pl-0">
-          <div className="w-full h-full rounded-[24px] overflow-hidden relative">
+          <div className="relative w-full h-full rounded-[24px] overflow-hidden">
             <Image
               src={project.coverImage}
               alt={project.title}
@@ -81,7 +102,9 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             />
           </div>
         </div>
-      </div>
+      </motion.div>
     </div>
   );
 }
+
+

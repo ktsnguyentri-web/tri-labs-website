@@ -13,11 +13,13 @@ export function FeaturedWorks({ works }: FeaturedWorksProps) {
       className="bg-card pt-24 pb-16 px-[5vw] w-full mx-auto overflow-hidden relative"
       id="featured-works"
     >
-      <div className="flex justify-between items-center mb-12 max-w-[1440px] mx-auto w-full">
-        <h2 className="text-2xl md:text-3xl font-light tracking-tight text-foreground">
+      <div className="flex justify-start items-start mb-12 max-w-[1440px] mx-auto w-full">
+        <h2 className="text-[28px] font-light tracking-[-0.02em] text-black">
           Featured Works
         </h2>
+
       </div>
+
 
       <FeaturedGrid works={works} />
 

@@ -23,13 +23,14 @@ function GridItem({
       className="flex flex-col gap-4 group cursor-pointer h-full text-left"
     >
       <div className="flex flex-col gap-2 flex-grow">
-        <span className="font-mono text-[12px] uppercase tracking-[0.05em] text-[#4C4546]">
+        <span className="data-mono text-on-surface-variant">
           {item.date} | {item.category}
         </span>
-        <h3 className="font-sans text-2xl font-medium tracking-tight text-black group-hover:text-[#4C4546] transition-colors truncate">
+        <h3 className="text-heading-lg font-bold tracking-tight text-black group-hover:text-on-surface-variant transition-colors truncate">
           {item.title}
         </h3>
-        <p className="font-sans text-base text-[#4C4546] line-clamp-2 leading-[1.6]">
+
+        <p className="text-body-md line-clamp-2">
           {item.excerpt}
         </p>
       </div>
@@ -54,60 +55,63 @@ export function ResearchGallery({
   const [selectedArticle, setSelectedArticle] = useState<ResearchArticle | null>(null);
 
   return (
-    <div className="w-full max-w-[1440px] mx-auto px-10 pt-0 pb-24 flex flex-col gap-32">
+    <div className="w-full max-w-[1440px] mx-auto px-[5vw] pt-12 pb-32 flex flex-col gap-24">
+ 
+       {/* Section 1: Research & Insights */}
+       {researchArticles.length > 0 && (
+         <div className="w-full">
+           <div className="flex flex-col md:flex-row items-baseline gap-6 mb-12">
+             <h1 className="text-[48px] font-light tracking-tight text-black uppercase leading-none">
+               Research &amp; Insights
+             </h1>
+             <p className="label-caps text-[#4C4546]/60">
+               Updates and news from the Tri Labs team.
+             </p>
+           </div>
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+             {researchArticles.map((item) => (
+               <GridItem
+                 key={item.slug}
+                 item={item}
+                 onClick={() => setSelectedArticle(item)}
+               />
+             ))}
+           </div>
+         </div>
+       )}
+ 
+       {/* Section 2: Tool */}
+       {toolArticles.length > 0 && (
+         <div className="w-full scroll-mt-[100px]" id="tool">
+           <div className="flex flex-col md:flex-row items-baseline gap-6 mb-12">
+             <h2 className="text-[48px] font-light tracking-tight text-black uppercase leading-none">
+               Tool
+             </h2>
+             <p className="label-caps text-[#4C4546]/60">
+               Internal tools and computational workflows developed by Tri Labs.
+             </p>
+           </div>
+ 
+           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+             {toolArticles.map((item) => (
+               <GridItem
+                 key={item.slug}
+                 item={item}
+                 onClick={() => setSelectedArticle(item)}
+               />
+             ))}
+           </div>
+         </div>
+       )}
+ 
+       {selectedArticle && (
+         <ArticleModal
+           article={selectedArticle}
+           onClose={() => setSelectedArticle(null)}
+         />
+       )}
+     </div>
 
-      {/* Section 1: Research & Insights */}
-      {researchArticles.length > 0 && (
-        <div className="w-full">
-          <div className="flex flex-col md:flex-row md:items-end gap-6 mb-24">
-            <h1 className="text-4xl md:text-[52px] leading-none font-normal text-black">
-              Research &amp; Insights
-            </h1>
-            <p className="font-mono text-[14px] text-[#4C4546] mb-1 md:mb-2">
-              Updates and news from the Tri Labs team.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {researchArticles.map((item) => (
-              <GridItem
-                key={item.slug}
-                item={item}
-                onClick={() => setSelectedArticle(item)}
-              />
-            ))}
-          </div>
-        </div>
-      )}
 
-      {/* Section 2: Tool */}
-      {toolArticles.length > 0 && (
-        <div className="w-full scroll-mt-[100px]" id="tool">
-          <div className="flex flex-col md:flex-row md:items-end gap-6 mb-24">
-            <h2 className="text-4xl md:text-[52px] leading-none font-normal text-black">
-              Tool
-            </h2>
-            <p className="font-mono text-[14px] text-[#4C4546] mb-1 md:mb-2">
-              Internal tools and computational workflows developed by Tri Labs.
-            </p>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-            {toolArticles.map((item) => (
-              <GridItem
-                key={item.slug}
-                item={item}
-                onClick={() => setSelectedArticle(item)}
-              />
-            ))}
-          </div>
-        </div>
-      )}
-
-      {selectedArticle && (
-        <ArticleModal
-          article={selectedArticle}
-          onClose={() => setSelectedArticle(null)}
-        />
-      )}
-    </div>
   );
 }

@@ -12,7 +12,7 @@ export function Contact() {
       id="contact"
     >
       {/* Hero Contact Area */}
-      <div className="relative w-full h-[500px] md:h-[600px] rounded-[24px] overflow-hidden group mb-16">
+      <div className="relative w-full max-w-[1440px] mx-auto h-[600px] md:h-[800px] rounded-[24px] overflow-hidden group mb-16">
         {/* Background Image */}
         <Image
           src="https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?q=80&w=2070&auto=format&fit=crop"
@@ -38,16 +38,17 @@ export function Contact() {
               <Link 
                 key={link.label}
                 href={link.href}
-                className="text-white/60 hover:text-white transition-colors text-[13px] font-medium tracking-[0.1em] uppercase"
+                className="text-white/60 hover:text-white transition-colors label-caps"
               >
                 {link.label}
               </Link>
             ))}
           </div>
 
-          <h2 className="text-5xl md:text-7xl lg:text-8xl font-serif text-white tracking-tight leading-[1.1] max-w-4xl">
+          <h2 className="text-display-xl text-white leading-[1.1] max-w-4xl">
             Let&apos;s build<br />something together
           </h2>
+
           
           <Button 
             asChild 
@@ -60,6 +61,7 @@ export function Contact() {
           </Button>
         </div>
       </div>
+
 
       {/* Footer Area */}
       <div className="w-full max-w-[1440px] mx-auto border-t border-border pt-12">

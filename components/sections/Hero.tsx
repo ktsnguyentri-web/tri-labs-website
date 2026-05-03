@@ -124,7 +124,7 @@ export function Hero() {
           className="relative z-0 w-full h-full rounded-[24px] overflow-hidden"
           initial={isFirstTime ? { scale: 0, opacity: 0 } : { scale: 1, opacity: 1 }}
           animate={{ scale: 1, opacity: 1 }}
-          transition={isFirstTime ? { 
+          transition={isFirstTime ? {
             scale: { duration: 1.5, ease: [0.16, 1, 0.3, 1] },
             opacity: { duration: 0.4, ease: "linear" }
           } : { duration: 0 }}
@@ -132,9 +132,8 @@ export function Hero() {
           {SLIDES.map((slide, index) => (
             <div
               key={slide.id}
-              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${
-                index === currentIndex ? "opacity-100 z-10" : "opacity-0 z-0"
-              }`}
+              className={`absolute inset-0 transition-opacity duration-1000 ease-in-out ${index === currentIndex ? "opacity-100 z-10" : "opacity-0 z-0"
+                }`}
             >
               <Image
                 src={slide.image}

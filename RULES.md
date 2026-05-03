@@ -78,7 +78,7 @@ All primary page sections must respect these padding values:
 - **Max width:** `max-w-[1440px] mx-auto`
 - **Images:** Rounded-[24px] per Rule 3. Grayscale filter applied to non-hero images (`i % 3 !== 0`).
 - **Hover overlay:** Bottom-anchored gradient (`from-black/80 to-transparent`), title + location in `font-mono`.
-- **Interaction:** Clicking a card opens `ProjectModal` — **never navigate to a new page.**
+- **Interaction:** Clicking a card updates the URL to `/work/[slug]`, triggering an **Intercepted Route** to show the `ProjectModal` while maintaining the homepage context.
 
 ### 4b. Work Page — Bento Gallery
 
@@ -98,38 +98,47 @@ All primary page sections must respect these padding values:
 
 ## 5. Typography — Inter Exclusively
 
-> Full token table lives in `DESIGN.md`. These are the Tailwind-mapped values.
+> Full token table lives in `DESIGN.md`. All typography must strictly adhere to the 'Foster + Partners' architectural aesthetic.
 
-| Token | Size | Weight | Tracking | Usage |
-|---|---|---|---|---|
-| `display-xl` | `text-[80px]` | `font-bold` | `-0.04em` | Hero headings |
-| `heading-lg` | `text-[32px]` | `font-medium` | `-0.02em` | Section titles |
-| `body-md` | `text-base` (16px) | `font-normal` | default | Paragraphs, nav links |
-| `data-mono` | `text-sm` (14px) | `font-normal` | `tracking-widest` | Metadata, stats |
-| `label-caps` | `text-xs` (12px) | `font-bold` | `tracking-[0.1em]` | Buttons, small labels |
+| Token | Size | Weight | Tracking | Line-Height | Usage |
+|---|---|---|---|---|---|
+| `display-2xl` | `144px` | `700` (Bold) | `-0.04em` | `1.0` | Massive Section Headers |
+| `display-xl` | `96px` | `300` (Light) | `-0.04em` | `1.0` | Hero titles, taglines |
+| `heading-lg` | `48px` | `300` (Light) | `-0.02em` | `1.1` | Sub-headers, article titles |
 
-**Rules:**
-- Font family: `Inter` only. Never override with a serif, system-ui, or monospace stack.
-- Button text: always `uppercase label-caps` (`text-xs font-bold tracking-[0.1em] uppercase`).
-- Section headings: `font-light tracking-tight` at `text-2xl md:text-3xl` for the "Featured Works / My Work Spans" pattern.
+
+
+| `body-md` | `16px` | `400` (Normal) | `default` | `1.625` | Paragraphs, long-form text |
+| `data-mono` | `11px` | `400` (Normal) | `0.2em` | `1.4` | Metadata, tags, secondary info |
+| `label-caps` | `11px` | `700` (Bold) | `0.2em` | `1.4` | Buttons, navigation links, labels |
+
+**Core Rules:**
+- **Font Family**: `Inter` exclusively. No exceptions. No serifs, no system fonts.
+- **Header Aesthetics**: Always use `font-light` (300) and `-0.04em` tracking for a compact, high-end architectural feel.
+- **Body Comfort**: Body text must use `text-on-surface-variant` (`#4C4546`) and `leading-relaxed` (1.625) for superior readability.
+- **Metadata Contrast**: Small labels and metadata must use ultra-wide `0.2em` tracking and `11px` size to contrast against massive headers.
+- **Navbar & Buttons**: Must use `label-caps` style (`text-[11px] font-bold tracking-[0.2em] uppercase`).
+
+
 
 ---
 
-## 6. Interaction Model — Modal-First
+## 6. Interaction Model — Intercepted Routes
 
-> **Do not create new routes for content details.**
+> **Use Intercepting Routes for shareable project links via Modals.**
 
-| Content Type | Detail View |
+| Content Type | Interaction |
 |---|---|
-| Featured project card | Opens `<ProjectModal>` (lightbox, image + title + location) |
-| Work gallery card | Opens `<ProjectModal>` |
-| Research insight card | Opens `<ResearchModal>` or reading lightbox |
-| CV entry | Inline expand or modal — never `/cv/:id` route |
+| Project card (any) | Updates URL to `/work/[slug]`. If navigating from a gallery, it **intercepts** the route to show `<ProjectModal>`. |
+| Direct Link | Navigating directly to `/work/[slug]` renders a **Full-Page** view (`app/work/[slug]/page.tsx`). |
+| Research card | Currently opens `<ResearchModal>` (Standard Modal). |
+| CV entry | Inline expand or modal — never `/cv/:id` route. |
 
-**Modal behaviour rules:**
+**Routing behavior rules:**
+- Intercepted modals must allow the user to share the URL of the project they are viewing.
+- Use `router.back()` to close intercepted modals and return to the previous context.
+- Modals are **client components** (`"use client"`). Intercepted page components fetch data and pass it as props.
 - Body scroll must be **locked** while any modal is open (`overflow-hidden` on `<body>`).
-- Dismiss via: clicking the backdrop, pressing `Escape`, or an explicit close button.
-- Modals are **client components** (`"use client"`). Parent server components pass data as props.
 
 ---
 
@@ -179,7 +188,7 @@ All primary page sections must respect these padding values:
 
 1. The `60px` navbar height and `pt-[60px]` page clearance.
 2. The `rounded-[24px]` value on image containers.
-3. The modal-first interaction model (no detail page routes).
+3. The use of **Intercepted Routes** for project details (enabling shareable URLs).
 4. The `max-w-[1440px]` content cap.
 5. The Inter font family.
 6. The `overflow-hidden` + `rounded-[24px]` pairing on image wrappers.

@@ -107,9 +107,15 @@ export async function getAllResearchInsights(): Promise<ResearchArticle[]> {
   return (rawData.research as RawResearch[]).map(toResearchArticle);
 }
 
+export async function getProjectBySlug(slug: string): Promise<Project | null> {
+  const all = (rawData.projects as RawProject[]).map(toProject);
+  return all.find((item) => item.slug === slug) ?? null;
+}
+
 export async function getResearchBySlug(
   slug: string,
 ): Promise<ResearchArticle | null> {
   const all = (rawData.research as RawResearch[]).map(toResearchArticle);
   return all.find((item) => item.slug === slug) ?? null;
 }
+
