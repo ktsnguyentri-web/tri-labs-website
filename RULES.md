@@ -43,15 +43,14 @@ All primary page sections must respect these padding values:
 ### The Law
 - All **primary images and card containers** must use `rounded-[24px]`.
 - The image element (`<Image />` or `<img>`) AND its parent container must carry the **same** `rounded-[24px]` class.
-- The parent container **MUST** have `overflow-hidden` to clip internal content to the curve.
+- This ensures that on-scroll masks and clip-paths behave predictably.
 
-### The Correct HTML Pattern
-
+Example:
 ```tsx
 <div className="relative w-full h-full rounded-[24px] overflow-hidden group">
   <Image
-    src="..."
-    alt="..."
+    src={...}
+    alt={...}
     fill
     className="object-cover rounded-[24px] transition-transform duration-500 group-hover:scale-105"
   />
@@ -76,7 +75,7 @@ All primary page sections must respect these padding values:
 - **Grid:** `grid-cols-1 md:grid-cols-4 auto-rows-[280px] gap-4 grid-flow-dense`
 - **Spans:** Each `Project` carries a `span` field from the CMS (e.g. `col-span-2 row-span-2`). Do not hardcode spans.
 - **Max width:** `max-w-[1440px] mx-auto`
-- **Images:** Rounded-[24px] per Rule 3. Grayscale filter applied to non-hero images (`i % 3 !== 0`).
+- **Images:** rounded-[24px] per Rule 3. Grayscale filter applied to non-hero images (`i % 3 !== 0`).
 - **Hover overlay:** Bottom-anchored gradient (`from-black/80 to-transparent`), title + location in `font-mono`.
 - **Interaction:** Clicking a card updates the URL to `/work/[slug]`, triggering an **Intercepted Route** to show the `ProjectModal` while maintaining the homepage context.
 
@@ -107,19 +106,19 @@ All primary page sections must respect these padding values:
 | `heading-lg` | `48px` | `300` (Light) | `-0.02em` | `1.1` | Sub-headers, article titles |
 
 
-
 | `body-md` | `16px` | `400` (Normal) | `default` | `1.625` | Paragraphs, long-form text |
 | `data-mono` | `11px` | `400` (Normal) | `0.2em` | `1.4` | Metadata, tags, secondary info |
 | `label-caps` | `11px` | `700` (Bold) | `0.2em` | `1.4` | Buttons, navigation links, labels |
 
 **Core Rules:**
-- **Font Family**: `Inter` exclusively. No exceptions. No serifs, no system fonts.
-- **Header Aesthetics**: Always use `font-light` (300) and `-0.04em` tracking for a compact, high-end architectural feel.
+- **Primary Display Font**: Strictly use **Inter**.
+- **Rule #5: Consistent Typography Scaling**:
+  - All display text must follow the established scale to ensure architectural alignment.
+  - Taglines/Headers: Use predefined `display-*` or `heading-*` classes.
+  - Grid elements must stay exactly within the clean layout lines.
 - **Body Comfort**: Body text must use `text-on-surface-variant` (`#4C4546`) and `leading-relaxed` (1.625) for superior readability.
 - **Metadata Contrast**: Small labels and metadata must use ultra-wide `0.2em` tracking and `11px` size to contrast against massive headers.
 - **Navbar & Buttons**: Must use `label-caps` style (`text-[11px] font-bold tracking-[0.2em] uppercase`).
-
-
 
 ---
 
@@ -188,7 +187,7 @@ All primary page sections must respect these padding values:
 
 1. The `60px` navbar height and `pt-[60px]` page clearance.
 2. The `rounded-[24px]` value on image containers.
-3. The use of **Intercepted Routes** for project details (enabling shareable URLs).
-4. The `max-w-[1440px]` content cap.
-5. The Inter font family.
+3. The `label-caps` typography style.
+4. The `data-mono` typography style.
+5. The `Inter` font family.
 6. The `overflow-hidden` + `rounded-[24px]` pairing on image wrappers.

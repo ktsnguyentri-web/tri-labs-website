@@ -5,6 +5,8 @@ import Image from "next/image";
 import type { ResearchArticle } from "@/types/cms";
 import { ArticleModal } from "@/components/modals/ArticleModal";
 
+import { Reveal } from "@/components/animations/Reveal";
+
 interface ResearchSectionClientProps {
   insights: ResearchArticle[];
 }
@@ -17,35 +19,36 @@ export function ResearchSectionClient({ insights }: ResearchSectionClientProps) 
   return (
     <>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-6 w-full">
-        {insights.map((item) => (
-          <div
-            key={item.slug}
-            onClick={() => setSelectedArticle(item)}
-            className="flex flex-col gap-4 group cursor-pointer h-full text-left"
-          >
-            <div className="flex flex-col gap-2 flex-grow">
-              <span className="font-mono text-[14px] uppercase tracking-[0.05em] text-[#4C4546]">
-                {item.date} | {item.category}
-              </span>
-              <h3 className="text-heading-lg font-bold tracking-tight text-black group-hover:text-on-surface-variant transition-colors truncate">
-                {item.title}
-              </h3>
+        {insights.map((item, i) => (
+          <Reveal key={item.slug} delay={0.2 + (i * 0.1)}>
+            <div
+              onClick={() => setSelectedArticle(item)}
+              className="flex flex-col gap-4 group cursor-pointer h-full text-left"
+            >
+              <div className="flex flex-col gap-2 flex-grow">
+                <span className="font-mono text-[14px] uppercase tracking-[0.05em] text-[#4C4546]">
+                  {item.date} | {item.category}
+                </span>
+                <h3 className="text-heading-lg font-bold tracking-tight text-black group-hover:text-on-surface-variant transition-colors truncate">
+                  {item.title}
+                </h3>
 
-              <p className="font-sans text-[16px] leading-[1.6] text-[#4C4546] line-clamp-2">
-                {item.excerpt}
-              </p>
+                <p className="font-sans text-[16px] leading-[1.6] text-[#4C4546] line-clamp-2">
+                  {item.excerpt}
+                </p>
+              </div>
+              {/* Image container — aspect-video + relative enables fill */}
+              <div className="w-full aspect-video relative overflow-hidden rounded-[24px] mt-auto">
+                <Image
+                  src={item.coverImage}
+                  alt={item.title}
+                  fill
+                  className="object-cover rounded-[24px] transition-transform duration-700 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 33vw"
+                />
+              </div>
             </div>
-            {/* Image container — aspect-video + relative enables fill */}
-            <div className="w-full aspect-video relative overflow-hidden rounded-[24px] mt-auto">
-              <Image
-                src={item.coverImage}
-                alt={item.title}
-                fill
-                className="object-cover rounded-[24px] transition-transform duration-700 group-hover:scale-105"
-                sizes="(max-width: 768px) 100vw, 33vw"
-              />
-            </div>
-          </div>
+          </Reveal>
         ))}
       </div>
 

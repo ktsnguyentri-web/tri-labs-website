@@ -23,9 +23,13 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col">
+      <body className="min-h-full flex flex-col font-sans selection:bg-accent selection:text-black">
         <IntroAnimationProvider>
-          {children}
+          <main className="flex-grow pt-[80px] px-10 pb-20">
+            <div className="max-w-[1440px] mx-auto w-full">
+              {children}
+            </div>
+          </main>
         </IntroAnimationProvider>
       </body>
     </html>

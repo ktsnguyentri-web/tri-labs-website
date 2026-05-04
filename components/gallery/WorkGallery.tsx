@@ -12,6 +12,8 @@ export type { WorkItem } from "@/types/cms";
 
 type Category = "All" | "Architecture" | "Interior" | "Design";
 
+import { Reveal } from "@/components/animations/Reveal";
+
 export function WorkGallery({ works }: { works: WorkItem[] }) {
   const searchParams = useSearchParams();
   const categoryParam = searchParams.get("category") as Category | null;
@@ -30,38 +32,38 @@ export function WorkGallery({ works }: { works: WorkItem[] }) {
     activeFilter === "All" ? works : works.filter((w) => w.category === activeFilter);
 
   return (
-    <div className="w-full max-w-[1440px] mx-auto px-[5vw] pt-12 pb-24">
+    <div className="w-full max-w-[1440px] mx-auto pt-12 pb-24">
 
 
       {/* Filters */}
       <div className="flex flex-col gap-8 mb-24">
         <div className="flex flex-wrap gap-8 items-center">
-          {filters.map((filter) => (
-            <button
-              key={filter}
-              onClick={() => setActiveFilter(filter)}
-              className={`text-[40px] md:text-[48px] leading-none tracking-tight uppercase transition-colors ${
-                activeFilter === filter
-                  ? "font-light text-black"
-                  : "font-light text-[#9CA3AF] hover:text-black"
-              }`}
-            >
-              {filter}
-            </button>
-
+          {filters.map((filter, i) => (
+            <Reveal key={filter} delay={i * 0.05}>
+              <button
+                onClick={() => setActiveFilter(filter)}
+                className={`text-[40px] md:text-[48px] leading-none tracking-tight uppercase transition-colors ${
+                  activeFilter === filter
+                    ? "font-light text-black"
+                    : "font-light text-[#9CA3AF] hover:text-black"
+                }`}
+              >
+                {filter}
+              </button>
+            </Reveal>
           ))}
         </div>
       </div>
 
       {/* Bento Grid */}
       <div className="grid grid-cols-1 md:grid-cols-4 auto-rows-[280px] gap-6 grid-flow-dense">
-        {filteredWorks.map((work) => (
-          <Link
-            key={work.id}
-            href={`/work/${work.slug}`}
-            scroll={false}
-            className={`${work.span} cursor-pointer relative w-full h-full text-left block`}
-          >
+        {filteredWorks.map((work, i) => (
+          <Reveal key={work.id} delay={0.1 + (i % 4) * 0.1} className={work.span}>
+            <Link
+              href={`/work/${work.slug}`}
+              scroll={false}
+              className="cursor-pointer relative w-full h-full text-left block"
+            >
             <div className="relative w-full h-full rounded-[24px] overflow-hidden group bg-secondary">
               <Image
                 src={work.coverImage}
@@ -83,8 +85,9 @@ export function WorkGallery({ works }: { works: WorkItem[] }) {
               </div>
             </div>
           </Link>
-        ))}
-      </div>
+        </Reveal>
+      ))}
+    </div>
     </div>
   );
 }

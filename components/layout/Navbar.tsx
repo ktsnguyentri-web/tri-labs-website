@@ -88,10 +88,10 @@ export function Navbar() {
   });
 
   const links = [
-    { label: "About", href: "/#about" },
-    { label: "CV", href: "/cv" },
-    { label: "Work", href: "/work" },
+    { label: "Info", href: "/cv" },
+    { label: "Projects", href: "/work" },
     { label: "Research & Insights", href: "/research" },
+    { label: "Gallery", href: "#" },
     { label: "Contact", href: "/#contact" },
   ];
 
@@ -142,7 +142,7 @@ export function Navbar() {
               <motion.div key={item.label} variants={menuItemVariants}>
                 <Link
                   href={item.href}
-                  className="label-caps text-gray-500 hover:text-black transition-colors duration-300"
+                  className="label-caps normal-case text-[14px] font-normal text-gray-500 hover:text-black transition-colors duration-300"
                 >
                   {item.label}
                 </Link>

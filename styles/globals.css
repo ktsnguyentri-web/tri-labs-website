@@ -12,7 +12,7 @@
   --font-sans: var(--font-inter);
   --font-mono: var(--font-inter);
   --font-heading: var(--font-sans);
-  
+
   /* Foster + Partners Typography Refinements */
   --font-size-display-2xl: 144px;
   --font-weight-display-2xl: 700;
@@ -21,20 +21,20 @@
   --font-size-display-xl: 96px;
   --font-weight-display-xl: 300;
   --letter-spacing-display-xl: -0.04em;
-  
+
   --font-size-heading-lg: 48px;
   --font-weight-heading-lg: 300;
   --letter-spacing-heading-lg: -0.02em;
 
 
 
-  
+
   --font-size-body-md: 16px;
   --leading-body-md: 1.625;
-  
+
   --font-size-data-mono: 11px;
   --letter-spacing-data-mono: 0.2em;
-  
+
   --font-size-label-caps: 11px;
   --letter-spacing-label-caps: 0.2em;
   --font-weight-label-caps: 700;
@@ -104,20 +104,27 @@
   * {
     @apply border-border outline-ring/50;
   }
+
   body {
     @apply bg-background text-on-surface-variant leading-relaxed;
   }
+
   html {
     @apply font-sans;
   }
+
   img {
-    @apply rounded-[16px];
+    @apply rounded-[12px];
   }
+
   /* Global Foster Metadata Style */
-  .data-mono, [class*="data-mono"] {
+  .data-mono,
+  [class*="data-mono"] {
     @apply text-[11px] tracking-[0.2em] font-normal;
   }
-  .label-caps, [class*="label-caps"] {
+
+  .label-caps,
+  [class*="label-caps"] {
     @apply text-[11px] tracking-[0.2em] font-bold uppercase;
   }
 }
@@ -129,10 +136,10 @@
   max-width: 100%;
 }
 
-.prose :where(h1, h2, h3, h4):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
+.prose :where(h1, h2, h3, h4):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   @apply font-light tracking-[-0.04em];
 }
 
-.prose :where(p):not(:where([class~="not-prose"],[class~="not-prose"] *)) {
+.prose :where(p):not(:where([class~="not-prose"], [class~="not-prose"] *)) {
   @apply leading-relaxed;
 }

@@ -18,10 +18,6 @@ export default {
         'data-mono': ['11px', { letterSpacing: '0.2em', fontWeight: '400' }],
         'label-caps': ['11px', { letterSpacing: '0.2em', fontWeight: '700' }],
       },
-
-
-
-
       letterSpacing: {
         'architectural': '-0.04em',
         'foster': '0.2em',
@@ -29,6 +25,9 @@ export default {
       lineHeight: {
         'relaxed-premium': '1.625',
       },
+      borderRadius: {
+        'architectural': '12px',
+      }
     },
   },
   plugins: [],
