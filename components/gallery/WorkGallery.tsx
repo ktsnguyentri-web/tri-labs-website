@@ -32,7 +32,7 @@ export function WorkGallery({ works }: { works: WorkItem[] }) {
     activeFilter === "All" ? works : works.filter((w) => w.category === activeFilter);
 
   return (
-    <div className="w-full max-w-[1440px] mx-auto pt-12 pb-24">
+    <div className="w-full max-w-[1440px] mx-auto pt-12 pb-24 px-10">
 
 
       {/* Filters */}
@@ -64,16 +64,16 @@ export function WorkGallery({ works }: { works: WorkItem[] }) {
               scroll={false}
               className="cursor-pointer relative w-full h-full text-left block"
             >
-            <div className="relative w-full h-full rounded-[24px] overflow-hidden group bg-secondary">
+            <div className="relative w-full h-full rounded-[12px] overflow-hidden group bg-secondary">
               <Image
                 src={work.coverImage}
                 alt={work.title}
                 fill
-                className="object-cover rounded-[24px] transition-transform duration-700 group-hover:scale-105"
+                className="object-cover rounded-[12px] transition-transform duration-700 group-hover:scale-105"
                 sizes="(max-width: 768px) 100vw, (max-width: 1440px) 50vw, 25vw"
               />
               {/* Hover overlay — rounded to match container */}
-              <div className="absolute inset-0 rounded-[24px] bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+              <div className="absolute inset-0 rounded-[12px] bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
                 <div className="absolute bottom-0 left-0 p-6">
                   <h4 className="text-white text-[15px] font-medium tracking-tight mb-2 leading-snug">
                     {work.title}

@@ -105,14 +105,14 @@ export function Hero() {
   const currentSlide = SLIDES[currentIndex];
 
   return (
-    <div className={`relative w-full h-[70vh] md:h-[85vh] transition-opacity duration-300 ${hasMounted ? 'opacity-100' : 'opacity-0'}`}>
+    <div className={`relative w-full h-screen transition-opacity duration-300 ${hasMounted ? 'opacity-100' : 'opacity-0'}`}>
       <section
         className="relative overflow-hidden flex items-center justify-center h-full w-full"
         id="hero-main"
       >
         {hasMounted && (
           <motion.div
-            className="relative z-0 w-full h-full rounded-[24px] overflow-hidden"
+            className="relative z-0 w-full h-full overflow-hidden"
             initial={isFirstTime ? { scale: 0, opacity: 0 } : { scale: 1, opacity: 1 }}
             animate={{ scale: 1, opacity: 1 }}
             transition={isFirstTime ? {
@@ -130,7 +130,7 @@ export function Hero() {
                   src={slide.image}
                   alt={slide.title}
                   fill
-                  className="object-cover object-center rounded-[24px]"
+                  className="object-cover object-center"
                   style={{ filter: "grayscale(100%) contrast(120%)" }}
                   sizes="100vw"
                   priority={index === 0}
@@ -140,7 +140,7 @@ export function Hero() {
 
             {/* Info card */}
             <motion.div
-              className="absolute bottom-8 left-8 z-30 w-[272px] h-[130px] bg-black/50 backdrop-blur-2xl rounded-[24px] border border-white/10 p-4 text-white shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex flex-col justify-between"
+              className="absolute bottom-8 left-8 z-30 w-[272px] h-[130px] bg-black/50 backdrop-blur-2xl rounded-[12px] border border-white/10 p-4 text-white shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex flex-col justify-between"
               initial={isFirstTime ? { opacity: 0, y: 40 } : { opacity: 1, y: 0 }}
               animate={{ opacity: 1, y: 0 }}
               transition={isFirstTime ? { 

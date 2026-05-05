@@ -94,13 +94,14 @@ export async function getProjects(): Promise<Project[]> {
   return (rawData.projects as RawProject[]).map(toProject);
 }
 
-export async function getResearchInsights(): Promise<ResearchArticle[]> {
+export async function getToolArticles(): Promise<ResearchArticle[]> {
   const all = (rawData.research as RawResearch[]).map(toResearchArticle);
+  return all.filter((item) => item.category === 'Tool').slice(0, 3);
+}
 
-  let featured = all.filter((item) => item.featured);
-  if (featured.length === 0) featured = all;
-
-  return featured.slice(0, 3);
+export async function getResearchArticles(): Promise<ResearchArticle[]> {
+  const all = (rawData.research as RawResearch[]).map(toResearchArticle);
+  return all.filter((item) => item.category === 'Research').slice(0, 3);
 }
 
 export async function getAllResearchInsights(): Promise<ResearchArticle[]> {

@@ -4,12 +4,13 @@ import { Statement } from "@/components/sections/Statement";
 import { FeaturedWorks } from "@/components/sections/FeaturedWorks";
 import { ResearchSection } from "@/components/sections/ResearchSection";
 import { Contact } from "@/components/sections/Contact";
-import { getProjects, getResearchInsights } from "@/lib/cms";
+import { getProjects, getToolArticles, getResearchArticles } from "@/lib/cms";
 
 export default async function Home() {
-  const [works, insights] = await Promise.all([
+  const [works, toolArticles, researchArticles] = await Promise.all([
     getProjects(),
-    getResearchInsights(),
+    getToolArticles(),
+    getResearchArticles(),
   ]);
 
   return (
@@ -17,12 +18,25 @@ export default async function Home() {
       <Navbar />
       <main className="w-full">
         <Hero />
-        <div className="h-[1px] bg-black/10 my-20" />
+        <div className="max-w-[1440px] mx-auto px-10">
+          <div className="h-[1px] bg-white/10 mt-6 mb-6" />
+        </div>
         <Statement />
         <FeaturedWorks works={works} />
-        <div className="h-[1px] bg-black/10 my-20" />
-        <ResearchSection insights={insights} />
-        <div className="h-[1px] bg-black/10 my-20" />
+        <div className="max-w-[1440px] mx-auto px-10">
+          <div className="h-[1px] bg-white/10 mt-16 mb-6" />
+        </div>
+        
+        {/* Section: Research & Tools */}
+        <ResearchSection insights={toolArticles} title="Research & Tools" />
+        
+        <div className="max-w-[1440px] mx-auto px-10">
+          <div className="h-[1px] bg-white/10 mt-16 mb-6" />
+        </div>
+
+        {/* Section: Insights */}
+        <ResearchSection insights={researchArticles} title="Insights" />
+
         <Contact />
       </main>
     </div>

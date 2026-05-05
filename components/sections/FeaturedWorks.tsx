@@ -10,11 +10,11 @@ interface FeaturedWorksProps {
 export function FeaturedWorks({ works }: FeaturedWorksProps) {
   return (
     <section
-      className="bg-card pt-10 pb-16 w-full mx-auto overflow-hidden relative"
+      className="bg-card pt-6 pb-0 w-full mx-auto overflow-hidden relative"
       id="featured-works"
     >
-      <div className="flex justify-start items-start mb-12 max-w-[1440px] mx-auto w-full">
-        <h2 className="text-[28px] font-light tracking-[-0.02em] text-black">
+      <div className="flex justify-start items-start mb-12 max-w-[1440px] mx-auto w-full px-10">
+        <h2 className="text-[28px] font-light tracking-[-0.02em] text-foreground">
           Featured Works
         </h2>
 

@@ -26,24 +26,24 @@ export function ResearchSectionClient({ insights }: ResearchSectionClientProps) 
               className="flex flex-col gap-4 group cursor-pointer h-full text-left"
             >
               <div className="flex flex-col gap-2 flex-grow">
-                <span className="font-mono text-[14px] uppercase tracking-[0.05em] text-[#4C4546]">
+                <span className="font-mono text-[14px] uppercase tracking-[0.05em] text-foreground/60">
                   {item.date} | {item.category}
                 </span>
-                <h3 className="text-heading-lg font-bold tracking-tight text-black group-hover:text-on-surface-variant transition-colors truncate">
+                <h3 className="text-[20px] font-bold tracking-tight text-foreground group-hover:text-foreground/80 transition-colors truncate">
                   {item.title}
                 </h3>
 
-                <p className="font-sans text-[16px] leading-[1.6] text-[#4C4546] line-clamp-2">
+                <p className="font-sans text-[16px] leading-[1.6] text-foreground/80 line-clamp-2">
                   {item.excerpt}
                 </p>
               </div>
               {/* Image container — aspect-video + relative enables fill */}
-              <div className="w-full aspect-video relative overflow-hidden rounded-[24px] mt-auto">
+              <div className="w-full aspect-video relative overflow-hidden rounded-[12px] mt-auto">
                 <Image
                   src={item.coverImage}
                   alt={item.title}
                   fill
-                  className="object-cover rounded-[24px] transition-transform duration-700 group-hover:scale-105"
+                  className="object-cover rounded-[12px] transition-transform duration-700 group-hover:scale-105"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>

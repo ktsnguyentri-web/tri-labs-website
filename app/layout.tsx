@@ -25,10 +25,8 @@ export default function RootLayout({
     >
       <body className="min-h-full flex flex-col font-sans selection:bg-accent selection:text-black">
         <IntroAnimationProvider>
-          <main className="flex-grow pt-[80px] px-10 pb-20">
-            <div className="max-w-[1440px] mx-auto w-full">
-              {children}
-            </div>
+          <main className="flex-grow pb-20">
+            {children}
           </main>
         </IntroAnimationProvider>
       </body>

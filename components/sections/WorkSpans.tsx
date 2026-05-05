@@ -41,13 +41,13 @@ export function WorkSpans() {
                 href={item.href}
                 className="w-full h-full relative cursor-pointer flex-1 transition-all duration-700 ease-in-out group-hover/container:opacity-40 hover:!opacity-100 hover:!flex-[2.5] flex flex-col group/item"
               >
-                {/* Image container — relative + h-full enables fill — Rule #3: rounded-[24px] */}
-                <div className="relative w-full flex-1 overflow-hidden rounded-[24px] bg-secondary shadow-sm transition-shadow duration-700 group-hover/item:shadow-xl">
+                {/* Image container — relative + h-full enables fill — Rule #3: rounded-[12px] */}
+                <div className="relative w-full flex-1 overflow-hidden rounded-[12px] bg-secondary shadow-sm transition-shadow duration-700 group-hover/item:shadow-xl">
                   <Image
                     src={item.img}
                     alt={item.title}
                     fill
-                    className="object-cover rounded-[24px] transition-all duration-700 group-hover/item:scale-110"
+                    className="object-cover rounded-[12px] transition-all duration-700 group-hover/item:scale-110"
                     style={{ filter: "grayscale(100%) contrast(120%)" }}
                     sizes="(max-width: 768px) 100vw, 33vw"
                   />

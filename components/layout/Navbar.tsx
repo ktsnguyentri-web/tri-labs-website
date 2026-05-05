@@ -98,9 +98,9 @@ export function Navbar() {
   // Prevent hydration mismatch: render a static shell on server/first-pass
   if (!hasMounted) {
     return (
-      <nav className="fixed top-0 left-0 w-full z-50 bg-white h-[60px] px-[5vw]">
+      <nav className="fixed top-0 left-0 w-full z-50 bg-background/50 backdrop-blur-md h-[60px] px-10">
         <div className="flex h-full items-center justify-between max-w-[1440px] mx-auto w-full opacity-0">
-          <div className="text-lg font-bold tracking-[0.2em] text-black">TRI LABS</div>
+          <div className="text-lg font-bold tracking-[0.2em] text-foreground">TRI LABS</div>
         </div>
       </nav>
     );
@@ -112,7 +112,7 @@ export function Navbar() {
         variants={navVariants}
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="fixed top-0 left-0 w-full z-50 bg-white h-[60px] px-[5vw]"
+        className="fixed top-0 left-0 w-full z-50 bg-background/50 backdrop-blur-md h-[60px] px-10"
       >
         <div className="flex h-full items-center justify-between max-w-[1440px] mx-auto w-full">
           
@@ -124,7 +124,7 @@ export function Navbar() {
           >
             <Link
               href="/"
-              className="text-lg font-bold tracking-[0.2em] text-black"
+              className="text-lg font-bold tracking-[0.2em] text-foreground"
               onClick={() => setIsMenuOpen(false)}
             >
               TRI LABS
@@ -142,7 +142,7 @@ export function Navbar() {
               <motion.div key={item.label} variants={menuItemVariants}>
                 <Link
                   href={item.href}
-                  className="label-caps normal-case text-[14px] font-normal text-gray-500 hover:text-black transition-colors duration-300"
+                  className="label-caps normal-case text-[14px] font-normal text-foreground/60 hover:text-foreground transition-colors duration-300"
                 >
                   {item.label}
                 </Link>
@@ -152,9 +152,9 @@ export function Navbar() {
           </motion.div>
 
           {/* Mobile Toggle */}
-          <div className="block md:hidden text-black flex items-center h-full">
+          <div className="block md:hidden text-foreground flex items-center h-full">
             <button
-              className="hover:text-gray-500 transition-colors duration-200 cursor-pointer"
+              className="hover:text-foreground/60 transition-colors duration-200 cursor-pointer"
               aria-label={isMenuOpen ? "Close menu" : "Open menu"}
               onClick={() => setIsMenuOpen(!isMenuOpen)}
             >
@@ -166,7 +166,7 @@ export function Navbar() {
 
       {/* Mobile Menu Dropdown — Solid Opaque per Rule 1 */}
       <div
-        className={`fixed inset-0 z-40 bg-white transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 z-40 bg-background transition-opacity duration-300 md:hidden ${
           isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsMenuOpen(false)}
@@ -181,7 +181,7 @@ export function Navbar() {
             <Link
               key={item.label}
               href={item.href}
-              className="font-sans text-2xl text-black hover:text-gray-500 transition-colors duration-300"
+              className="font-sans text-2xl text-foreground hover:text-foreground/60 transition-colors duration-300"
               onClick={() => setIsMenuOpen(false)}
             >
               {item.label}

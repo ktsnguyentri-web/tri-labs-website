@@ -54,12 +54,12 @@ export function CVSection() {
           <div className="md:sticky md:top-[80px] flex flex-col gap-10">
             {/* Portrait Image (Rule #3) */}
             <Reveal delay={0.2}>
-              <div className="w-full aspect-[4/5] rounded-[24px] overflow-hidden bg-[#EEEEEE] relative">
+              <div className="w-full aspect-[4/5] rounded-[12px] overflow-hidden bg-[#EEEEEE] relative">
                 <Image
                   src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1200&q=80"
                   alt="Tri Nguyen Minh Portrait"
                   fill
-                  className="object-cover rounded-[24px] grayscale"
+                  className="object-cover rounded-[12px] grayscale"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>

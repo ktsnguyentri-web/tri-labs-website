@@ -8,12 +8,13 @@ import Link from "next/link";
 export function Contact() {
   return (
     <section 
-      className="w-full bg-background pt-32 pb-8 scroll-mt-[60px]" 
+      className="w-full bg-background pt-16 pb-8 scroll-mt-[60px]" 
       id="contact"
     >
 
       {/* Footer Area */}
-      <div className="w-full max-w-[1440px] mx-auto border-t border-border pt-12">
+      <div className="w-full max-w-[1440px] mx-auto px-10">
+        <div className="border-t border-border pt-12">
         <div className="flex flex-col md:flex-row justify-between items-center gap-10 md:gap-0">
           
           {/* Logo */}
@@ -47,6 +48,7 @@ export function Contact() {
           </div>
         </div>
       </div>
-    </section>
-  );
+    </div>
+  </section>
+);
 }

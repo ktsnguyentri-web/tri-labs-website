@@ -39,12 +39,12 @@ function GridItem({
           </p>
         </div>
         {/* aspect-[16/10] + relative enables fill Image */}
-        <div className="w-full aspect-[16/10] overflow-hidden rounded-[24px] mt-auto relative">
+        <div className="w-full aspect-[16/10] overflow-hidden rounded-[12px] mt-auto relative">
           <Image
             src={item.coverImage}
             alt={item.title}
             fill
-            className="object-cover rounded-[24px] transition-transform duration-700 group-hover:scale-105"
+            className="object-cover rounded-[12px] transition-transform duration-700 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
           />
         </div>
@@ -60,7 +60,7 @@ export function ResearchGallery({
   const [selectedArticle, setSelectedArticle] = useState<ResearchArticle | null>(null);
 
   return (
-    <div className="w-full max-w-[1440px] mx-auto pt-12 pb-32 flex flex-col gap-24">
+    <div className="w-full max-w-[1440px] mx-auto pt-12 pb-32 flex flex-col gap-24 px-10">
  
        {/* Section 1: Research & Insights */}
        {researchArticles.length > 0 && (
