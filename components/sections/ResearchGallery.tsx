@@ -39,12 +39,12 @@ function GridItem({
           </p>
         </div>
         {/* aspect-[16/10] + relative enables fill Image */}
-        <div className="w-full aspect-[16/10] overflow-hidden rounded-[12px] mt-auto relative">
+        <div className="w-full aspect-[16/10] overflow-hidden mt-auto relative">
           <Image
             src={item.coverImage}
             alt={item.title}
             fill
-            className="object-cover rounded-[12px] transition-transform duration-700 group-hover:scale-105"
+            className="object-cover transition-transform duration-700 group-hover:scale-105"
             sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
           />
         </div>

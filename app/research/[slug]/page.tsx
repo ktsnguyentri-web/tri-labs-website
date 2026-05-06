@@ -74,7 +74,7 @@ export default async function ResearchArticlePage({
           {/* Article Body - Prose */}
           <Reveal delay={0.2}>
             <div
-              className="prose prose-lg max-w-none prose-headings:text-black prose-headings:font-medium prose-p:text-gray-600 prose-p:leading-[1.8] prose-p:font-sans prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-[6px] prose-strong:text-black"
+              className="prose prose-lg max-w-none prose-headings:text-black prose-headings:font-medium prose-p:text-gray-600 prose-p:leading-[1.8] prose-p:font-sans prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-none prose-strong:text-black"
               dangerouslySetInnerHTML={{ __html: article.contentHtml }}
             />
           </Reveal>

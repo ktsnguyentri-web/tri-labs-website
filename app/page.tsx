@@ -18,20 +18,20 @@ export default async function Home() {
       <Navbar />
       <main className="w-full">
         <Hero />
-        <div className="max-w-[1440px] mx-auto px-10">
+        <div className="max-w-[1440px] mx-auto px-4 md:px-10">
           <div className="h-[1px] bg-white/10 mt-6 mb-6" />
         </div>
         <Statement />
         <FeaturedWorks works={works} />
-        <div className="max-w-[1440px] mx-auto px-10">
-          <div className="h-[1px] bg-white/10 mt-16 mb-6" />
+        <div className="max-w-[1440px] mx-auto px-4 md:px-10">
+          <div className="h-[1px] bg-white/10 mt-8 mb-6" />
         </div>
         
         {/* Section: Research & Tools */}
         <ResearchSection insights={toolArticles} title="Research & Tools" />
         
-        <div className="max-w-[1440px] mx-auto px-10">
-          <div className="h-[1px] bg-white/10 mt-16 mb-6" />
+        <div className="max-w-[1440px] mx-auto px-4 md:px-10">
+          <div className="h-[1px] bg-white/10 mt-8 mb-6" />
         </div>
 
         {/* Section: Insights */}

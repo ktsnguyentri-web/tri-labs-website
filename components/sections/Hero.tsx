@@ -69,9 +69,9 @@ function ProgressBars({
   return (
     <div className="flex gap-1.5 mb-4 w-full">
       {Array.from({ length: total }).map((_, idx) => (
-        <div key={idx} className="h-1 flex-1 bg-white/20 rounded-full overflow-hidden">
+        <div key={idx} className="h-1 flex-1 bg-white/20 overflow-hidden">
           <div
-            className="h-full bg-white rounded-full"
+            className="h-full bg-white"
             style={{
               width:
                 idx === currentIndex ? `${progress}%` : idx < currentIndex ? "100%" : "0%",
@@ -140,7 +140,7 @@ export function Hero() {
 
             {/* Info card */}
             <motion.div
-              className="absolute bottom-8 left-8 z-30 w-[272px] h-[130px] bg-black/50 backdrop-blur-2xl rounded-[12px] border border-white/10 p-4 text-white shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex flex-col justify-between"
+              className="absolute bottom-4 left-4 md:bottom-8 md:left-8 z-30 w-[272px] h-[130px] bg-black/50 backdrop-blur-2xl border border-white/10 p-4 text-white shadow-[0_8px_32px_rgba(0,0,0,0.4)] flex flex-col justify-between"
               initial={isFirstTime ? { opacity: 0, y: 40 } : { opacity: 1, y: 0 }}
               animate={{ opacity: 1, y: 0 }}
               transition={isFirstTime ? { 
@@ -157,7 +157,7 @@ export function Hero() {
               />
               <div className="flex flex-col">
                 <div className="flex flex-wrap gap-2 mb-2">
-                  <span className="font-mono text-[8px] tracking-widest text-white bg-white/10 border border-white/20 px-2 py-0.5 rounded hover:bg-white hover:text-black transition-colors cursor-pointer shrink-0">
+                  <span className="font-mono text-[8px] tracking-widest text-white bg-white/10 border border-white/20 px-2 py-0.5 hover:bg-white hover:text-black transition-colors cursor-pointer shrink-0">
                     VIEW
                   </span>
                   <span className="font-mono text-[8px] tracking-widest text-white/60 py-0.5 shrink-0">

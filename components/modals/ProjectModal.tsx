@@ -52,7 +52,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
         transition={{ type: "spring", damping: 25, stiffness: 300 }}
-        className="bg-white w-full max-w-7xl h-[85vh] rounded-[12px] overflow-hidden flex flex-col md:flex-row shadow-2xl relative z-10"
+        className="bg-white w-full max-w-7xl h-[85vh] overflow-hidden flex flex-col md:flex-row shadow-2xl relative z-10"
       >
         {/* Left Panel — Info (~35%) */}
         <div className="w-full md:w-[35%] p-10 flex flex-col h-full overflow-y-auto">
@@ -62,7 +62,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             </span>
             <button
               onClick={handleClose}
-              className="p-2 hover:bg-gray-100 rounded-full transition-colors"
+              className="p-2 hover:bg-gray-100 transition-colors"
               aria-label="Close"
             >
               <X className="w-5 h-5 text-black" strokeWidth={1.5} />
@@ -92,12 +92,12 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
         {/* Right Panel — Image (~65%) */}
         <div className="w-full md:w-[65%] h-full p-4 pl-0">
-          <div className="relative w-full h-full rounded-[12px] overflow-hidden">
+          <div className="relative w-full h-full overflow-hidden">
             <Image
               src={project.coverImage}
               alt={project.title}
               fill
-              className="object-cover rounded-[12px]"
+              className="object-cover"
               sizes="(max-width: 768px) 100vw, 65vw"
             />
           </div>

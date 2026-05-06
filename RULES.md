@@ -36,34 +36,19 @@ All primary page sections must respect these padding values:
 
 ---
 
-## 3. The Rounded Corner Rule — **CRITICAL**
+## 3. The Square Corner Rule — **CRITICAL**
 
-> This rule prevents the most common visual regression: square artifacts on image cards.
+> This rule ensures a brutalist, architectural aesthetic by eliminating all curves from structural elements.
 
 ### The Law
-- All **primary images and card containers** must use `rounded-[12px]`.
-- The image element (`<Image />` or `<img>`) AND its parent container must carry the **same** `rounded-[12px]` class.
-- This ensures that on-scroll masks and clip-paths behave predictably.
-
-Example:
-```tsx
-<div className="relative w-full h-full rounded-[12px] overflow-hidden group">
-  <Image
-    src={...}
-    alt={...}
-    fill
-    className="object-cover rounded-[12px] transition-transform duration-500 group-hover:scale-105"
-  />
-  {/* Any hover overlay must ALSO carry rounded-[12px] */}
-  <div className="absolute inset-0 rounded-[12px] bg-black/30 opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
-</div>
-```
+- All **images, card containers, and structural UI elements** must have square corners (`rounded-none` or simply no `rounded-*` class).
+- This applies to `<Image />` elements, their parent wrappers, hover overlays, and modals.
+- Never use `rounded-xl`, `rounded-[12px]`, or any other rounding on these elements.
 
 ### Common Violations to Avoid
-- ❌ Placing `overflow-hidden` on a `<button>` element — browsers do not reliably clip absolutely-positioned children on replaced elements.
-- ❌ Applying `rounded-*` only to the parent but not to the overlay or image.
-- ❌ Using `rounded-xl` or `rounded-2xl` inconsistently — always use `rounded-[12px]` (exact value).
-- ❌ Removing `rounded-[12px]` from any element on `:hover`.
+- ❌ Leaving `rounded-[12px]` on an image while the parent is square.
+- ❌ Using `rounded-full` for image-based avatars or icons (unless they are specifically decorative scribbles).
+- ❌ Inconsistent rounding between a card and its internal image.
 
 ---
 
@@ -186,8 +171,8 @@ Example:
 ## 10. What Must Never Change Without Explicit Approval
 
 1. The `60px` navbar height and `pt-[60px]` page clearance.
-2. The `rounded-[12px]` value on image containers.
+2. The **square corner** (0px) requirement for all image containers and structural UI.
 3. The `label-caps` typography style.
 4. The `data-mono` typography style.
 5. The `Inter` font family.
-6. The `overflow-hidden` + `rounded-[12px]` pairing on image wrappers.
+6. The `overflow-hidden` + square corner pairing on image wrappers.

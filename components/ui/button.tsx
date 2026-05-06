@@ -8,12 +8,12 @@ import { cn } from "@/lib/utils";
 /**
  * Standardized CTA Button Component
  * 
- * Design: Pill-shaped, Brutalist dark muted tone (#4A4443), White bold uppercase text.
+ * Design: Square corners, Brutalist dark muted tone (#4A4443), White bold uppercase text.
  * Features: Automatic ArrowRight icon (customizable), 'asChild' support for Next.js Links.
  */
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap rounded-full label-caps transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap label-caps transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]",
   {
     variants: {
       variant: {

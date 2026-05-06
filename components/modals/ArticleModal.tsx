@@ -27,12 +27,12 @@ export function ArticleModal({ article, onClose }: ArticleModalProps) {
         aria-label="Close modal background"
       />
 
-      <div className="bg-white w-full max-w-5xl h-[90vh] rounded-[12px] relative overflow-hidden flex flex-col shadow-2xl z-10 scale-in-95 duration-300">
+      <div className="bg-white w-full max-w-5xl h-[90vh] relative overflow-hidden flex flex-col shadow-2xl z-10 scale-in-95 duration-300">
 
         {/* Close Button */}
         <button
           onClick={onClose}
-          className="absolute top-6 right-6 p-2 bg-white/80 backdrop-blur-sm hover:bg-gray-100 rounded-full transition-colors z-20 shadow-sm"
+          className="absolute top-6 right-6 p-2 bg-white/80 backdrop-blur-sm hover:bg-gray-100 transition-colors z-20 shadow-sm"
           aria-label="Close"
         >
           <X className="w-6 h-6 text-black" strokeWidth={1.5} />
@@ -61,7 +61,7 @@ export function ArticleModal({ article, onClose }: ArticleModalProps) {
 
             {/* Body — Prose HTML from CMS */}
             <div
-              className="prose prose-lg max-w-none prose-headings:text-black prose-headings:font-medium prose-p:text-gray-600 prose-p:leading-[1.8] prose-p:font-sans prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-[12px] prose-strong:text-black"
+              className="prose prose-lg max-w-none prose-headings:text-black prose-headings:font-medium prose-p:text-gray-600 prose-p:leading-[1.8] prose-p:font-sans prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-none prose-strong:text-black"
               dangerouslySetInnerHTML={{ __html: article.contentHtml }}
             />
 

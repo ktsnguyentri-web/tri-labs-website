@@ -7,7 +7,7 @@ export function Statement() {
     <section className="bg-background pt-8 pb-12 w-full mx-auto relative scroll-mt-[60px]" id="statement">
 
 
-      <div className="grid grid-cols-1 md:grid-cols-3 w-full max-w-[1440px] mx-auto gap-12 md:gap-20 px-10">
+      <div className="grid grid-cols-1 md:grid-cols-3 w-full max-w-[1440px] mx-auto gap-8 md:gap-20 px-4 md:px-10">
 
         {/* Left Column (1/3) — Metadata */}
         <div className="col-span-1 pt-4">

@@ -98,7 +98,7 @@ export function Navbar() {
   // Prevent hydration mismatch: render a static shell on server/first-pass
   if (!hasMounted) {
     return (
-      <nav className="fixed top-0 left-0 w-full z-50 bg-background/50 backdrop-blur-md h-[60px] px-10">
+      <nav className="fixed top-0 left-0 w-full z-50 bg-background/50 backdrop-blur-md h-[60px] px-4 md:px-10">
         <div className="flex h-full items-center justify-between max-w-[1440px] mx-auto w-full opacity-0">
           <div className="text-lg font-bold tracking-[0.2em] text-foreground">TRI LABS</div>
         </div>
@@ -112,7 +112,7 @@ export function Navbar() {
         variants={navVariants}
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="fixed top-0 left-0 w-full z-50 bg-background/50 backdrop-blur-md h-[60px] px-10"
+        className="fixed top-0 left-0 w-full z-50 bg-background/50 backdrop-blur-md h-[60px] px-4 md:px-10"
       >
         <div className="flex h-full items-center justify-between max-w-[1440px] mx-auto w-full">
           

@@ -26,7 +26,7 @@ export default async function WorkDetailPage({
       <Navbar />
       <main className="w-full pt-[60px] min-h-[calc(100vh-60px)]">
         <div className="max-w-[1440px] mx-auto w-full pt-12 pb-32 px-[5vw]">
-          <div className="bg-white w-full max-w-7xl h-auto md:h-[85vh] rounded-[6px] overflow-hidden flex flex-col md:flex-row shadow-xl relative">
+          <div className="bg-white w-full max-w-7xl h-auto md:h-[85vh] overflow-hidden flex flex-col md:flex-row shadow-xl relative">
 
             {/* Left: Content (2/3 on desktop) */}
             <div className="w-full md:w-[40%] p-8 md:p-16 flex flex-col justify-between bg-white border-r border-black/5">
@@ -68,12 +68,12 @@ export default async function WorkDetailPage({
             {/* Right: Cover Image (3/5 on desktop) */}
             <div className="w-full md:w-[60%] bg-secondary relative h-[400px] md:h-full">
               <Reveal delay={0.1} className="h-full">
-                <div className="relative w-full h-full rounded-[6px] overflow-hidden">
+                <div className="relative w-full h-full overflow-hidden">
                   <Image
                     src={project.coverImage}
                     alt={project.title}
                     fill
-                    className="object-cover rounded-[6px]"
+                    className="object-cover"
                     priority
                     sizes="(max-width: 768px) 100vw, 60vw"
                   />
