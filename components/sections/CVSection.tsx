@@ -46,7 +46,7 @@ export function CVSection() {
   ];
 
   return (
-    <section className="bg-white py-12 w-full mx-auto relative scroll-mt-[60px]" id="cv-section">
+    <section className="bg-background py-20 w-full mx-auto relative scroll-mt-[60px]" id="cv-section">
       <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-24">
         
         {/* Left Column — Sticky Sidebar (1/3) */}
@@ -56,10 +56,10 @@ export function CVSection() {
             <Reveal delay={0.2}>
               <div className="w-full aspect-[4/5] overflow-hidden bg-[#EEEEEE] relative">
                 <Image
-                  src="https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?auto=format&fit=crop&w=1200&q=80"
+                  src="/portrait.jpg"
                   alt="Tri Nguyen Minh Portrait"
                   fill
-                  className="object-cover grayscale"
+                  className="object-cover"
                   sizes="(max-width: 768px) 100vw, 33vw"
                 />
               </div>
@@ -68,19 +68,19 @@ export function CVSection() {
             {/* Contact Info (label-caps) */}
             <Reveal delay={0.3}>
               <div className="flex flex-col gap-4">
-                <div className="label-caps text-[#4C4546]">
-                  <a href="mailto:hello@trilab.design" className="hover:text-black transition-colors">hello@trilab.design</a>
+                <div className="label-caps text-white/40">
+                  <a href="mailto:hello@trilab.design" className="hover:text-white transition-colors">hello@trilab.design</a>
                 </div>
-                <div className="label-caps text-[#4C4546]">
-                  <a href="#" className="hover:text-black transition-colors">linkedin.com/in/tri-nguyen</a>
+                <div className="label-caps text-white/40">
+                  <a href="#" className="hover:text-white transition-colors">linkedin.com/in/tri-nguyen</a>
                 </div>
-                <div className="label-caps text-[#4C4546]">
+                <div className="label-caps text-white/40">
                   <span>Ho Chi Minh City, Vietnam</span>
                 </div>
               </div>
 
               <div className="pt-2">
-                <Button size="sm" variant="outline" className="text-[10px] h-8 px-4">
+                <Button size="sm" variant="outline" className="text-[10px] h-8 px-4 border-white/20 hover:bg-white hover:text-black transition-all">
                   DOWNLOAD FULL PDF
                 </Button>
               </div>
@@ -94,7 +94,7 @@ export function CVSection() {
           {/* Experience Section */}
           <div>
             <Reveal>
-              <h2 className="text-[48px] font-light tracking-tight text-black mb-10 uppercase">
+              <h2 className="text-[48px] font-light tracking-tight text-white mb-10 uppercase">
                 Experience
               </h2>
             </Reveal>
@@ -102,11 +102,11 @@ export function CVSection() {
               {experiences.map((exp, i) => (
                 <Reveal key={i} delay={0.2 + (i * 0.1)}>
                   <div className="flex flex-col gap-3">
-                    <div className="data-mono text-[#4C4546]/40 text-[10px]">{exp.period}</div>
+                    <div className="data-mono text-white/20 text-[10px]">{exp.period}</div>
                     <div>
-                      <h3 className="text-xl font-medium text-black mb-1">{exp.role}</h3>
-                      <p className="text-[#4C4546] font-medium mb-3">{exp.company}</p>
-                      <p className="text-base text-[#4C4546] leading-relaxed max-w-2xl opacity-80">
+                      <h3 className="text-xl font-medium text-white mb-1">{exp.role}</h3>
+                      <p className="text-white/60 font-medium mb-3">{exp.company}</p>
+                      <p className="text-base text-white/40 leading-relaxed max-w-2xl">
                         {exp.description}
                       </p>
                     </div>
@@ -119,7 +119,7 @@ export function CVSection() {
           {/* Education Section */}
           <div>
             <Reveal>
-              <h2 className="text-[48px] font-light tracking-tight text-black mb-10 uppercase">
+              <h2 className="text-[48px] font-light tracking-tight text-white mb-10 uppercase">
                 Education
               </h2>
             </Reveal>
@@ -127,10 +127,10 @@ export function CVSection() {
               {education.map((edu, i) => (
                 <Reveal key={i} delay={0.2 + (i * 0.1)}>
                   <div className="flex flex-col gap-3">
-                    <div className="data-mono text-[#4C4546]/40 text-[10px]">{edu.period}</div>
+                    <div className="data-mono text-white/20 text-[10px]">{edu.period}</div>
                     <div>
-                      <h3 className="text-xl font-medium text-black mb-1">{edu.degree}</h3>
-                      <p className="text-base text-[#4C4546] opacity-80">{edu.school}</p>
+                      <h3 className="text-xl font-medium text-white mb-1">{edu.degree}</h3>
+                      <p className="text-base text-white/60">{edu.school}</p>
                     </div>
                   </div>
                 </Reveal>
@@ -141,7 +141,7 @@ export function CVSection() {
           {/* Skills Section */}
           <div>
             <Reveal>
-              <h2 className="text-[48px] font-light tracking-tight text-black mb-10 uppercase">
+              <h2 className="text-[48px] font-light tracking-tight text-white mb-10 uppercase">
                 Skills
               </h2>
             </Reveal>
@@ -149,10 +149,10 @@ export function CVSection() {
               {skills.map((skill, i) => (
                 <Reveal key={i} delay={0.2 + (i * 0.1)}>
                   <div className="flex flex-col gap-4">
-                    <div className="label-caps text-[#4C4546]/40">{skill.category}</div>
+                    <div className="label-caps text-white/20">{skill.category}</div>
                     <ul className="flex flex-col gap-1">
                       {skill.items.map((item, j) => (
-                        <li key={j} className="text-base text-[#4C4546] opacity-80">{item}</li>
+                        <li key={j} className="text-base text-white/60">{item}</li>
                       ))}
                     </ul>
                   </div>

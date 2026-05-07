@@ -90,15 +90,16 @@ export function FeaturedGrid({ works }: { works: Project[] }) {
 
                 {/* 2. Content below image - Clickable area */}
                 <div className="flex flex-col gap-3">
-                  <div className="font-sans text-[12px] text-white/30 uppercase tracking-[0.1em] select-none">
-                    {work.location}
+                  <div className="flex justify-between items-center font-sans text-[11px] text-white/30 uppercase tracking-[0.1em] select-none">
+                    <span>{work.location}</span>
+                    {work.completionYear && <span>{work.completionYear}</span>}
                   </div>
                   
                   <Link
                     href={`/work/${work.slug}`}
                     scroll={false}
                     onClick={(e) => isDragging && e.preventDefault()}
-                    className="text-[18px] md:text-[22px] font-medium tracking-tight text-white group-hover:underline decoration-white decoration-2 underline-offset-4 cursor-pointer transition-colors leading-[1.3] line-clamp-2 select-none"
+                    className="text-[18px] md:text-[22px] font-medium tracking-tight text-white hover:underline w-fit decoration-white decoration-2 underline-offset-4 cursor-pointer transition-colors leading-[1.3] line-clamp-2 select-none"
                   >
                     {work.title}
                   </Link>

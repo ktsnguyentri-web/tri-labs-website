@@ -1,10 +1,11 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { Menu, X } from "lucide-react";
+import { Menu, X, Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { Logo } from "./Logo";
 
 /**
  * Navbar.tsx — One-time cinematic entrance + Smart Scroll behavior.
@@ -88,10 +89,9 @@ export function Navbar() {
   });
 
   const links = [
-    { label: "Info", href: "/cv" },
     { label: "Projects", href: "/work" },
-    { label: "Research & Insights", href: "/research" },
-    { label: "Gallery", href: "#" },
+    { label: "Ideas", href: "/research" },
+    { label: "About", href: "/cv" },
     { label: "Contact", href: "/#contact" },
   ];
 
@@ -100,7 +100,7 @@ export function Navbar() {
     return (
       <nav className="fixed top-0 left-0 w-full z-50 bg-background/50 backdrop-blur-md h-[60px] px-4 md:px-10">
         <div className="flex h-full items-center justify-between max-w-[1440px] mx-auto w-full opacity-0">
-          <div className="text-lg font-bold tracking-[0.2em] text-foreground">TRI LABS</div>
+          <Logo className="text-foreground" />
         </div>
       </nav>
     );
@@ -114,26 +114,28 @@ export function Navbar() {
         transition={{ duration: 0.3, ease: "easeInOut" }}
         className="fixed top-0 left-0 w-full z-50 bg-background/50 backdrop-blur-md h-[60px] px-4 md:px-10"
       >
-        <div className="flex h-full items-center justify-between max-w-[1440px] mx-auto w-full">
+        <div className="flex h-full items-center justify-between max-w-[1440px] mx-auto w-full relative">
           
-          {/* Logo Entrance */}
-          <motion.div
-            variants={logoVariants}
-            initial={shouldAnimate ? "initial" : "static"}
-            animate={shouldAnimate ? "animate" : "static"}
-          >
-            <Link
-              href="/"
-              className="text-lg font-bold tracking-[0.2em] text-foreground"
-              onClick={() => setIsMenuOpen(false)}
+          {/* 1. Left Section: Logo */}
+          <div className="flex-1 flex justify-start">
+            <motion.div
+              variants={logoVariants}
+              initial={shouldAnimate ? "initial" : "static"}
+              animate={shouldAnimate ? "animate" : "static"}
             >
-              TRI LABS
-            </Link>
-          </motion.div>
+              <Link
+                href="/"
+                className="flex items-center"
+                onClick={() => setIsMenuOpen(false)}
+              >
+                <Logo className="text-foreground" />
+              </Link>
+            </motion.div>
+          </div>
 
-          {/* Desktop Menu Entrance (Staggered) */}
+          {/* 2. Center Section: Desktop Menu */}
           <motion.div 
-            className="hidden md:flex gap-8 items-center h-full"
+            className="hidden md:flex gap-10 items-center justify-center flex-1 h-full"
             variants={menuContainerVariants}
             initial={shouldAnimate ? "initial" : "static"}
             animate={shouldAnimate ? "animate" : "static"}
@@ -142,24 +144,35 @@ export function Navbar() {
               <motion.div key={item.label} variants={menuItemVariants}>
                 <Link
                   href={item.href}
-                  className="label-caps normal-case text-[14px] font-normal text-foreground/60 hover:text-foreground transition-colors duration-300"
+                  className="label-caps normal-case text-[13px] font-normal text-foreground/60 hover:text-foreground transition-all duration-300 hover:tracking-[0.3em]"
                 >
                   {item.label}
                 </Link>
-
               </motion.div>
             ))}
           </motion.div>
 
-          {/* Mobile Toggle */}
-          <div className="block md:hidden text-foreground flex items-center h-full">
-            <button
-              className="hover:text-foreground/60 transition-colors duration-200 cursor-pointer"
-              aria-label={isMenuOpen ? "Close menu" : "Open menu"}
-              onClick={() => setIsMenuOpen(!isMenuOpen)}
-            >
-              {isMenuOpen ? <X className="w-6 h-6" strokeWidth={1.5} /> : <Menu className="w-6 h-6" strokeWidth={1.5} />}
-            </button>
+          {/* 3. Right Section: Search + Language + Mobile Toggle */}
+          <div className="flex-1 flex justify-end items-center gap-6">
+            <div className="hidden md:flex items-center gap-6">
+              <button className="text-foreground/60 hover:text-foreground transition-colors cursor-pointer" aria-label="Search">
+                <Search className="w-5 h-5" strokeWidth={1.5} />
+              </button>
+              <button className="label-caps text-[11px] text-foreground/60 hover:text-foreground transition-colors cursor-pointer">
+                VN / EN
+              </button>
+            </div>
+
+            {/* Mobile Toggle */}
+            <div className="block md:hidden text-foreground flex items-center h-full">
+              <button
+                className="hover:text-foreground/60 transition-colors duration-200 cursor-pointer"
+                aria-label={isMenuOpen ? "Close menu" : "Open menu"}
+                onClick={() => setIsMenuOpen(!isMenuOpen)}
+              >
+                {isMenuOpen ? <X className="w-6 h-6" strokeWidth={1.5} /> : <Menu className="w-6 h-6" strokeWidth={1.5} />}
+              </button>
+            </div>
           </div>
         </div>
       </motion.nav>

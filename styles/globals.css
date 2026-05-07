@@ -106,11 +106,11 @@
   }
 
   body {
-    @apply bg-background text-on-surface-variant leading-relaxed;
+    @apply bg-background text-on-surface-variant leading-relaxed overflow-x-hidden w-full;
   }
 
   html {
-    @apply font-sans;
+    @apply font-sans overflow-x-hidden w-full;
   }
 
   img {

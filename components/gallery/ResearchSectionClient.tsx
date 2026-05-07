@@ -102,7 +102,7 @@ export function ResearchSectionClient({ insights }: ResearchSectionClientProps) 
                   
                   <h3 
                     onClick={() => !isDragging && setSelectedArticle(item)}
-                    className="text-[18px] md:text-[22px] font-medium tracking-tight text-white group-hover:underline decoration-white decoration-2 underline-offset-4 cursor-pointer transition-colors leading-[1.3] line-clamp-2 select-none"
+                    className="text-[18px] md:text-[22px] font-medium tracking-tight text-white hover:underline w-fit decoration-white decoration-2 underline-offset-4 cursor-pointer transition-colors leading-[1.3] line-clamp-2 select-none"
                   >
                     {item.title}
                   </h3>
