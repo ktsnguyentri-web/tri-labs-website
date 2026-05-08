@@ -75,6 +75,21 @@ export function Navbar() {
     }
   }, [isHomePage]);
 
+  // Hide Navbar when a modal is open (indicated by locked body scroll)
+  useEffect(() => {
+    const observer = new MutationObserver(() => {
+      const isOverflowHidden = 
+        document.body.style.overflow === 'hidden' || 
+        document.documentElement.style.overflow === 'hidden';
+      setHidden(isOverflowHidden);
+    });
+
+    observer.observe(document.body, { attributes: true, attributeFilter: ['style'] });
+    observer.observe(document.documentElement, { attributes: true, attributeFilter: ['style'] });
+    
+    return () => observer.disconnect();
+  }, []);
+
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
     
@@ -91,8 +106,8 @@ export function Navbar() {
   const links = [
     { label: "Projects", href: "/work" },
     { label: "Ideas", href: "/research" },
+    { label: "Tool", href: "/tool" },
     { label: "About", href: "/cv" },
-    { label: "Contact", href: "/#contact" },
   ];
 
   // Prevent hydration mismatch: render a static shell on server/first-pass

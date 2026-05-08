@@ -1,10 +1,16 @@
 import type { Metadata } from "next";
-import { Inter } from "next/font/google";
+import { Inter, Titan_One } from "next/font/google";
 import "@/styles/globals.css";
 import { IntroAnimationProvider } from "@/lib/intro-animation-context";
 
 const inter = Inter({
   variable: "--font-inter",
+  subsets: ["latin"],
+});
+
+const titanOne = Titan_One({
+  weight: "400",
+  variable: "--font-titan",
   subsets: ["latin"],
 });
 
@@ -15,18 +21,21 @@ export const metadata: Metadata = {
 
 export default function RootLayout({
   children,
+  modal,
 }: Readonly<{
   children: React.ReactNode;
+  modal: React.ReactNode;
 }>) {
   return (
     <html
       lang="en"
-      className={`${inter.variable} h-full antialiased scroll-smooth`}
+      className={`${inter.variable} ${titanOne.variable} h-full antialiased scroll-smooth`}
     >
       <body className="min-h-full flex flex-col font-sans selection:bg-accent selection:text-black">
         <IntroAnimationProvider>
           <main className="flex-grow pb-20">
             {children}
+            {modal}
           </main>
         </IntroAnimationProvider>
       </body>

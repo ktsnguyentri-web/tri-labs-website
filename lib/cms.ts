@@ -1,6 +1,6 @@
 /**
  * CMS Adapter Layer
- *
+ * 
  * This module reads raw data from the compiled JSON (written by build-cms.mjs)
  * and maps it to the canonical typed interfaces in @/types/cms.
  *
@@ -38,6 +38,9 @@ interface RawProject {
   order: number;
   completionYear?: string;
   description?: string;
+  architect?: string;
+  status?: string;
+  scope?: string;
   gallery?: string[];
 }
 
@@ -69,6 +72,9 @@ function toProject(raw: RawProject): Project {
     span: raw.span,
     order: raw.order,
     description: raw.description,
+    architect: raw.architect,
+    status: raw.status,
+    scope: raw.scope,
     gallery: raw.gallery,
   };
 }

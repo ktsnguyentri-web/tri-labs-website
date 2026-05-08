@@ -14,14 +14,15 @@ export function Logo({ className }: LogoProps) {
     <div 
       className={className}
       style={{ 
-        fontFamily: '"Rockwell", serif',
-        fontWeight: 700, // Bold
-        fontSize: '32px',
+        fontFamily: 'var(--font-titan)',
+        fontWeight: 400,
+        fontSize: '28px',
         textTransform: 'lowercase',
         letterSpacing: '-0.02em',
         lineHeight: 1,
         display: 'flex',
-        alignItems: 'center'
+        alignItems: 'center',
+        height: '100%'
       }}
     >
       tri labs

@@ -6,8 +6,7 @@ import type { ResearchArticle } from "@/types/cms";
 import { ArticleModal } from "@/components/modals/ArticleModal";
 import { Reveal } from "@/components/animations/Reveal";
 
-interface ResearchGalleryProps {
-  researchArticles: ResearchArticle[];
+interface ToolGalleryProps {
   toolArticles: ResearchArticle[];
 }
 
@@ -53,46 +52,46 @@ function GridItem({
   );
 }
 
-export function ResearchGallery({
-  researchArticles,
-}: Omit<ResearchGalleryProps, 'toolArticles'>) {
+export function ToolGallery({
+  toolArticles,
+}: ToolGalleryProps) {
   const [selectedArticle, setSelectedArticle] = useState<ResearchArticle | null>(null);
 
   return (
     <div className="w-full max-w-[1440px] mx-auto pt-12 pb-32 flex flex-col gap-24 px-10">
- 
-       {/* Section 1: Research & Insights */}
-       {researchArticles.length > 0 && (
-         <div className="w-full">
-           <Reveal>
-             <div className="flex flex-col md:flex-row items-baseline gap-6 mb-12">
-               <h1 className="text-[48px] font-light tracking-tight text-black uppercase leading-none">
-                 Research &amp; Insights
-               </h1>
-               <p className="label-caps text-[#4C4546]/60">
-                 Updates and news from the Tri Labs team.
-               </p>
-             </div>
-           </Reveal>
-           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-             {researchArticles.map((item, i) => (
-               <GridItem
-                 key={item.slug}
-                 item={item}
-                 onClick={() => setSelectedArticle(item)}
-                 index={i}
-               />
-             ))}
-           </div>
-         </div>
-       )}
- 
-       {selectedArticle && (
-         <ArticleModal
-           article={selectedArticle}
-           onClose={() => setSelectedArticle(null)}
-         />
-       )}
-     </div>
+      {/* Tool Section */}
+      {toolArticles.length > 0 && (
+        <div className="w-full scroll-mt-[100px]" id="tool">
+          <Reveal>
+            <div className="flex flex-col md:flex-row items-baseline gap-6 mb-12">
+              <h1 className="text-[48px] font-light tracking-tight text-black uppercase leading-none">
+                Tool
+              </h1>
+              <p className="label-caps text-[#4C4546]/60">
+                Internal tools and computational workflows developed by Tri Labs.
+              </p>
+            </div>
+          </Reveal>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+            {toolArticles.map((item, i) => (
+              <GridItem
+                key={item.slug}
+                item={item}
+                onClick={() => setSelectedArticle(item)}
+                index={i}
+              />
+            ))}
+          </div>
+        </div>
+      )}
+
+      {selectedArticle && (
+        <ArticleModal
+          article={selectedArticle}
+          onClose={() => setSelectedArticle(null)}
+        />
+      )}
+    </div>
   );
 }

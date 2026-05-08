@@ -26,6 +26,10 @@ export interface Project {
   order: number;
   /** Extended description for the detail page */
   description?: string;
+  /** Additional project metadata */
+  architect?: string;
+  status?: string;
+  scope?: string;
   /** Additional image URLs for a gallery carousel */
   gallery?: string[];
 }
@@ -81,6 +85,10 @@ export interface ModalProject {
   category?: string;
   completionYear?: string;
   description?: string;
+  architect?: string;
+  status?: string;
+  scope?: string;
+  gallery?: string[];
 }
 
 // ---------------------------------------------------------------------------
@@ -94,6 +102,7 @@ export interface HeroSlide {
   /** Formatted tag string, e.g. "ARCHITECTURE | [TAG]" */
   tag: string;
   image: string;
+  href?: string;
 }
 
 // ---------------------------------------------------------------------------

@@ -1,11 +1,24 @@
 {
   "projects": [
     {
+      "title": "Chavana Boutique Hotel",
+      "location": "68 Vo Nguyen Giap Street, Son Tra, Da Nang City",
+      "architect": "Studio Duo",
+      "status": "Under construction",
+      "scope": "Concept Design & Construction document",
+      "span": "md:col-span-2 md:row-span-2",
+      "img": "/images/projects/chavana/front.jpg",
+      "order": 0,
+      "gallery": [
+        "/images/projects/chavana/render.jpg",
+        "/images/projects/chavana/bar.jpg"
+      ]
+    },
+    {
       "title": "Shenzhen Bay Culture Park",
       "location": "SHENZHEN, CHINA",
       "span": "md:col-span-2 md:row-span-2",
       "img": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
-      "completionYear": "2024",
       "order": 1
     },
     {
@@ -13,7 +26,6 @@
       "location": "HARBIN, CHINA",
       "span": "md:col-span-1 md:row-span-1",
       "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
-      "completionYear": "2015",
       "order": 2
     },
     {
@@ -21,7 +33,6 @@
       "location": "MISSISSAUGA, CANADA",
       "span": "md:col-span-1 md:row-span-2",
       "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
-      "completionYear": "2012",
       "order": 3
     },
     {
@@ -29,7 +40,6 @@
       "location": "ORDOS, CHINA",
       "span": "md:col-span-1 md:row-span-1",
       "img": "https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=1200&q=80",
-      "completionYear": "2011",
       "order": 4
     },
     {
@@ -37,7 +47,6 @@
       "location": "HUZHOU, CHINA",
       "span": "md:col-span-2 md:row-span-1",
       "img": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
-      "completionYear": "2013",
       "order": 5
     },
     {
@@ -45,7 +54,6 @@
       "location": "BEIJING, CHINA",
       "span": "md:col-span-1 md:row-span-2",
       "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
-      "completionYear": "2017",
       "order": 6
     },
     {

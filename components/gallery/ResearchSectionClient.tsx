@@ -3,8 +3,8 @@
 import * as React from "react";
 import { useState } from "react";
 import Image from "next/image";
+import Link from "next/link";
 import type { ResearchArticle } from "@/types/cms";
-import { ArticleModal } from "@/components/modals/ArticleModal";
 
 import { Reveal } from "@/components/animations/Reveal";
 
@@ -13,7 +13,6 @@ interface ResearchSectionClientProps {
 }
 
 export function ResearchSectionClient({ insights }: ResearchSectionClientProps) {
-  const [selectedArticle, setSelectedArticle] = useState<ResearchArticle | null>(null);
   const scrollRef = React.useRef<HTMLDivElement>(null);
   const [isDragging, setIsDragging] = useState(false);
   const [startX, setStartX] = useState(0);
@@ -80,9 +79,11 @@ export function ResearchSectionClient({ insights }: ResearchSectionClientProps) 
             <Reveal width="100%" delay={i * 0.1}>
               <div className="flex flex-col gap-6 group h-full text-left">
                 {/* 1. Image container - Clickable area */}
-                <div 
-                  onClick={() => !isDragging && setSelectedArticle(item)}
-                  className="w-full aspect-[3/2] relative overflow-hidden bg-white/5 cursor-pointer"
+                <Link 
+                  href={`/research/${item.slug}`}
+                  scroll={false}
+                  onClick={(e) => isDragging && e.preventDefault()}
+                  className="w-full aspect-[3/2] relative overflow-hidden bg-white/5 cursor-pointer block"
                 >
                   <Image
                     src={item.coverImage}
@@ -92,7 +93,7 @@ export function ResearchSectionClient({ insights }: ResearchSectionClientProps) 
                     className="object-cover transition-transform duration-1000 group-hover:scale-105 select-none"
                     sizes="(max-width: 768px) 300px, 600px"
                   />
-                </div>
+                </Link>
 
                 {/* 2. Content below image - Clickable area */}
                 <div className="flex flex-col gap-3">
@@ -100,25 +101,20 @@ export function ResearchSectionClient({ insights }: ResearchSectionClientProps) 
                     {item.date}
                   </div>
                   
-                  <h3 
-                    onClick={() => !isDragging && setSelectedArticle(item)}
+                  <Link 
+                    href={`/research/${item.slug}`}
+                    scroll={false}
+                    onClick={(e) => isDragging && e.preventDefault()}
                     className="text-[18px] md:text-[22px] font-medium tracking-tight text-white hover:underline w-fit decoration-white decoration-2 underline-offset-4 cursor-pointer transition-colors leading-[1.3] line-clamp-2 select-none"
                   >
                     {item.title}
-                  </h3>
+                  </Link>
                 </div>
               </div>
             </Reveal>
           </div>
         ))}
       </div>
-
-      {selectedArticle && (
-        <ArticleModal
-          article={selectedArticle}
-          onClose={() => setSelectedArticle(null)}
-        />
-      )}
     </div>
   );
 }
