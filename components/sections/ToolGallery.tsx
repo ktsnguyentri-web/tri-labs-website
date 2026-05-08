@@ -26,14 +26,14 @@ function GridItem({
         className="flex flex-col gap-4 group cursor-pointer h-full text-left"
       >
         <div className="flex flex-col gap-2 flex-grow">
-          <span className="data-mono text-on-surface-variant">
+          <span className="data-mono text-white/30">
             {item.date} | {item.category}
           </span>
-          <h3 className="text-heading-lg font-bold tracking-tight text-black group-hover:text-on-surface-variant transition-colors truncate">
+          <h3 className="text-heading-lg font-bold tracking-tight text-white group-hover:text-white/60 transition-colors truncate">
             {item.title}
           </h3>
 
-          <p className="text-body-md line-clamp-2">
+          <p className="text-body-md text-white/50 line-clamp-2">
             {item.excerpt}
           </p>
         </div>
@@ -64,10 +64,10 @@ export function ToolGallery({
         <div className="w-full scroll-mt-[100px]" id="tool">
           <Reveal>
             <div className="flex flex-col md:flex-row items-baseline gap-6 mb-12">
-              <h1 className="text-[48px] font-light tracking-tight text-black uppercase leading-none">
+              <h1 className="text-[48px] font-light tracking-tight text-white uppercase leading-none">
                 Tool
               </h1>
-              <p className="label-caps text-[#4C4546]/60">
+              <p className="label-caps text-white/40">
                 Internal tools and computational workflows developed by Tri Labs.
               </p>
             </div>

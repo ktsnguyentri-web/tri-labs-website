@@ -126,7 +126,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         </div>
 
         {/* Right Panel — Scrollable Gallery (~65%) */}
-        <div className="w-full md:w-[65%] h-full p-4 pt-0 pl-0 overflow-y-auto custom-scrollbar overscroll-contain">
+        <div className="w-full md:w-[65%] h-full pr-4 pt-0 pl-0 pb-0 overflow-y-auto custom-scrollbar overscroll-contain">
           <div className="flex flex-col gap-4">
             {[project.coverImage, ...(project.gallery || [])]
               .filter((url, index, self) => self.indexOf(url) === index) // Remove duplicates
