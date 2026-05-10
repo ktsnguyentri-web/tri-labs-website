@@ -100,7 +100,7 @@ export function CVSection() {
           {/* 1. Experience Section */}
           <div className="flex flex-col gap-16">
             <Reveal>
-              <h2 className="text-[40px] md:text-[48px] font-light tracking-tight text-white uppercase border-b border-white/10 pb-4">
+              <h2 className="text-[28px] font-light tracking-tight text-white uppercase border-b border-white/10 pb-4">
                 My Journey
               </h2>
             </Reveal>
@@ -125,7 +125,7 @@ export function CVSection() {
           {/* 2. Education Section */}
           <div className="flex flex-col gap-16">
             <Reveal>
-              <h2 className="text-[40px] md:text-[48px] font-light tracking-tight text-white uppercase border-b border-white/10 pb-4">
+              <h2 className="text-[28px] font-light tracking-tight text-white uppercase border-b border-white/10 pb-4">
                 Roots & Foundations
               </h2>
             </Reveal>
@@ -147,7 +147,7 @@ export function CVSection() {
           {/* 3. Skills Section */}
           <div className="flex flex-col gap-16">
             <Reveal>
-              <h2 className="text-[40px] md:text-[48px] font-light tracking-tight text-white uppercase border-b border-white/10 pb-4">
+              <h2 className="text-[28px] font-light tracking-tight text-white uppercase border-b border-white/10 pb-4">
                 My Toolkit
               </h2>
             </Reveal>
