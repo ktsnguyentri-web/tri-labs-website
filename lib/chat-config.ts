@@ -5,8 +5,8 @@
 
 export const CHAT_CONFIG = {
   // Pusher credentials — get these from https://dashboard.pusher.com
-  PUSHER_APP_KEY: "YOUR_PUSHER_APP_KEY",
-  PUSHER_CLUSTER: "YOUR_PUSHER_CLUSTER",     // e.g. "ap1", "us2", "eu"
+  PUSHER_APP_KEY: "19d32477f5acc14b340e",
+  PUSHER_CLUSTER: "ap1",
 
   // Cloudflare Worker endpoint — the URL of your deployed Worker
   WORKER_ENDPOINT: "https://YOUR_WORKER.YOUR_SUBDOMAIN.workers.dev/send",
