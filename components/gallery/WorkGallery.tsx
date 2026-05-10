@@ -33,11 +33,11 @@ export function WorkGallery({ works }: { works: WorkItem[] }) {
     activeFilter === "All" ? works : works.filter((w) => w.category === activeFilter);
 
   return (
-    <div className="w-full max-w-[1440px] mx-auto pt-12 pb-24 px-10">
+    <div className="w-full pt-12 pb-24">
 
 
       {/* Filters */}
-      <div className="flex flex-col gap-6 mb-6">
+      <div className="flex flex-col gap-6 mb-6 px-6 md:px-10">
         <div className="flex flex-wrap justify-between items-center w-full">
           {filters.map((filter) => (
             <button
@@ -56,7 +56,7 @@ export function WorkGallery({ works }: { works: WorkItem[] }) {
       </div>
 
       {/* Bento Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-4 auto-rows-[280px] gap-6 grid-flow-dense">
+      <div className="grid grid-cols-1 md:grid-cols-4 auto-rows-[280px] gap-2 grid-flow-dense">
         {filteredWorks.map((work, i) => {
           const href = `/work/${work.slug}`;
           const isWorkPage = pathname?.includes('/work') || pathname?.includes('/projects');
