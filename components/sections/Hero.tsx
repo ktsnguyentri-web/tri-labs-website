@@ -177,7 +177,7 @@ export function Hero() {
                   <motion.div style={{ opacity: entranceDone ? architectOpacity : 1 }}>
                     <span
                       className="font-sans font-light tracking-tight text-white/50 lowercase leading-none"
-                      style={{ fontSize: "clamp(48px, 10vw, 120px)" }}
+                      style={{ fontSize: "clamp(38px, 8vw, 96px)" }}
                     >
                       architect
                     </span>
@@ -197,7 +197,7 @@ export function Hero() {
                   <motion.div style={{ opacity: entranceDone ? coderOpacity : 1 }}>
                     <span
                       className="font-sans font-light tracking-tight text-white/50 lowercase leading-none"
-                      style={{ fontSize: "clamp(48px, 10vw, 120px)" }}
+                      style={{ fontSize: "clamp(38px, 8vw, 96px)" }}
                     >
                       coder
                     </span>
