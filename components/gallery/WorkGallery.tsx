@@ -33,94 +33,66 @@ export function WorkGallery({ works }: { works: WorkItem[] }) {
     activeFilter === "All" ? works : works.filter((w) => w.category === activeFilter);
 
   return (
-    <div className="w-full pt-12 pb-24">
-
-
-      {/* Filters */}
-      <div className="flex flex-col gap-6 mb-6 px-6 md:px-10">
-        <div className="flex flex-wrap justify-between items-center w-full">
-          {filters.map((filter) => (
-            <button
-              key={filter}
-              onClick={() => setActiveFilter(filter)}
-              className={`text-[28px] md:text-[32px] leading-none tracking-tight transition-colors ${
-                activeFilter === filter
-                  ? "font-light text-white"
-                  : "font-light text-white/30 hover:text-white"
-              }`}
-            >
-              {filter}
-            </button>
-          ))}
+    <div className="w-full">
+      {/* Editorial Top Bar */}
+      <div className="flex justify-between items-center px-6 md:px-10 py-10 border-b border-white/5 uppercase font-mono text-[10px] tracking-[0.2em] text-white/30 bg-background">
+        <div className="flex gap-8 items-center">
+          <button className="flex items-center gap-2 text-white hover:opacity-70 transition-opacity">
+            <span className="w-1 h-1 bg-white rounded-full" />
+            Search & Filter
+          </button>
+          <span className="hidden md:inline font-light opacity-50 tracking-[0.1em]">{works.length} projects</span>
+        </div>
+        
+        <div className="flex gap-10 items-center">
+          <div className="flex gap-6">
+            <button className="text-white border-b border-white pb-1">Grid</button>
+            <button className="hover:text-white transition-colors pb-1 border-b border-transparent">List</button>
+            <button className="hover:text-white transition-colors pb-1 border-b border-transparent">Map</button>
+          </div>
         </div>
       </div>
 
-      {/* Bento Grid */}
-      <div className="grid grid-cols-1 md:grid-cols-4 auto-rows-[280px] gap-2 grid-flow-dense">
-        {filteredWorks.map((work, i) => {
+      {/* Zero-Gap Editorial Grid */}
+      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-0 bg-white/5">
+        {works.map((work, i) => {
           const href = `/work/${work.slug}`;
-          const isWorkPage = pathname?.includes('/work') || pathname?.includes('/projects');
-
+          
           return (
-            <Reveal key={work.id} delay={0.1 + (i % 4) * 0.1} className={work.span}>
-              {isWorkPage ? (
-                <a
-                  href={href}
-                  className="cursor-pointer relative w-full h-full text-left block"
-                >
-                  <div className="relative w-full h-full overflow-hidden group bg-secondary">
-                    <Image
-                      src={work.coverImage}
-                      alt={work.title}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1440px) 50vw, 25vw"
-                    />
-                    {/* Hover overlay — rounded to match container */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                      <div className="absolute bottom-0 left-0 p-6">
-                        <h4 className="text-white text-[15px] font-medium tracking-tight mb-2 leading-snug">
-                          {work.title}
-                        </h4>
-                        <p className="text-white/70 text-[10px] font-mono uppercase tracking-widest">
-                          {work.completionYear}
-                        </p>
-                      </div>
-                    </div>
+            <Reveal 
+              key={work.id} 
+              delay={0.02 * (i % 8)} 
+              className="aspect-[4/3] md:aspect-square relative overflow-hidden group border-r border-b border-white/5"
+            >
+              <Link
+                href={href}
+                className="cursor-pointer relative w-full h-full block overflow-hidden"
+              >
+                <Image
+                  src={work.coverImage}
+                  alt={work.title}
+                  fill
+                  className="object-cover transition-transform duration-1000 group-hover:scale-105"
+                  sizes="(max-width: 768px) 100vw, 50vw, 25vw"
+                />
+                
+                {/* Editorial Hover Overlay */}
+                <div className="absolute inset-0 bg-black/40 opacity-0 group-hover:opacity-100 transition-all duration-500 flex flex-col justify-end p-8 backdrop-blur-[1px]">
+                  <div className="translate-y-4 group-hover:translate-y-0 transition-transform duration-500">
+                    <h4 className="text-white text-[13px] font-bold uppercase tracking-[0.25em] mb-2 leading-tight">
+                      {work.title}
+                    </h4>
+                    <p className="text-white/60 text-[9px] font-mono uppercase tracking-widest flex items-center gap-2">
+                      <span className="w-1 h-[1px] bg-white/40" />
+                      {work.location || 'Architecture'}
+                    </p>
                   </div>
-                </a>
-              ) : (
-                <Link
-                  href={href}
-                  scroll={false}
-                  className="cursor-pointer relative w-full h-full text-left block"
-                >
-                  <div className="relative w-full h-full overflow-hidden group bg-secondary">
-                    <Image
-                      src={work.coverImage}
-                      alt={work.title}
-                      fill
-                      className="object-cover transition-transform duration-700 group-hover:scale-105"
-                      sizes="(max-width: 768px) 100vw, (max-width: 1440px) 50vw, 25vw"
-                    />
-                    {/* Hover overlay — rounded to match container */}
-                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                      <div className="absolute bottom-0 left-0 p-6">
-                        <h4 className="text-white text-[15px] font-medium tracking-tight mb-2 leading-snug">
-                          {work.title}
-                        </h4>
-                        <p className="text-white/70 text-[10px] font-mono uppercase tracking-widest">
-                          {work.completionYear}
-                        </p>
-                      </div>
-                    </div>
-                  </div>
-                </Link>
-              )}
+                </div>
+              </Link>
             </Reveal>
           );
         })}
-    </div>
+      </div>
     </div>
   );
 }
