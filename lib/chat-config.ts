@@ -9,7 +9,7 @@ export const CHAT_CONFIG = {
   PUSHER_CLUSTER: "ap1",
 
   // Cloudflare Worker endpoint — the URL of your deployed Worker
-  WORKER_ENDPOINT: "https://trilabs.kts-nguyentri.workers.dev/send",
+  WORKER_ENDPOINT: "https://trilabs.kts-nguyentri.workers.dev",
 
   // Pusher channel & event names (must match your Worker config)
   CHANNEL: "chat-room",
