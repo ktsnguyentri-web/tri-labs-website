@@ -1,6 +1,7 @@
-import Image from "next/image";
-import { Mail, ExternalLink, MapPin, Download } from "lucide-react";
+"use client";
 
+import Image from "next/image";
+import { motion } from "framer-motion";
 import { Button } from "@/components/ui/button";
 import { Reveal } from "@/components/animations/Reveal";
 
@@ -47,65 +48,70 @@ export function CVSection() {
 
   return (
     <section className="bg-background py-20 w-full mx-auto relative scroll-mt-[60px]" id="cv-section">
-      <div className="max-w-[1440px] mx-auto grid grid-cols-1 md:grid-cols-3 gap-16 md:gap-24">
+      <div className="max-w-[1440px] mx-auto px-6 md:px-10">
         
-        {/* Left Column — Sticky Sidebar (1/3) */}
-        <aside className="md:col-span-1">
-          <div className="md:sticky md:top-[80px] flex flex-col gap-10">
-            {/* Portrait Image (Rule #3) */}
+        {/* TOP INTRO SECTION (Adham Style) */}
+        <div className="flex flex-col md:flex-row items-center md:items-start gap-12 md:gap-24 mb-32">
+          {/* Left: Avatar */}
+          <div className="w-full md:w-[40%]">
             <Reveal delay={0.2}>
-              <div className="w-full aspect-[4/5] overflow-hidden bg-[#EEEEEE] relative">
+              <div className="relative w-full aspect-[4/5] overflow-hidden bg-[#EEEEEE]">
                 <Image
                   src="/portrait.jpg"
                   alt="Tri Nguyen Minh Portrait"
                   fill
                   className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 33vw"
+                  sizes="(max-width: 768px) 100vw, 40vw"
+                  priority
                 />
               </div>
             </Reveal>
+          </div>
 
-            {/* Contact Info (label-caps) */}
+          {/* Right: Info */}
+          <div className="w-full md:w-[60%] flex flex-col justify-center">
             <Reveal delay={0.3}>
-              <div className="flex flex-col gap-4">
-                <div className="label-caps text-white/40">
-                  <a href="mailto:hello@trilab.design" className="hover:text-white transition-colors">hello@trilab.design</a>
+              <h1 className="text-[80px] md:text-[140px] font-light tracking-tighter text-white leading-none mb-10">
+                about.
+              </h1>
+              <div className="flex flex-col gap-8 max-w-xl">
+                <p className="text-[20px] md:text-[24px] text-white/80 font-light leading-snug">
+                  I'm an architectural designer and creative coder based in Ho Chi Minh City, Vietnam.
+                </p>
+                <p className="text-[16px] md:text-[18px] text-white/50 leading-relaxed">
+                  Since 2013, I've enjoyed turning complex spatial problems into simple, beautiful and intuitive architectural solutions. When I'm not pushing pixels or drafting forms, you'll find me exploring the intersection of BIM and creative technology.
+                </p>
+                <div className="pt-4 flex flex-wrap gap-4">
+                  <Button size="sm" variant="outline" className="text-[10px] h-9 px-6 border-white/20 hover:bg-white hover:text-black transition-all uppercase tracking-widest">
+                    Download Full CV
+                  </Button>
+                  <Button size="sm" variant="outline" className="text-[10px] h-9 px-6 border-white/20 hover:bg-white hover:text-black transition-all uppercase tracking-widest">
+                    Get in Touch
+                  </Button>
                 </div>
-                <div className="label-caps text-white/40">
-                  <a href="#" className="hover:text-white transition-colors">linkedin.com/in/tri-nguyen</a>
-                </div>
-                <div className="label-caps text-white/40">
-                  <span>Ho Chi Minh City, Vietnam</span>
-                </div>
-              </div>
-
-              <div className="pt-2">
-                <Button size="sm" variant="outline" className="text-[10px] h-8 px-4 border-white/20 hover:bg-white hover:text-black transition-all">
-                  DOWNLOAD FULL PDF
-                </Button>
               </div>
             </Reveal>
           </div>
-        </aside>
+        </div>
 
-        {/* Right Column — Scrollable CV (2/3) */}
-        <div className="md:col-span-2 flex flex-col gap-20">
+        {/* BOTTOM SECTIONS (Full Width Column) */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-20 md:gap-32">
           
-          {/* Experience Section */}
-          <div>
+          {/* Experience Section (Spans 2 columns) */}
+          <div className="md:col-span-2 flex flex-col gap-16">
             <Reveal>
-              <h2 className="text-[48px] font-light tracking-tight text-white mb-10 uppercase">
+              <h2 className="text-[40px] md:text-[48px] font-light tracking-tight text-white uppercase border-b border-white/10 pb-4">
                 Experience
               </h2>
             </Reveal>
-            <div className="flex flex-col gap-12">
+            <div className="flex flex-col gap-16">
               {experiences.map((exp, i) => (
                 <Reveal key={i} delay={0.2 + (i * 0.1)}>
-                  <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-4">
                     <div className="data-mono text-white/20 text-[10px]">{exp.period}</div>
                     <div>
-                      <h3 className="text-xl font-medium text-white mb-1">{exp.role}</h3>
-                      <p className="text-white/60 font-medium mb-3">{exp.company}</p>
+                      <h3 className="text-2xl font-medium text-white mb-2">{exp.role}</h3>
+                      <p className="text-white/60 font-medium mb-4">{exp.company}</p>
                       <p className="text-base text-white/40 leading-relaxed max-w-2xl">
                         {exp.description}
                       </p>
@@ -116,49 +122,54 @@ export function CVSection() {
             </div>
           </div>
 
-          {/* Education Section */}
-          <div>
-            <Reveal>
-              <h2 className="text-[48px] font-light tracking-tight text-white mb-10 uppercase">
-                Education
-              </h2>
-            </Reveal>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-10">
-              {education.map((edu, i) => (
-                <Reveal key={i} delay={0.2 + (i * 0.1)}>
-                  <div className="flex flex-col gap-3">
-                    <div className="data-mono text-white/20 text-[10px]">{edu.period}</div>
-                    <div>
-                      <h3 className="text-xl font-medium text-white mb-1">{edu.degree}</h3>
-                      <p className="text-base text-white/60">{edu.school}</p>
+          {/* Sidebar Area: Education & Skills */}
+          <div className="md:col-span-1 flex flex-col gap-24">
+            
+            {/* Education Section */}
+            <div>
+              <Reveal>
+                <h2 className="text-[28px] md:text-[32px] font-light tracking-tight text-white uppercase border-b border-white/10 pb-4 mb-10">
+                  Education
+                </h2>
+              </Reveal>
+              <div className="flex flex-col gap-12">
+                {education.map((edu, i) => (
+                  <Reveal key={i} delay={0.2 + (i * 0.1)}>
+                    <div className="flex flex-col gap-2">
+                      <div className="data-mono text-white/20 text-[10px]">{edu.period}</div>
+                      <div>
+                        <h3 className="text-lg font-medium text-white mb-1">{edu.degree}</h3>
+                        <p className="text-sm text-white/60">{edu.school}</p>
+                      </div>
                     </div>
-                  </div>
-                </Reveal>
-              ))}
+                  </Reveal>
+                ))}
+              </div>
             </div>
-          </div>
 
-          {/* Skills Section */}
-          <div>
-            <Reveal>
-              <h2 className="text-[48px] font-light tracking-tight text-white mb-10 uppercase">
-                Skills
-              </h2>
-            </Reveal>
-            <div className="grid grid-cols-1 sm:grid-cols-3 gap-10">
-              {skills.map((skill, i) => (
-                <Reveal key={i} delay={0.2 + (i * 0.1)}>
-                  <div className="flex flex-col gap-4">
-                    <div className="label-caps text-white/20">{skill.category}</div>
-                    <ul className="flex flex-col gap-1">
-                      {skill.items.map((item, j) => (
-                        <li key={j} className="text-base text-white/60">{item}</li>
-                      ))}
-                    </ul>
-                  </div>
-                </Reveal>
-              ))}
+            {/* Skills Section */}
+            <div>
+              <Reveal>
+                <h2 className="text-[28px] md:text-[32px] font-light tracking-tight text-white uppercase border-b border-white/10 pb-4 mb-10">
+                  Skills
+                </h2>
+              </Reveal>
+              <div className="flex flex-col gap-10">
+                {skills.map((skill, i) => (
+                  <Reveal key={i} delay={0.2 + (i * 0.1)}>
+                    <div className="flex flex-col gap-4">
+                      <div className="label-caps text-white/20 text-[10px]">{skill.category}</div>
+                      <ul className="flex flex-wrap gap-x-4 gap-y-2">
+                        {skill.items.map((item, j) => (
+                          <li key={j} className="text-sm text-white/60">{item}</li>
+                        ))}
+                      </ul>
+                    </div>
+                  </Reveal>
+                ))}
+              </div>
             </div>
+
           </div>
 
         </div>
@@ -166,4 +177,3 @@ export function CVSection() {
     </section>
   );
 }
-
