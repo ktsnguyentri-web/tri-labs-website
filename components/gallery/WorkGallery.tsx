@@ -41,7 +41,9 @@ export function WorkGallery({ works }: { works: WorkItem[] }) {
             <span className="w-1 h-1 bg-white rounded-full" />
             Search & Filter
           </button>
-          <span className="hidden md:inline font-light opacity-50 tracking-[0.1em]">{works.length} projects</span>
+          <span className="hidden md:inline font-light opacity-50 tracking-[0.1em]">
+            <span className="text-white/60">{filteredWorks.length}</span> projects
+          </span>
         </div>
         
         <div className="flex gap-10 items-center">
@@ -55,7 +57,7 @@ export function WorkGallery({ works }: { works: WorkItem[] }) {
 
       {/* Zero-Gap Editorial Grid */}
       <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-0 bg-white/5">
-        {works.map((work, i) => {
+        {filteredWorks.map((work, i) => {
           const href = `/work/${work.slug}`;
           
           return (
