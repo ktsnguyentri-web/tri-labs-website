@@ -171,19 +171,6 @@ export function Hero() {
                   </motion.div>
                 </motion.div>
               </div>
-
-              {/* CENTER BRANDING */}
-              <motion.div
-                initial={{ opacity: 0, y: 20 }}
-                animate={{ opacity: 1, y: 0 }}
-                transition={{ duration: 1.1, ease: "easeOut" }}
-                className="flex flex-col items-center gap-4 mt-8 md:mt-0"
-              >
-                <p className="font-sans text-[10px] md:text-[12px] font-bold tracking-[0.3em] uppercase text-white/80 whitespace-nowrap">
-                  Tri Nguyen Minh
-                </p>
-                <div className="w-px h-10 md:h-16 bg-gradient-to-b from-white/40 to-transparent" />
-              </motion.div>
             </div>
           </div>
 

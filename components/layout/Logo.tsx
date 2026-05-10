@@ -25,7 +25,7 @@ export function Logo({ className }: LogoProps) {
         height: '100%'
       }}
     >
-      tri labs
+      tri-labs
     </div>
   );
 }
