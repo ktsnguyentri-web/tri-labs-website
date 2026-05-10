@@ -62,23 +62,14 @@ export function ChatWidget() {
         )}
       </AnimatePresence>
 
-      {/* Trigger Button - "Concrete Block" */}
+      {/* Trigger Button - Circular Arrow Style */}
       <motion.button
         onClick={() => setIsOpen(!isOpen)}
         whileHover={{ scale: 1.05 }}
         whileTap={{ scale: 0.95 }}
-        className="w-14 h-14 bg-[#EEEEEE] flex items-center justify-center text-black shadow-lg relative group overflow-hidden"
-        style={{ 
-          boxShadow: '4px 4px 0px rgba(0,0,0,0.2)',
-        }}
+        className="w-12 h-12 rounded-full border border-white/10 bg-background flex items-center justify-center text-white/40 hover:text-white hover:border-white transition-all duration-300 shadow-xl relative group overflow-hidden z-[101]"
       >
-        {/* Subtle concrete texture overlay */}
-        <div className="absolute inset-0 opacity-10 pointer-events-none bg-[url('https://www.transparenttextures.com/patterns/concrete-wall.png')]" />
-        
-        {isOpen ? <X size={24} /> : <MessageSquare size={24} />}
-        
-        {/* Hover effect indicator */}
-        <div className="absolute inset-0 border border-black/5 group-hover:border-black/20 transition-colors" />
+        {isOpen ? <X size={20} /> : <MessageSquare size={20} />}
       </motion.button>
     </div>
   );
