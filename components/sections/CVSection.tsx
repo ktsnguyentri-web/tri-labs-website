@@ -94,11 +94,11 @@ export function CVSection() {
           </div>
         </div>
 
-        {/* BOTTOM SECTIONS (Full Width Column) */}
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-20 md:gap-32">
+        {/* DETAILED CV SECTIONS (Vertical Sequence) */}
+        <div className="flex flex-col gap-32">
           
-          {/* Experience Section (Spans 2 columns) */}
-          <div className="md:col-span-2 flex flex-col gap-16">
+          {/* 1. Experience Section */}
+          <div className="flex flex-col gap-16">
             <Reveal>
               <h2 className="text-[40px] md:text-[48px] font-light tracking-tight text-white uppercase border-b border-white/10 pb-4">
                 Experience
@@ -107,12 +107,12 @@ export function CVSection() {
             <div className="flex flex-col gap-16">
               {experiences.map((exp, i) => (
                 <Reveal key={i} delay={0.2 + (i * 0.1)}>
-                  <div className="flex flex-col gap-4">
-                    <div className="data-mono text-white/20 text-[10px]">{exp.period}</div>
-                    <div>
+                  <div className="flex flex-col md:flex-row gap-4 md:gap-24">
+                    <div className="data-mono text-white/20 text-[10px] w-32 shrink-0 pt-2">{exp.period}</div>
+                    <div className="flex-1">
                       <h3 className="text-2xl font-medium text-white mb-2">{exp.role}</h3>
                       <p className="text-white/60 font-medium mb-4">{exp.company}</p>
-                      <p className="text-base text-white/40 leading-relaxed max-w-2xl">
+                      <p className="text-base text-white/40 leading-relaxed max-w-3xl">
                         {exp.description}
                       </p>
                     </div>
@@ -122,54 +122,49 @@ export function CVSection() {
             </div>
           </div>
 
-          {/* Sidebar Area: Education & Skills */}
-          <div className="md:col-span-1 flex flex-col gap-24">
-            
-            {/* Education Section */}
-            <div>
-              <Reveal>
-                <h2 className="text-[28px] md:text-[32px] font-light tracking-tight text-white uppercase border-b border-white/10 pb-4 mb-10">
-                  Education
-                </h2>
-              </Reveal>
-              <div className="flex flex-col gap-12">
-                {education.map((edu, i) => (
-                  <Reveal key={i} delay={0.2 + (i * 0.1)}>
-                    <div className="flex flex-col gap-2">
-                      <div className="data-mono text-white/20 text-[10px]">{edu.period}</div>
-                      <div>
-                        <h3 className="text-lg font-medium text-white mb-1">{edu.degree}</h3>
-                        <p className="text-sm text-white/60">{edu.school}</p>
-                      </div>
+          {/* 2. Education Section */}
+          <div className="flex flex-col gap-16">
+            <Reveal>
+              <h2 className="text-[40px] md:text-[48px] font-light tracking-tight text-white uppercase border-b border-white/10 pb-4">
+                Education
+              </h2>
+            </Reveal>
+            <div className="flex flex-col gap-12">
+              {education.map((edu, i) => (
+                <Reveal key={i} delay={0.2 + (i * 0.1)}>
+                  <div className="flex flex-col md:flex-row gap-4 md:gap-24">
+                    <div className="data-mono text-white/20 text-[10px] w-32 shrink-0 pt-2">{edu.period}</div>
+                    <div className="flex-1">
+                      <h3 className="text-2xl font-medium text-white mb-2">{edu.degree}</h3>
+                      <p className="text-lg text-white/60">{edu.school}</p>
                     </div>
-                  </Reveal>
-                ))}
-              </div>
+                  </div>
+                </Reveal>
+              ))}
             </div>
+          </div>
 
-            {/* Skills Section */}
-            <div>
-              <Reveal>
-                <h2 className="text-[28px] md:text-[32px] font-light tracking-tight text-white uppercase border-b border-white/10 pb-4 mb-10">
-                  Skills
-                </h2>
-              </Reveal>
-              <div className="flex flex-col gap-10">
-                {skills.map((skill, i) => (
-                  <Reveal key={i} delay={0.2 + (i * 0.1)}>
-                    <div className="flex flex-col gap-4">
-                      <div className="label-caps text-white/20 text-[10px]">{skill.category}</div>
-                      <ul className="flex flex-wrap gap-x-4 gap-y-2">
-                        {skill.items.map((item, j) => (
-                          <li key={j} className="text-sm text-white/60">{item}</li>
-                        ))}
-                      </ul>
-                    </div>
-                  </Reveal>
-                ))}
-              </div>
+          {/* 3. Skills Section */}
+          <div className="flex flex-col gap-16">
+            <Reveal>
+              <h2 className="text-[40px] md:text-[48px] font-light tracking-tight text-white uppercase border-b border-white/10 pb-4">
+                Skills
+              </h2>
+            </Reveal>
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
+              {skills.map((skill, i) => (
+                <Reveal key={i} delay={0.2 + (i * 0.1)}>
+                  <div className="flex flex-col gap-6">
+                    <div className="label-caps text-white/20 text-[10px] border-l border-white/10 pl-4">{skill.category}</div>
+                    <ul className="flex flex-wrap md:flex-col gap-x-6 gap-y-3 pl-4">
+                      {skill.items.map((item, j) => (
+                        <li key={j} className="text-lg text-white/60">{item}</li>
+                      ))}
+                    </ul>
+                  </div>
+                </Reveal>
+              ))}
             </div>
-
           </div>
 
         </div>
