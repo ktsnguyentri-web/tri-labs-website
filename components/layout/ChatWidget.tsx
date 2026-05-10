@@ -17,7 +17,7 @@ export function ChatWidget() {
             animate={{ opacity: 1, scale: 1, y: 0 }}
             exit={{ opacity: 0, scale: 0.9, y: 20 }}
             transition={{ type: "spring", damping: 20, stiffness: 300 }}
-            className="w-[320px] md:w-[380px] h-[500px] bg-white/10 backdrop-blur-xl flex flex-col overflow-hidden shadow-2xl"
+            className="w-[320px] md:w-[380px] h-[500px] bg-white/10 backdrop-blur-xl flex flex-col overflow-hidden shadow-2xl rounded-[24px]"
             style={{ 
               border: 'none',
               boxShadow: '0 25px 50px -12px rgba(0, 0, 0, 0.5)'
