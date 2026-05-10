@@ -1,7 +1,7 @@
 "use client";
 
 import { useState, useEffect } from "react";
-import { useSearchParams } from "next/navigation";
+import { useSearchParams, usePathname } from "next/navigation";
 import Link from "next/link";
 import Image from "next/image";
 import type { WorkItem } from "@/types/cms";
@@ -16,6 +16,7 @@ import { Reveal } from "@/components/animations/Reveal";
 
 export function WorkGallery({ works }: { works: WorkItem[] }) {
   const searchParams = useSearchParams();
+  const pathname = usePathname();
   const categoryParam = searchParams.get("category") as Category | null;
 
   const [activeFilter, setActiveFilter] = useState<Category>(categoryParam || "All");
@@ -36,57 +37,89 @@ export function WorkGallery({ works }: { works: WorkItem[] }) {
 
 
       {/* Filters */}
-      <div className="flex flex-col gap-8 mb-24">
-        <div className="flex flex-wrap gap-8 items-center">
-          {filters.map((filter, i) => (
-            <Reveal key={filter} delay={i * 0.05}>
-              <button
-                onClick={() => setActiveFilter(filter)}
-                className={`text-[40px] md:text-[48px] leading-none tracking-tight uppercase transition-colors ${
-                  activeFilter === filter
-                    ? "font-light text-black"
-                    : "font-light text-[#9CA3AF] hover:text-black"
-                }`}
-              >
-                {filter}
-              </button>
-            </Reveal>
+      <div className="flex flex-col gap-6 mb-6">
+        <div className="flex flex-wrap justify-between items-center w-full">
+          {filters.map((filter) => (
+            <button
+              key={filter}
+              onClick={() => setActiveFilter(filter)}
+              className={`text-[28px] md:text-[32px] leading-none tracking-tight transition-colors ${
+                activeFilter === filter
+                  ? "font-light text-white"
+                  : "font-light text-white/30 hover:text-white"
+              }`}
+            >
+              {filter}
+            </button>
           ))}
         </div>
       </div>
 
       {/* Bento Grid */}
       <div className="grid grid-cols-1 md:grid-cols-4 auto-rows-[280px] gap-6 grid-flow-dense">
-        {filteredWorks.map((work, i) => (
-          <Reveal key={work.id} delay={0.1 + (i % 4) * 0.1} className={work.span}>
-            <Link
-              href={`/work/${work.slug}`}
-              scroll={false}
-              className="cursor-pointer relative w-full h-full text-left block"
-            >
-            <div className="relative w-full h-full overflow-hidden group bg-secondary">
-              <Image
-                src={work.coverImage}
-                alt={work.title}
-                fill
-                className="object-cover transition-transform duration-700 group-hover:scale-105"
-                sizes="(max-width: 768px) 100vw, (max-width: 1440px) 50vw, 25vw"
-              />
-              {/* Hover overlay — rounded to match container */}
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
-                <div className="absolute bottom-0 left-0 p-6">
-                  <h4 className="text-white text-[15px] font-medium tracking-tight mb-2 leading-snug">
-                    {work.title}
-                  </h4>
-                  <p className="text-white/70 text-[10px] font-mono uppercase tracking-widest">
-                    {work.completionYear}
-                  </p>
-                </div>
-              </div>
-            </div>
-          </Link>
-        </Reveal>
-      ))}
+        {filteredWorks.map((work, i) => {
+          const href = `/work/${work.slug}`;
+          const isWorkPage = pathname?.includes('/work') || pathname?.includes('/projects');
+
+          return (
+            <Reveal key={work.id} delay={0.1 + (i % 4) * 0.1} className={work.span}>
+              {isWorkPage ? (
+                <a
+                  href={href}
+                  className="cursor-pointer relative w-full h-full text-left block"
+                >
+                  <div className="relative w-full h-full overflow-hidden group bg-secondary">
+                    <Image
+                      src={work.coverImage}
+                      alt={work.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1440px) 50vw, 25vw"
+                    />
+                    {/* Hover overlay — rounded to match container */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                      <div className="absolute bottom-0 left-0 p-6">
+                        <h4 className="text-white text-[15px] font-medium tracking-tight mb-2 leading-snug">
+                          {work.title}
+                        </h4>
+                        <p className="text-white/70 text-[10px] font-mono uppercase tracking-widest">
+                          {work.completionYear}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </a>
+              ) : (
+                <Link
+                  href={href}
+                  scroll={false}
+                  className="cursor-pointer relative w-full h-full text-left block"
+                >
+                  <div className="relative w-full h-full overflow-hidden group bg-secondary">
+                    <Image
+                      src={work.coverImage}
+                      alt={work.title}
+                      fill
+                      className="object-cover transition-transform duration-700 group-hover:scale-105"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1440px) 50vw, 25vw"
+                    />
+                    {/* Hover overlay — rounded to match container */}
+                    <div className="absolute inset-0 bg-gradient-to-t from-black/80 to-transparent opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-10">
+                      <div className="absolute bottom-0 left-0 p-6">
+                        <h4 className="text-white text-[15px] font-medium tracking-tight mb-2 leading-snug">
+                          {work.title}
+                        </h4>
+                        <p className="text-white/70 text-[10px] font-mono uppercase tracking-widest">
+                          {work.completionYear}
+                        </p>
+                      </div>
+                    </div>
+                  </div>
+                </Link>
+              )}
+            </Reveal>
+          );
+        })}
     </div>
     </div>
   );
