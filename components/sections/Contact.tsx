@@ -14,7 +14,7 @@ export function Contact() {
       id="contact"
     >
       <div className="w-full max-w-[1440px] mx-auto px-4 md:px-10">
-        <div className="border-t border-white/10 pt-10 pb-10">
+        <div className="border-t border-white/10 pt-10 pb-4">
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <Logo className="text-white" />
             
