@@ -70,16 +70,16 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
           {/* Sticky Header */}
           <div className="sticky top-0 bg-white z-20 p-8 pb-4 flex justify-between items-center">
             {project.slug ? (
-              <Link
-                href={`/work/${project.slug}`}
-                className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#4C4546]/60 hover:text-black transition-colors"
+              <button
                 onClick={() => {
                   document.body.style.overflow = "auto";
                   document.documentElement.style.overflow = "auto";
+                  window.location.href = `/work/${project.slug}`;
                 }}
+                className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#4C4546]/60 hover:text-black transition-colors"
               >
                 Gallery ↗
-              </Link>
+              </button>
             ) : (
               <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#4C4546]/60">
                 Gallery
