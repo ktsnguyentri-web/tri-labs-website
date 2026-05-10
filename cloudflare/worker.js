@@ -1,21 +1,14 @@
 /**
- * Tri Labs — Cloudflare Worker (Hardened, Credentials Hardcoded)
+ * Tri Labs — Cloudflare Worker
  *
- * Receives POST from website → sends to Telegram → triggers Pusher event.
+ * Two POST routes:
+ *   1. Website → Worker  : sends visitor message to Telegram
+ *   2. Telegram → Worker : webhook — routes owner replies back to visitor via Pusher
  *
- * NOTE: For production, move secrets to Environment Variables in Cloudflare dashboard.
+ * Env vars (Cloudflare dashboard → Settings → Variables):
+ *   TELEGRAM_TOKEN, TELEGRAM_CHAT_ID,
+ *   PUSHER_APP_ID, PUSHER_KEY, PUSHER_SECRET, PUSHER_CLUSTER
  */
-
-// ─── Configuration (hardcoded for immediate use) ──────────────────────────────
-
-const CONFIG = {
-  TELEGRAM_TOKEN:   "8508763168:AAGstb9uhspQwrBTUIs3Y2kUAJPDi8d5Os8",
-  TELEGRAM_CHAT_ID: "6247777053",
-  PUSHER_APP_ID:    "2152808",
-  PUSHER_KEY:       "19d32477f5acc14b340e",
-  PUSHER_SECRET:    "e667151c811908a103a4",
-  PUSHER_CLUSTER:   "ap1",
-};
 
 // ─── CORS — wildcard, applied to every single response ───────────────────────
 
@@ -34,8 +27,11 @@ function makeJson(data, status = 200) {
 
 // ─── Pusher Server-Side Trigger (no SDK — SubtleCrypto + inline MD5) ─────────
 
-async function triggerPusher(channel, eventName, data) {
-  const { PUSHER_APP_ID: appId, PUSHER_KEY: key, PUSHER_SECRET: secret, PUSHER_CLUSTER: cluster } = CONFIG;
+async function triggerPusher(channel, eventName, data, env) {
+  const appId   = env.PUSHER_APP_ID;
+  const key     = env.PUSHER_KEY;
+  const secret  = env.PUSHER_SECRET;
+  const cluster = env.PUSHER_CLUSTER;
 
   const body      = JSON.stringify({ name: eventName, channel, data: JSON.stringify(data) });
   const timestamp = Math.floor(Date.now() / 1000).toString();
@@ -117,10 +113,53 @@ function _md5(input) {
   return [a,b,c,d].map(n=>{let h="";for(let i=0;i<4;i++)h+=((n>>(i*8))&0xff).toString(16).padStart(2,"0");return h;}).join("");
 }
 
+// ─── Telegram Webhook Handler ─────────────────────────────────────────────────
+// Called when Telegram POSTs an update to this Worker URL.
+// Extracts the session ID from the replied-to message and pushes a Pusher event.
+
+async function handleWebhook(update, env) {
+  const message = update?.message;
+  if (!message) return makeJson({ ok: true }); // not a message update, ignore
+
+  const fromId   = String(message.from?.id  ?? "");
+  const ownerId  = String(env.TELEGRAM_CHAT_ID);
+
+  // ── Security: only process messages sent BY the owner ──────────────────────
+  if (fromId !== ownerId) {
+    console.warn("[Webhook] Ignored message from non-owner:", fromId);
+    return makeJson({ ok: true }); // always 200 to Telegram
+  }
+
+  const replyText = message.reply_to_message?.text ?? "";
+
+  // Extract #ID-xxxxx tag embedded in the original visitor message
+  const sessionMatch = replyText.match(/#(ID-[a-z0-9]+)/i);
+  if (!sessionMatch) {
+    console.log("[Webhook] Owner message has no #ID tag — skipping Pusher.");
+    return makeJson({ ok: true });
+  }
+
+  const sessionId = sessionMatch[1];          // e.g. "ID-a7b2c"
+  const replyBody = (message.text ?? "").trim();
+
+  if (!replyBody) return makeJson({ ok: true });
+
+  // Push reply to the visitor's personal Pusher channel
+  const channel = `chat-${sessionId}`;       // e.g. "chat-ID-a7b2c"
+  try {
+    await triggerPusher(channel, "bot-reply", { text: replyBody, sender: "support" }, env);
+    console.log(`[Webhook] Pushed bot-reply → ${channel}`);
+  } catch (e) {
+    console.error("[Webhook] Pusher error:", e.message);
+  }
+
+  return makeJson({ ok: true });
+}
+
 // ─── Main Handler ──────────────────────────────────────────────────────────────
 
 export default {
-  async fetch(request) {
+  async fetch(request, env) {
 
     // CORS preflight
     if (request.method === "OPTIONS") {
@@ -145,20 +184,27 @@ export default {
         return makeJson({ error: "Invalid JSON body" }, 400);
       }
 
-      const msgText = (body.text   || "").trim();
-      const sender  = (body.sender || "user").trim();
+      // ── Route: Telegram Webhook (has update_id field) ───────────────────────
+      if (body.update_id !== undefined) {
+        return handleWebhook(body, env);
+      }
+
+      // ── Route: Website → Telegram ───────────────────────────────────────────
+      const msgText   = (body.text       || "").trim();
+      const sender    = (body.sender     || "user").trim();
+      const sessionId = (body.session_id || "unknown").trim();
 
       if (!msgText) return makeJson({ error: "Empty message" }, 400);
 
-      // Step 1 — Send to Telegram
+      // Step 1 — Send to Telegram (embed session ID as a tag for webhook reply routing)
       const tgRes = await fetch(
-        `https://api.telegram.org/bot${CONFIG.TELEGRAM_TOKEN}/sendMessage`,
+        `https://api.telegram.org/bot${env.TELEGRAM_TOKEN}/sendMessage`,
         {
           method:  "POST",
           headers: { "Content-Type": "application/json" },
           body: JSON.stringify({
-            chat_id:    CONFIG.TELEGRAM_CHAT_ID,
-            text:       `💬 [Tri Labs Chat]\nFrom: ${sender}\n\n${msgText}`,
+            chat_id:    env.TELEGRAM_CHAT_ID,
+            text:       `💬 [Tri Labs Chat]\nUser: #${sessionId}\n\n${msgText}`,
             parse_mode: "HTML",
           }),
         }
@@ -170,9 +216,9 @@ export default {
         return makeJson({ error: "Telegram delivery failed", detail }, 502);
       }
 
-      // Step 2 — Trigger Pusher (non-fatal)
+      // Step 2 — Echo to the visitor's own Pusher channel (non-fatal)
       try {
-        await triggerPusher("chat-room", "new-message", { text: msgText, sender });
+        await triggerPusher(`chat-${sessionId}`, "new-message", { text: msgText, sender }, env);
       } catch (e) {
         console.error("[Pusher] non-fatal error:", e.message);
       }

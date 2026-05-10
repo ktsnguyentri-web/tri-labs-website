@@ -11,7 +11,7 @@ export const CHAT_CONFIG = {
   // Cloudflare Worker endpoint — the URL of your deployed Worker
   WORKER_ENDPOINT: "https://trilabs.kts-nguyentri.workers.dev",
 
-  // Pusher channel & event names (must match your Worker config)
-  CHANNEL: "chat-room",
-  EVENT: "new-message",
+  // Pusher event names (channel is per-session: `chat-{sessionId}`)
+  EVENT:       "new-message", // visitor → Worker → echo back to visitor
+  REPLY_EVENT: "bot-reply",   // Telegram reply → Worker webhook → visitor
 } as const;
