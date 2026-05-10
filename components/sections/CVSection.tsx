@@ -101,7 +101,7 @@ export function CVSection() {
           <div className="flex flex-col gap-16">
             <Reveal>
               <h2 className="text-[40px] md:text-[48px] font-light tracking-tight text-white uppercase border-b border-white/10 pb-4">
-                Experience
+                My Journey
               </h2>
             </Reveal>
             <div className="flex flex-col gap-16">
@@ -126,7 +126,7 @@ export function CVSection() {
           <div className="flex flex-col gap-16">
             <Reveal>
               <h2 className="text-[40px] md:text-[48px] font-light tracking-tight text-white uppercase border-b border-white/10 pb-4">
-                Education
+                Roots & Foundations
               </h2>
             </Reveal>
             <div className="flex flex-col gap-12">
@@ -148,7 +148,7 @@ export function CVSection() {
           <div className="flex flex-col gap-16">
             <Reveal>
               <h2 className="text-[40px] md:text-[48px] font-light tracking-tight text-white uppercase border-b border-white/10 pb-4">
-                Skills
+                My Toolkit
               </h2>
             </Reveal>
             <div className="grid grid-cols-1 md:grid-cols-3 gap-12">
