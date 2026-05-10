@@ -79,6 +79,7 @@ export interface WorkItem {
 
 /** Minimal project data passed to the ProjectModal overlay */
 export interface ModalProject {
+  slug?: string;
   title: string;
   coverImage: string;
   location?: string;

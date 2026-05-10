@@ -6,6 +6,7 @@ import Image from "next/image";
 import { X } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { ModalProject } from "@/types/cms";
+import Link from "next/link";
 import { Button } from "@/components/ui/button";
 
 interface ProjectModalProps {
@@ -101,7 +102,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             </div>
 
             {!isExpanded && (
-              <div className="mt-6">
+              <div className="mt-6 flex flex-col gap-4">
                 <button 
                   onClick={() => setIsExpanded(true)}
                   className="font-mono text-[10px] uppercase tracking-[0.2em] text-black hover:opacity-50 transition-all flex items-center gap-2 group"
@@ -109,6 +110,22 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   Read More 
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </button>
+
+                {project.slug && (
+                  <Link
+                    href={`/work/${project.slug}`}
+                    className="font-mono text-[10px] uppercase tracking-[0.2em] text-black/40 hover:text-black transition-all flex items-center gap-2 group"
+                    onClick={() => {
+                      // Optionally close modal before navigating, 
+                      // though Next.js usually handles this with full-page nav
+                      document.body.style.overflow = "auto";
+                      document.documentElement.style.overflow = "auto";
+                    }}
+                  >
+                    View Project Details
+                    <span className="group-hover:translate-x-1 transition-transform">↗</span>
+                  </Link>
+                )}
               </div>
             )}
 
