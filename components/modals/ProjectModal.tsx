@@ -69,9 +69,22 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         <div className={`w-full md:w-[35%] flex flex-col h-full overscroll-contain custom-scrollbar ${isExpanded ? 'overflow-y-auto' : 'overflow-hidden'}`}>
           {/* Sticky Header */}
           <div className="sticky top-0 bg-white z-20 p-8 pb-4 flex justify-between items-center">
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#4C4546]/60">
-              Gallery
-            </span>
+            {project.slug ? (
+              <Link
+                href={`/work/${project.slug}`}
+                className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#4C4546]/60 hover:text-black transition-colors"
+                onClick={() => {
+                  document.body.style.overflow = "auto";
+                  document.documentElement.style.overflow = "auto";
+                }}
+              >
+                Gallery ↗
+              </Link>
+            ) : (
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#4C4546]/60">
+                Gallery
+              </span>
+            )}
             <button
               onClick={handleClose}
               className="p-1.5 hover:bg-gray-100 transition-colors"
@@ -102,7 +115,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             </div>
 
             {!isExpanded && (
-              <div className="mt-6 flex flex-col gap-4">
+              <div className="mt-6">
                 <button 
                   onClick={() => setIsExpanded(true)}
                   className="font-mono text-[10px] uppercase tracking-[0.2em] text-black hover:opacity-50 transition-all flex items-center gap-2 group"
@@ -110,22 +123,6 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   Read More 
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
                 </button>
-
-                {project.slug && (
-                  <Link
-                    href={`/work/${project.slug}`}
-                    className="font-mono text-[10px] uppercase tracking-[0.2em] text-black/40 hover:text-black transition-all flex items-center gap-2 group"
-                    onClick={() => {
-                      // Optionally close modal before navigating, 
-                      // though Next.js usually handles this with full-page nav
-                      document.body.style.overflow = "auto";
-                      document.documentElement.style.overflow = "auto";
-                    }}
-                  >
-                    View Project Details
-                    <span className="group-hover:translate-x-1 transition-transform">↗</span>
-                  </Link>
-                )}
               </div>
             )}
 
