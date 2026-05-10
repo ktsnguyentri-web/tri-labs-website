@@ -18,7 +18,16 @@ export function Contact() {
       id="contact"
     >
       <div className="w-full max-w-[1440px] mx-auto px-4 md:px-10">
-        <div className="border-t border-white/10 pt-10 pb-4">
+        <div className="border-t border-white/10 pt-10 pb-4 relative">
+          {/* Back to Top Arrow - Centered on border */}
+          <button
+            onClick={scrollToTop}
+            className="absolute top-0 left-1/2 -translate-x-1/2 -translate-y-1/2 w-10 h-10 rounded-full border border-white/10 bg-background flex items-center justify-center text-white/40 hover:text-white hover:border-white transition-all duration-300 group z-10"
+            aria-label="Back to top"
+          >
+            <ArrowUp size={16} className="group-hover:-translate-y-0.5 transition-transform duration-300" />
+          </button>
+
           <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-6">
             <Logo className="text-white" />
             
@@ -27,15 +36,6 @@ export function Contact() {
                 <span className="no-underline hover:underline decoration-white/20 underline-offset-4 cursor-pointer hover:text-white transition-colors duration-300">Site by Tri Nguyen Minh</span>
                 <span>© {currentYear}</span>
               </div>
-
-              {/* Back to Top Arrow */}
-              <button
-                onClick={scrollToTop}
-                className="w-10 h-10 rounded-full border border-white/10 flex items-center justify-center text-white/40 hover:text-white hover:border-white transition-all duration-300 group"
-                aria-label="Back to top"
-              >
-                <ArrowUp size={16} className="group-hover:-translate-y-0.5 transition-transform duration-300" />
-              </button>
             </div>
           </div>
         </div>
