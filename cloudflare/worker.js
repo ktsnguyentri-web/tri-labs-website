@@ -1,20 +1,25 @@
 /**
- * Tri Labs — Cloudflare Worker
+ * Tri Labs — Cloudflare Worker  (v3 — production-ready)
  *
- * Two POST routes:
- *   1. Website → Worker  : sends visitor message to Telegram
- *   2. Telegram → Worker : webhook — routes owner replies back to visitor via Pusher
+ * ┌─ POST (from website)          → send to Telegram + echo to Pusher channel
+ * ├─ POST (Telegram webhook)      → extract #SESSION_ID → Pusher bot-reply
+ * ├─ GET                          → health check
+ * └─ OPTIONS                      → CORS preflight
  *
- * Env vars (Cloudflare dashboard → Settings → Variables):
- *   TELEGRAM_TOKEN, TELEGRAM_CHAT_ID,
- *   PUSHER_APP_ID, PUSHER_KEY, PUSHER_SECRET, PUSHER_CLUSTER
+ * Environment Variables  (Cloudflare dashboard → Settings → Variables):
+ *   TELEGRAM_TOKEN   – bot token
+ *   TELEGRAM_CHAT_ID – owner Telegram user ID  (6247777053)
+ *   PUSHER_APP_ID    – Pusher app ID
+ *   PUSHER_KEY       – Pusher app key
+ *   PUSHER_SECRET    – Pusher app secret
+ *   PUSHER_CLUSTER   – Pusher cluster  (ap1)
  */
 
-// ─── CORS — wildcard, applied to every single response ───────────────────────
+// ─── CORS — wildcard, required for localhost + production ─────────────────────
 
 const CORS_HEADERS = {
   "Access-Control-Allow-Origin":  "*",
-  "Access-Control-Allow-Methods": "POST, OPTIONS",
+  "Access-Control-Allow-Methods": "GET, POST, OPTIONS",
   "Access-Control-Allow-Headers": "Content-Type",
 };
 
@@ -25,77 +30,55 @@ function makeJson(data, status = 200) {
   });
 }
 
-// ─── Pusher Server-Side Trigger (no SDK — SubtleCrypto + inline MD5) ─────────
+// ─── HMAC-SHA256  (Web Crypto API — native in Cloudflare Workers) ─────────────
 
-async function triggerPusher(channel, eventName, data, env) {
-  const appId   = env.PUSHER_APP_ID;
-  const key     = env.PUSHER_KEY;
-  const secret  = env.PUSHER_SECRET;
-  const cluster = env.PUSHER_CLUSTER;
-
-  const body      = JSON.stringify({ name: eventName, channel, data: JSON.stringify(data) });
-  const timestamp = Math.floor(Date.now() / 1000).toString();
-  const bodyMd5   = computeMd5(body);
-
-  const stringToSign = `POST\n/apps/${appId}/events\nauth_key=${key}&auth_timestamp=${timestamp}&auth_version=1.0&body_md5=${bodyMd5}`;
-  const signature    = await hmacSha256(secret, stringToSign);
-
-  const url = `https://api-${cluster}.pusher.com/apps/${appId}/events`
-    + `?auth_key=${key}&auth_timestamp=${timestamp}&auth_version=1.0&body_md5=${bodyMd5}&auth_signature=${signature}`;
-
-  const res = await fetch(url, {
-    method:  "POST",
-    headers: { "Content-Type": "application/json" },
-    body,
-  });
-
-  if (!res.ok) {
-    const errText = await res.text();
-    throw new Error(`Pusher ${res.status}: ${errText}`);
-  }
+async function hmacSha256(secret, message) {
+  const enc = new TextEncoder();
+  const key = await crypto.subtle.importKey(
+    "raw", enc.encode(secret),
+    { name: "HMAC", hash: "SHA-256" },
+    false, ["sign"],
+  );
+  const sig = await crypto.subtle.sign("HMAC", key, enc.encode(message));
+  return Array.from(new Uint8Array(sig))
+    .map(b => b.toString(16).padStart(2, "0"))
+    .join("");
 }
 
-// ─── MD5 (RFC 1321 — pure JS, correct buffer sizing) ─────────────────────────
+// ─── MD5  (RFC 1321 — pure JS, Unicode-safe via TextEncoder) ─────────────────
 //
-// Root cause of "Invalid body_md5": the previous buffer was Uint32Array(l32+16).
-// When the UTF-8 message fills ≥56 bytes of the last 64-byte block, MD5 needs an
-// extra block for padding + length. Writing past the end of a TypedArray is a
-// silent no-op, so the bit-length word was lost → wrong digest every time.
+// Critical fix vs. the broken previous version:
+//   OLD: Uint32Array(l32 + 16)          ← too small for messages ≥ 56 bytes
+//        into the last block; the bit-length word was written out-of-bounds
+//        (silent no-op in TypedArrays) → wrong digest → Pusher 400.
 //
-// Fix: nblocks = Math.ceil((byteLen + 9) / 64)  — always allocates the right
-// number of complete 512-bit (64-byte / 16-word) blocks per the spec.
+//   NEW: Math.ceil((len + 9) / 64) * 16 ← always allocates the correct number
+//        of complete 512-bit blocks per RFC 1321, regardless of message length.
+//
+// TextEncoder.encode() produces UTF-8 bytes, so Vietnamese / emoji are handled
+// correctly — no character-code truncation at codepoint > 0xFF.
 
 function computeMd5(str) {
   function safeAdd(x, y) {
     const lsw = (x & 0xffff) + (y & 0xffff);
     return ((x >> 16) + (y >> 16) + (lsw >> 16)) << 16 | lsw & 0xffff;
   }
-  function rol(n, c)             { return n << c | n >>> (32 - c); }
-  function cmn(q, a, b, x, s, t){ return safeAdd(rol(safeAdd(safeAdd(a, q), safeAdd(x, t)), s), b); }
-  function ff(a,b,c,d,x,s,t){ return cmn( b&c | ~b&d,  a,b,x,s,t); }
-  function gg(a,b,c,d,x,s,t){ return cmn( b&d | c&~d,  a,b,x,s,t); }
-  function hh(a,b,c,d,x,s,t){ return cmn( b^c^d,        a,b,x,s,t); }
-  function ii(a,b,c,d,x,s,t){ return cmn( c^(b|~d),     a,b,x,s,t); }
+  function rol(n, c)              { return n << c | n >>> (32 - c); }
+  function cmn(q, a, b, x, s, t) { return safeAdd(rol(safeAdd(safeAdd(a, q), safeAdd(x, t)), s), b); }
+  function ff(a,b,c,d,x,s,t) { return cmn( b&c | ~b&d, a,b,x,s,t); }
+  function gg(a,b,c,d,x,s,t) { return cmn( b&d | c&~d, a,b,x,s,t); }
+  function hh(a,b,c,d,x,s,t) { return cmn( b^c^d,      a,b,x,s,t); }
+  function ii(a,b,c,d,x,s,t) { return cmn( c^(b|~d),   a,b,x,s,t); }
 
-  // UTF-8 encode (handles Vietnamese and all Unicode correctly)
   const bytes   = new TextEncoder().encode(str);
   const len     = bytes.length;
-
-  // Allocate enough 32-bit words for: message + 0x80 byte + zero pad + 64-bit length
-  const nblocks = Math.ceil((len + 9) / 64); // number of 64-byte blocks
+  const nblocks = Math.ceil((len + 9) / 64);   // complete 64-byte blocks needed
   const w       = new Uint32Array(nblocks * 16);
 
-  // Load message bytes into little-endian 32-bit words
   for (let i = 0; i < len; i++) w[i >> 2] |= bytes[i] << (i % 4 * 8);
+  w[len >> 2] |= 0x80 << (len % 4 * 8);        // append 0x80 padding byte
+  w[nblocks * 16 - 2] = len * 8;               // 64-bit bit-length (low word)
 
-  // Append 0x80 padding byte immediately after the message
-  w[len >> 2] |= 0x80 << (len % 4 * 8);
-
-  // Append bit-length as 64-bit little-endian at the last two words of the last block
-  // (high word is always 0 for messages we'll ever send)
-  w[nblocks * 16 - 2] = len * 8; // low 32 bits of bit-length
-
-  // MD5 compression
   let a = 1732584193, b = -271733879, c = -1732584194, d = 271733878;
   for (let i = 0; i < w.length; i += 16) {
     const [oa, ob, oc, od] = [a, b, c, d];
@@ -134,68 +117,125 @@ function computeMd5(str) {
     a=safeAdd(a,oa); b=safeAdd(b,ob); c=safeAdd(c,oc); d=safeAdd(d,od);
   }
 
-  // Serialise four 32-bit words as 32 lowercase hex chars (little-endian per word)
   return [a, b, c, d]
-    .map(n => Array.from({length: 4}, (_, i) => ((n >> (i * 8)) & 0xff).toString(16).padStart(2, "0")).join(""))
+    .map(n => Array.from(
+      { length: 4 },
+      (_, i) => ((n >> (i * 8)) & 0xff).toString(16).padStart(2, "0"),
+    ).join(""))
     .join("");
 }
 
+// ─── Pusher Server-Side Trigger  (no SDK — SubtleCrypto HMAC + inline MD5) ────
+//
+// Pusher REST API auth steps:
+//   1. body_md5   = MD5(raw JSON body string)
+//   2. stringToSign = "POST\n/apps/{appId}/events\n" + sorted query params incl. body_md5
+//   3. auth_signature = HMAC-SHA256(pusherSecret, stringToSign)
+//   4. Send POST with all params in query string + raw body
+
+async function triggerPusher(channel, eventName, data, env) {
+  const appId   = env.PUSHER_APP_ID;
+  const key     = env.PUSHER_KEY;
+  const secret  = env.PUSHER_SECRET;
+  const cluster = env.PUSHER_CLUSTER;
+
+  // The body string must be identical for both MD5 calculation and fetch body.
+  const body      = JSON.stringify({ name: eventName, channel, data: JSON.stringify(data) });
+  const timestamp = Math.floor(Date.now() / 1000).toString();
+  const bodyMd5   = computeMd5(body);  // synchronous, correct for all Unicode
+
+  // Query params must be alphabetically sorted for the signature to be valid.
+  const stringToSign =
+    `POST\n/apps/${appId}/events\n` +
+    `auth_key=${key}&auth_timestamp=${timestamp}&auth_version=1.0&body_md5=${bodyMd5}`;
+
+  const signature = await hmacSha256(secret, stringToSign);
+
+  const url =
+    `https://api-${cluster}.pusher.com/apps/${appId}/events` +
+    `?auth_key=${key}&auth_timestamp=${timestamp}&auth_version=1.0` +
+    `&body_md5=${bodyMd5}&auth_signature=${signature}`;
+
+  const res = await fetch(url, {
+    method:  "POST",
+    headers: { "Content-Type": "application/json" },
+    body,
+  });
+
+  if (!res.ok) {
+    const errText = await res.text();
+    throw new Error(`Pusher ${res.status}: ${errText}`);
+  }
+}
+
 // ─── Telegram Webhook Handler ─────────────────────────────────────────────────
-// Called when Telegram POSTs an update to this Worker URL.
-// Extracts the session ID from the replied-to message and pushes a Pusher event.
+//
+// Called when Telegram POSTs an update to this Worker URL (after setWebhook).
+// Security: only messages FROM the owner (TELEGRAM_CHAT_ID = 6247777053) are
+// processed — anyone else gets a 200 OK with no side-effects.
+//
+// Flow:
+//   1. Owner taps "Reply" on a visitor message in Telegram
+//   2. Telegram sends update with message.reply_to_message.text containing #ID-xxxxx
+//   3. Worker extracts the session ID and fires Pusher event on chat-{sessionId}
+//   4. ChatWidget receives bot-reply event and displays the message in real-time
 
 async function handleWebhook(update, env) {
   const message = update?.message;
-  if (!message) return makeJson({ ok: true }); // not a message update, ignore
+  if (!message) return makeJson({ ok: true });  // not a text message, ignore silently
 
-  const fromId   = String(message.from?.id  ?? "");
-  const ownerId  = String(env.TELEGRAM_CHAT_ID);
+  const fromId  = String(message.from?.id ?? "");
+  const ownerId = String(env.TELEGRAM_CHAT_ID);
 
-  // ── Security: only process messages sent BY the owner ──────────────────────
+  // ── Security gate ─────────────────────────────────────────────────────────
   if (fromId !== ownerId) {
-    console.warn("[Webhook] Ignored message from non-owner:", fromId);
-    return makeJson({ ok: true }); // always 200 to Telegram
+    console.warn("[Webhook] Rejected — sender is not the owner:", fromId);
+    return makeJson({ ok: true });  // always 200 so Telegram doesn't retry
   }
 
-  const replyText = message.reply_to_message?.text ?? "";
+  // ── Validate: must be a Reply to a message containing #ID-xxxxx ──────────
+  const quotedText   = message.reply_to_message?.text ?? "";
+  const sessionMatch = quotedText.match(/#(ID-[a-z0-9]+)/i);
 
-  // Extract #ID-xxxxx tag embedded in the original visitor message
-  const sessionMatch = replyText.match(/#(ID-[a-z0-9]+)/i);
   if (!sessionMatch) {
-    console.log("[Webhook] Owner message has no #ID tag — skipping Pusher.");
+    console.log("[Webhook] No #ID tag in quoted message — skipping Pusher.");
     return makeJson({ ok: true });
   }
 
-  const sessionId = sessionMatch[1];          // e.g. "ID-a7b2c"
-  const replyBody = (message.text ?? "").trim();
+  const sessionId = sessionMatch[1];                    // e.g. "ID-tsb4g"
+  const replyText = (message.text ?? "").trim();
 
-  if (!replyBody) return makeJson({ ok: true });
+  if (!replyText) return makeJson({ ok: true });
 
-  // Push reply to the visitor's personal Pusher channel
-  const channel = `chat-${sessionId}`;       // e.g. "chat-ID-a7b2c"
+  // ── Push reply to visitor's Pusher channel ────────────────────────────────
+  const channel = `chat-${sessionId}`;                  // e.g. "chat-ID-tsb4g"
   try {
-    await triggerPusher(channel, "bot-reply", { text: replyBody, sender: "support" }, env);
-    console.log(`[Webhook] Pushed bot-reply → ${channel}`);
+    await triggerPusher(channel, "bot-reply", { text: replyText, sender: "support" }, env);
+    console.log(`[Webhook] bot-reply → ${channel}: "${replyText.slice(0, 60)}"`);
   } catch (e) {
-    console.error("[Webhook] Pusher error:", e.message);
+    console.error("[Webhook] Pusher trigger failed:", e.message);
+    // Still return 200 so Telegram doesn't retry the webhook endlessly.
   }
 
   return makeJson({ ok: true });
 }
 
-// ─── Main Handler ──────────────────────────────────────────────────────────────
+// ─── Main Handler ─────────────────────────────────────────────────────────────
 
 export default {
   async fetch(request, env) {
 
-    // CORS preflight
+    // ── CORS preflight ───────────────────────────────────────────────────────
     if (request.method === "OPTIONS") {
       return new Response(null, { status: 204, headers: CORS_HEADERS });
     }
 
-    // Health check
+    // ── Health check ─────────────────────────────────────────────────────────
     if (request.method === "GET") {
-      return new Response("Tri Labs Worker is running ✓", { status: 200, headers: CORS_HEADERS });
+      return new Response("Tri Labs Worker is running ✓", {
+        status: 200,
+        headers: CORS_HEADERS,
+      });
     }
 
     if (request.method !== "POST") {
@@ -203,7 +243,7 @@ export default {
     }
 
     try {
-      // Parse body
+      // ── Parse JSON body ────────────────────────────────────────────────────
       let body;
       try {
         body = await request.json();
@@ -211,19 +251,21 @@ export default {
         return makeJson({ error: "Invalid JSON body" }, 400);
       }
 
-      // ── Route: Telegram Webhook (has update_id field) ───────────────────────
+      // ── Route: Telegram Webhook (Telegram always includes update_id) ───────
       if (body.update_id !== undefined) {
         return handleWebhook(body, env);
       }
 
-      // ── Route: Website → Telegram ───────────────────────────────────────────
+      // ── Route: Website → Telegram ──────────────────────────────────────────
       const msgText   = (body.text       || "").trim();
       const sender    = (body.sender     || "user").trim();
       const sessionId = (body.session_id || "unknown").trim();
 
       if (!msgText) return makeJson({ error: "Empty message" }, 400);
 
-      // Step 1 — Send to Telegram (embed session ID as a tag for webhook reply routing)
+      // Step 1 — Forward to Telegram.
+      //   Embed #SESSION_ID in the message text so when the owner hits "Reply"
+      //   in Telegram, the quoted text contains the tag for session routing.
       const tgRes = await fetch(
         `https://api.telegram.org/bot${env.TELEGRAM_TOKEN}/sendMessage`,
         {
@@ -234,20 +276,26 @@ export default {
             text:       `💬 [Tri Labs Chat]\nUser: #${sessionId}\n\n${msgText}`,
             parse_mode: "HTML",
           }),
-        }
+        },
       );
 
       if (!tgRes.ok) {
         const detail = await tgRes.text();
-        console.error("[Telegram] failed:", tgRes.status, detail);
+        console.error("[Telegram] delivery failed:", tgRes.status, detail);
         return makeJson({ error: "Telegram delivery failed", detail }, 502);
       }
 
-      // Step 2 — Echo to the visitor's own Pusher channel (non-fatal)
+      // Step 2 — Echo to visitor's Pusher channel (non-fatal: won't break ok:true).
+      //   Channel: chat-{sessionId}   Event: new-message
       try {
-        await triggerPusher(`chat-${sessionId}`, "new-message", { text: msgText, sender }, env);
+        await triggerPusher(
+          `chat-${sessionId}`,
+          "new-message",
+          { text: msgText, sender },
+          env,
+        );
       } catch (e) {
-        console.error("[Pusher] non-fatal error:", e.message);
+        console.error("[Pusher] echo failed (non-fatal):", e.message);
       }
 
       return makeJson({ ok: true });
