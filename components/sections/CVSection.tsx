@@ -56,54 +56,63 @@ export function CVSection() {
   ];
 
   return (
-    <section className="bg-background scroll-mt-[60px]" id="cv-section">
-      {/* INTRO BLOCK — full bleed above the central column */}
-      <div className="w-full max-w-[1440px] mx-auto px-6 md:px-10 pt-20 pb-24">
-        <div className="flex flex-col md:flex-row items-center md:items-start gap-12 md:gap-24">
-          {/* Left: Avatar */}
-          <Reveal delay={0.1}>
-            <div className="w-full md:w-[380px] shrink-0">
-              <div className="relative w-full aspect-[4/5] overflow-hidden bg-[#1A1A1A]">
-                <Image
-                  src="/portrait.jpg"
-                  alt="Tri Nguyen Minh Portrait"
-                  fill
-                  className="object-cover"
-                  sizes="(max-width: 768px) 100vw, 380px"
-                  priority
-                />
-              </div>
-            </div>
-          </Reveal>
+    <section className="bg-[#050505] scroll-mt-[60px]" id="cv-section">
+      {/* ── HEADER: 800px focused, sliding entrance ──────────────────── */}
+      <div className="max-w-[800px] mx-auto px-6 pt-20 pb-24">
+        <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
 
-          {/* Right: Identity */}
-          <div className="flex flex-col justify-center gap-8 max-w-xl">
-            <Reveal delay={0.2}>
-              <h1 className="text-[80px] md:text-[120px] font-light tracking-tighter text-white leading-none">
-                about.
-              </h1>
-            </Reveal>
-            <Reveal delay={0.3}>
-              <p className="text-[20px] md:text-[22px] text-white/80 font-light leading-snug">
-                I'm an architectural designer and creative coder based in Ho Chi Minh City, Vietnam.
-              </p>
-            </Reveal>
-            <Reveal delay={0.4}>
-              <p className="text-base text-white/50 leading-relaxed">
-                Since 2013, I've enjoyed turning complex spatial problems into simple, beautiful and intuitive architectural solutions. When I'm not pushing pixels or drafting forms, you'll find me exploring the intersection of BIM and creative technology.
-              </p>
-            </Reveal>
-            <Reveal delay={0.5}>
-              <div className="flex flex-wrap gap-4 pt-2">
-                <Button size="sm" variant="outline" className="text-[10px] h-9 px-6 border-white/20 hover:bg-white hover:text-black transition-all uppercase tracking-widest">
-                  Download Full CV
-                </Button>
-                <Button size="sm" variant="outline" className="text-[10px] h-9 px-6 border-white/20 hover:bg-white hover:text-black transition-all uppercase tracking-widest">
-                  Get in Touch
-                </Button>
-              </div>
-            </Reveal>
-          </div>
+          {/* Left: Portrait — slides in from left */}
+          <motion.div
+            initial={{ x: -100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut" }}
+          >
+            <div className="relative w-full aspect-[4/5] overflow-hidden rounded-[24px] bg-[#1A1A1A]">
+              <Image
+                src="/portrait.jpg"
+                alt="Tri Nguyen Minh Portrait"
+                fill
+                className="object-cover"
+                sizes="(max-width: 768px) 100vw, 380px"
+                priority
+              />
+            </div>
+          </motion.div>
+
+          {/* Right: Content — slides in from right */}
+          <motion.div
+            initial={{ x: 100, opacity: 0 }}
+            animate={{ x: 0, opacity: 1 }}
+            transition={{ duration: 0.8, ease: "easeOut", delay: 0.2 }}
+            className="flex flex-col justify-center gap-7"
+          >
+            <h1 className="text-[64px] md:text-[80px] font-bold tracking-tighter text-white leading-none">
+              about.
+            </h1>
+            <p className="text-[18px] md:text-[20px] text-white/80 font-light leading-snug">
+              I'm an architectural designer and creative coder based in Ho Chi Minh City, Vietnam.
+            </p>
+            <p className="text-base text-white/50 leading-relaxed">
+              Since 2013, I've enjoyed turning complex spatial problems into simple, beautiful and intuitive architectural solutions. When I'm not pushing pixels or drafting forms, you'll find me exploring the intersection of BIM and creative technology.
+            </p>
+            <div className="flex flex-wrap gap-3 pt-2">
+              <Button
+                size="sm"
+                variant="outline"
+                className="text-[10px] h-9 px-6 border-white/20 hover:bg-white hover:text-black transition-all uppercase tracking-widest"
+              >
+                Download Full CV
+              </Button>
+              <Button
+                size="sm"
+                variant="outline"
+                className="text-[10px] h-9 px-6 border-white/20 hover:bg-white hover:text-black transition-all uppercase tracking-widest"
+              >
+                Get in Touch
+              </Button>
+            </div>
+          </motion.div>
+
         </div>
       </div>
 
