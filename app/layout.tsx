@@ -19,6 +19,8 @@ export const metadata: Metadata = {
   description: "Tri Labs Portfolio",
 };
 
+import { ChatWidget } from "@/components/layout/ChatWidget";
+
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -34,6 +36,7 @@ export default function RootLayout({
           <main className="flex-grow pb-20">
             {children}
           </main>
+          <ChatWidget />
         </IntroAnimationProvider>
       </body>
     </html>
