@@ -38,9 +38,9 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${titanOne.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col font-sans selection:bg-accent selection:text-black bg-black">
+      <body className="min-h-full flex flex-col font-sans selection:bg-accent selection:text-black">
         <IntroAnimationProvider>
-          <main className="flex-grow pb-20">
+          <main className="flex-grow">
             {children}
           </main>
           <ChatWidget />

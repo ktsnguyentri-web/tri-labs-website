@@ -4,11 +4,11 @@ import { CVSection } from "@/components/sections/CVSection";
 
 export default function CVPage() {
   return (
-    <div className="min-h-screen bg-black text-foreground font-sans selection:bg-accent selection:text-black">
+    <div className="min-h-screen bg-white text-black font-sans selection:bg-accent selection:text-black">
       <Navbar />
       <main className="w-full pt-[60px]">
-        <CVSection />
-        <Contact />
+        <CVSection theme="light" />
+        <Contact theme="light" />
       </main>
     </div>
   );

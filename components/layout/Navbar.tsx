@@ -75,6 +75,9 @@ export function Navbar() {
     }
   }, [isHomePage]);
 
+  const isCVPage = pathname === "/cv";
+  const isLight = isCVPage;
+
   // Hide Navbar when a modal is open (indicated by locked body scroll)
   useEffect(() => {
     const observer = new MutationObserver(() => {
@@ -113,9 +116,9 @@ export function Navbar() {
   // Prevent hydration mismatch: render a static shell on server/first-pass
   if (!hasMounted) {
     return (
-      <nav className="fixed top-0 left-0 w-full z-50 bg-black/50 backdrop-blur-md h-[60px] px-4 md:px-10">
+      <nav className={`fixed top-0 left-0 w-full z-50 ${isLight ? "bg-white/50" : "bg-black/50"} backdrop-blur-md h-[60px] px-4 md:px-10`}>
         <div className="flex h-full items-center justify-between max-w-[1440px] mx-auto w-full opacity-0">
-          <Logo className="text-foreground" />
+          <Logo className={isLight ? "text-black" : "text-foreground"} />
         </div>
       </nav>
     );
@@ -127,7 +130,7 @@ export function Navbar() {
         variants={navVariants}
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="fixed top-0 left-0 w-full z-50 bg-black/50 backdrop-blur-md h-[60px] px-4 md:px-10"
+        className={`fixed top-0 left-0 w-full z-50 ${isLight ? "bg-white/50 text-black" : "bg-black/50 text-white"} backdrop-blur-md h-[60px] px-4 md:px-10`}
       >
         <div className="flex h-full items-center justify-between max-w-[1440px] mx-auto w-full relative">
           
@@ -143,7 +146,7 @@ export function Navbar() {
                 className="flex items-center"
                 onClick={() => setIsMenuOpen(false)}
               >
-                <Logo className="text-foreground" />
+                <Logo className={isLight ? "text-black" : "text-foreground"} />
               </Link>
             </motion.div>
           </div>
@@ -159,7 +162,7 @@ export function Navbar() {
               <motion.div key={item.label} variants={menuItemVariants}>
                 <Link
                   href={item.href}
-                  className="label-caps normal-case text-[13px] font-normal text-foreground/60 hover:text-foreground transition-all duration-300 hover:tracking-[0.3em]"
+                  className={`label-caps normal-case text-[13px] font-normal ${isLight ? "text-black/60 hover:text-black" : "text-foreground/60 hover:text-foreground"} transition-all duration-300 hover:tracking-[0.3em]`}
                 >
                   {item.label}
                 </Link>
@@ -170,18 +173,18 @@ export function Navbar() {
           {/* 3. Right Section: Search + Language + Mobile Toggle */}
           <div className="flex-1 flex justify-end items-center gap-6">
             <div className="hidden md:flex items-center gap-6">
-              <button className="text-foreground/60 hover:text-foreground transition-colors cursor-pointer" aria-label="Search">
+              <button className={`${isLight ? "text-black/60 hover:text-black" : "text-foreground/60 hover:text-foreground"} transition-colors cursor-pointer`} aria-label="Search">
                 <Search className="w-5 h-5" strokeWidth={1.5} />
               </button>
-              <button className="label-caps text-[11px] text-foreground/60 hover:text-foreground transition-colors cursor-pointer">
+              <button className={`label-caps text-[11px] ${isLight ? "text-black/60 hover:text-black" : "text-foreground/60 hover:text-foreground"} transition-colors cursor-pointer`}>
                 VN / EN
               </button>
             </div>
 
             {/* Mobile Toggle */}
-            <div className="block md:hidden text-foreground flex items-center h-full">
+            <div className={`block md:hidden ${isLight ? "text-black" : "text-foreground"} flex items-center h-full`}>
               <button
-                className="hover:text-foreground/60 transition-colors duration-200 cursor-pointer"
+                className="hover:opacity-60 transition-colors duration-200 cursor-pointer"
                 aria-label={isMenuOpen ? "Close menu" : "Open menu"}
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
               >
@@ -194,7 +197,7 @@ export function Navbar() {
 
       {/* Mobile Menu Dropdown — Solid Opaque per Rule 1 */}
       <div
-        className={`fixed inset-0 z-40 bg-black transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 z-40 ${isLight ? "bg-white" : "bg-black"} transition-opacity duration-300 md:hidden ${
           isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsMenuOpen(false)}
@@ -209,7 +212,7 @@ export function Navbar() {
             <Link
               key={item.label}
               href={item.href}
-              className="font-sans text-2xl text-foreground hover:text-foreground/60 transition-colors duration-300"
+              className={`font-sans text-2xl ${isLight ? "text-black hover:text-black/60" : "text-foreground hover:text-foreground/60"} transition-colors duration-300`}
               onClick={() => setIsMenuOpen(false)}
             >
               {item.label}
