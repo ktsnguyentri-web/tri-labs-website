@@ -71,6 +71,8 @@ export interface WorkItem {
   coverImage: string;
   /** Tailwind CSS grid-span utility classes */
   span: string;
+  /** Human-readable location string */
+  location?: string;
 }
 
 // ---------------------------------------------------------------------------
