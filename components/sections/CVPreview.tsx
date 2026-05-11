@@ -6,7 +6,7 @@ import { Reveal } from "@/components/animations/Reveal";
 export function CVPreview() {
   return (
     <section
-      className="bg-background pt-0 pb-32 px-6 md:px-10 w-full mx-auto relative scroll-mt-[60px]"
+      className="bg-black pt-0 pb-32 px-6 md:px-10 w-full mx-auto relative scroll-mt-[60px]"
       id="about"
     >
       <div className="flex flex-col md:flex-row gap-16 md:gap-24 items-center w-full max-w-[1440px] mx-auto">
@@ -14,7 +14,7 @@ export function CVPreview() {
         {/* Left Column — Portrait */}
         <div className="w-full md:w-1/2 flex justify-center md:justify-start">
           <Reveal delay={0.2}>
-            <div className="w-full max-w-[500px] aspect-[4/5] overflow-hidden bg-secondary relative">
+            <div className="w-full max-w-[500px] aspect-[4/5] overflow-hidden bg-black relative">
               <Image
                 src="/portrait.jpg"
                 alt="Portrait of Tri Nguyen Minh"

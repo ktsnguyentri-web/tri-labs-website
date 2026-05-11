@@ -14,7 +14,7 @@ export function Contact() {
   
   return (
     <section 
-      className="w-full bg-background pt-10 pb-0 scroll-mt-[60px]" 
+      className="w-full bg-black pt-10 pb-0 scroll-mt-[60px]" 
       id="contact"
     >
       <div className="w-full max-w-[1440px] mx-auto px-4 md:px-10">

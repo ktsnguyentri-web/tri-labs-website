@@ -23,7 +23,7 @@ const SPANS = [
 
 export function WorkSpans() {
   return (
-    <section className="bg-card pt-12 pb-32 px-[5vw] w-full mx-auto overflow-hidden relative">
+    <section className="bg-black pt-12 pb-32 px-[5vw] w-full mx-auto overflow-hidden relative">
 
       <div className="flex flex-col gap-16 items-start w-full max-w-[1440px] mx-auto">
         <div className="w-full text-left">
@@ -42,7 +42,7 @@ export function WorkSpans() {
                 className="w-full h-full relative cursor-pointer flex-1 transition-all duration-700 ease-in-out group-hover/container:opacity-40 hover:!opacity-100 hover:!flex-[2.5] flex flex-col group/item"
               >
                 {/* Image container — relative + h-full enables fill — Rule #3: square corners */}
-                <div className="relative w-full flex-1 overflow-hidden bg-secondary shadow-sm transition-shadow duration-700 group-hover/item:shadow-xl">
+                <div className="relative w-full flex-1 overflow-hidden bg-black shadow-sm transition-shadow duration-700 group-hover/item:shadow-xl">
                   <Image
                     src={item.img}
                     alt={item.title}

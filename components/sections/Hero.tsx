@@ -122,7 +122,7 @@ export function Hero() {
       onTouchMove={handleTouchMove}
       onMouseLeave={handleLeave}
       onTouchEnd={handleLeave}
-      className="relative w-full h-screen min-h-[600px] overflow-hidden cursor-ew-resize"
+      className="relative w-full h-screen min-h-[600px] overflow-hidden cursor-default bg-black"
     >
       {hasMounted && (
         <>

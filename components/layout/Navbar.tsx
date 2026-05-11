@@ -113,7 +113,7 @@ export function Navbar() {
   // Prevent hydration mismatch: render a static shell on server/first-pass
   if (!hasMounted) {
     return (
-      <nav className="fixed top-0 left-0 w-full z-50 bg-background/50 backdrop-blur-md h-[60px] px-4 md:px-10">
+      <nav className="fixed top-0 left-0 w-full z-50 bg-black/50 backdrop-blur-md h-[60px] px-4 md:px-10">
         <div className="flex h-full items-center justify-between max-w-[1440px] mx-auto w-full opacity-0">
           <Logo className="text-foreground" />
         </div>
@@ -127,7 +127,7 @@ export function Navbar() {
         variants={navVariants}
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="fixed top-0 left-0 w-full z-50 bg-background/50 backdrop-blur-md h-[60px] px-4 md:px-10"
+        className="fixed top-0 left-0 w-full z-50 bg-black/50 backdrop-blur-md h-[60px] px-4 md:px-10"
       >
         <div className="flex h-full items-center justify-between max-w-[1440px] mx-auto w-full relative">
           
@@ -194,7 +194,7 @@ export function Navbar() {
 
       {/* Mobile Menu Dropdown — Solid Opaque per Rule 1 */}
       <div
-        className={`fixed inset-0 z-40 bg-background transition-opacity duration-300 md:hidden ${
+        className={`fixed inset-0 z-40 bg-black transition-opacity duration-300 md:hidden ${
           isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
         }`}
         onClick={() => setIsMenuOpen(false)}

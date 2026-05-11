@@ -4,7 +4,7 @@ import { Reveal } from "@/components/animations/Reveal";
 
 export function Statement() {
   return (
-    <section className="bg-background pt-8 pb-12 w-full mx-auto relative scroll-mt-[60px]" id="statement">
+    <section className="bg-black pt-8 pb-12 w-full mx-auto relative scroll-mt-[60px]" id="statement">
 
 
       <div className="grid grid-cols-1 md:grid-cols-3 w-full max-w-[1440px] mx-auto gap-8 md:gap-20 px-4 md:px-10">

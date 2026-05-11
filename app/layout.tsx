@@ -19,6 +19,13 @@ export const metadata: Metadata = {
   description: "Tri Labs Portfolio",
 };
 
+export const viewport = {
+  width: "device-width",
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false, // Prevents unintended zooming/wobbling on some devices
+};
+
 import { ChatWidget } from "@/components/layout/ChatWidget";
 
 export default function RootLayout({
@@ -31,7 +38,7 @@ export default function RootLayout({
       lang="en"
       className={`${inter.variable} ${titanOne.variable} h-full antialiased scroll-smooth`}
     >
-      <body className="min-h-full flex flex-col font-sans selection:bg-accent selection:text-black">
+      <body className="min-h-full flex flex-col font-sans selection:bg-accent selection:text-black bg-black">
         <IntroAnimationProvider>
           <main className="flex-grow pb-20">
             {children}

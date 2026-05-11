@@ -10,22 +10,34 @@ const STAGGER_DELAY = 0.12;
 export function CVSection() {
   const experiences = [
     {
-      period: "2020 — PRES.",
-      role: "Founder & Principal Architect",
-      company: "TRI NGUYEN Studio, Ho Chi Minh City",
-      description: "Leading a studio focused on experimental architectural forms and custom BIM plugins. We integrate generative design with traditional craft to create high-performance structures."
+      period: "2024 — PRES.",
+      role: "Interior Architect",
+      company: "THIEN PHUOC COMPANY",
+      description: "Received concept design from the Korean team, developed detailed drawings, and executed shop drawings on-site."
     },
     {
-      period: "2015 — 2020",
-      role: "Senior Associate / Lead Designer",
-      company: "Global Design Partners, London / HK",
-      description: "Headed the Computational Design Group. Focused on parametric façade systems for high-rise residential towers and cultural institutions."
+      period: "2022 — 2024",
+      role: "Concept Architect",
+      company: "HTA+PIZZINI ARCHITECTS",
+      description: "Worked directly with the director to develop the project from concept to schematic design stage."
     },
     {
-      period: "2013 — 2015",
-      role: "Architectural Designer",
-      company: "Format & Scale, New York",
-      description: "Implemented BIM workflows for complex geometry projects. Specialized in environmental simulation and sustainable material analysis."
+      period: "2021 — 2023",
+      role: "Freelancer Architect",
+      company: "DI+ARCHITECTS",
+      description: "Assisted in construction drawings for Singapore townhouses and supported concept design on some large-scale projects."
+    },
+    {
+      period: "2021 — 2022",
+      role: "Project Architect",
+      company: "STUDIO DUO",
+      description: "Responsible for concept design and the development of construction documents across multiple projects."
+    },
+    {
+      period: "2019 — 2020",
+      role: "Project Architect",
+      company: "PHILIPPE PIERGA DESIGN",
+      description: "Assisted senior architects in developing design concepts and producing construction drawings for high-rise buildings and upscale resort projects."
     }
   ];
 
@@ -56,7 +68,7 @@ export function CVSection() {
   ];
 
   return (
-    <section className="bg-[#050505] scroll-mt-[60px]" id="cv-section">
+    <section className="bg-black scroll-mt-[60px]" id="cv-section">
       {/* ── HEADER: 800px focused, sliding entrance ──────────────────── */}
       <div className="max-w-[800px] mx-auto px-6 pt-20 pb-24">
         <div className="grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-16 items-start">
@@ -67,7 +79,7 @@ export function CVSection() {
             animate={{ x: 0, opacity: 1 }}
             transition={{ duration: 0.8, ease: "easeOut" }}
           >
-            <div className="relative w-full aspect-[4/5] overflow-hidden rounded-[24px] bg-[#1A1A1A]">
+            <div className="relative w-full aspect-[4/5] overflow-hidden rounded-[24px] bg-black">
               <Image
                 src="/portrait.jpg"
                 alt="Tri Nguyen Minh Portrait"
@@ -99,16 +111,9 @@ export function CVSection() {
               <Button
                 size="sm"
                 variant="outline"
-                className="text-[10px] h-9 px-6 border-white/20 hover:bg-white hover:text-black transition-all uppercase tracking-widest"
+                className="text-[9px] h-8 px-4 border-white/20 hover:bg-white hover:text-black transition-all uppercase tracking-widest"
               >
                 Download Full CV
-              </Button>
-              <Button
-                size="sm"
-                variant="outline"
-                className="text-[10px] h-9 px-6 border-white/20 hover:bg-white hover:text-black transition-all uppercase tracking-widest"
-              >
-                Get in Touch
               </Button>
             </div>
           </motion.div>

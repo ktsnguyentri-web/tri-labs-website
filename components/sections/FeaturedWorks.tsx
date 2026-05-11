@@ -11,22 +11,24 @@ interface FeaturedWorksProps {
 export function FeaturedWorks({ works }: FeaturedWorksProps) {
   return (
     <section
-      className="bg-card pt-4 pb-0 w-full mx-auto overflow-hidden relative"
+      className="bg-black pt-4 pb-0 w-full mx-auto overflow-hidden relative"
       id="featured-works"
     >
       <div className="flex flex-col gap-6 md:gap-10 w-full max-w-[1440px] mx-auto px-4 md:px-10">
         <div className="flex justify-between items-end">
           <Reveal width="fit-content">
-            <h2 className="text-[28px] md:text-[32px] font-light tracking-tight text-foreground">
-              Featured Works
-            </h2>
-          </Reveal>
-          <Reveal delay={0.2} width="fit-content">
             <Link 
               href="/work" 
-              className="font-mono text-[10px] tracking-[0.2em] text-foreground/40 hover:text-foreground transition-colors uppercase flex items-center gap-2 mb-2"
+              className="group relative block overflow-hidden"
             >
-              See all projects <span>&gt;</span>
+              <h2 className="text-[22px] md:text-[26px] font-light tracking-tight text-foreground transition-transform duration-500 group-hover:-translate-y-full whitespace-nowrap">
+                Featured Works
+              </h2>
+              <div className="absolute inset-0 flex items-center">
+                <h2 className="text-[22px] md:text-[26px] font-light tracking-tight text-foreground translate-y-full transition-transform duration-500 group-hover:translate-y-0 whitespace-nowrap">
+                  See All
+                </h2>
+              </div>
             </Link>
           </Reveal>
         </div>

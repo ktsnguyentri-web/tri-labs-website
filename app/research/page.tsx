@@ -14,7 +14,7 @@ export default async function ResearchPage() {
   const researchArticles = insights.filter(item => item.category === 'Research');
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-accent selection:text-black">
+    <div className="min-h-screen bg-black text-foreground font-sans selection:bg-accent selection:text-black">
       <Navbar />
       <main className="w-full pt-[60px]">
         <ResearchGallery researchArticles={researchArticles} />

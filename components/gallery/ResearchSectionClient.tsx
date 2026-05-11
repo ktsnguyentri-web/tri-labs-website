@@ -46,7 +46,7 @@ export function ResearchSectionClient({ insights }: ResearchSectionClientProps) 
   };
 
   return (
-    <div className="relative group/section -mx-10 px-10">
+    <div className="relative group/section -mx-4 px-4 md:-mx-10 md:px-10">
       {/* Navigation Arrows — Circular and centered on image */}
       <button 
         onClick={() => scroll('left')}
@@ -69,21 +69,21 @@ export function ResearchSectionClient({ insights }: ResearchSectionClientProps) 
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
-        className={`flex flex-nowrap overflow-x-auto gap-6 pb-12 no-scrollbar ${isDragging ? 'cursor-grabbing select-none scroll-auto snap-none' : 'cursor-default scroll-smooth snap-x snap-mandatory'}`}
+        className={`flex flex-nowrap overflow-x-auto gap-3 pb-12 no-scrollbar ${isDragging ? 'cursor-grabbing select-none scroll-auto snap-none' : 'cursor-default scroll-smooth snap-x snap-mandatory'}`}
       >
         {insights.map((item, i) => (
           <div 
             key={`${item.slug}-${i}`} 
-            className="flex-shrink-0 w-[85vw] md:w-[calc((100%-48px)/3)] snap-start"
+            className="flex-shrink-0 w-[85vw] sm:w-[calc((100%-12px)/2)] lg:w-[calc((100%-36px)/4)] snap-start"
           >
             <Reveal width="100%" delay={i * 0.1}>
               <div className="flex flex-col gap-6 group h-full text-left">
-                {/* 1. Image container - Clickable area */}
+                {/* 1. Image container */}
                 <Link 
                   href={`/research/${item.slug}`}
                   scroll={false}
                   onClick={(e) => isDragging && e.preventDefault()}
-                  className="w-full aspect-[3/2] relative overflow-hidden bg-white/5 cursor-pointer block"
+                  className="w-full aspect-[3/2] relative overflow-hidden bg-black cursor-pointer block"
                 >
                   <Image
                     src={item.coverImage}
@@ -91,24 +91,28 @@ export function ResearchSectionClient({ insights }: ResearchSectionClientProps) 
                     fill
                     draggable={false}
                     className="object-cover transition-transform duration-1000 group-hover:scale-105 select-none"
-                    sizes="(max-width: 768px) 300px, 600px"
+                    sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
                   />
                 </Link>
 
-                {/* 2. Content below image - Clickable area */}
-                <div className="flex flex-col gap-3">
-                  <div className="font-sans text-[12px] text-white/30 uppercase tracking-[0.1em] select-none">
-                    {item.date}
+                {/* 2. Content Section */}
+                <div className="flex flex-col gap-1">
+                  <div className="font-sans text-[11px] font-bold text-white tracking-tight">
+                    {item.category || 'Insight'}
                   </div>
-                  
+
                   <Link 
                     href={`/research/${item.slug}`}
                     scroll={false}
                     onClick={(e) => isDragging && e.preventDefault()}
-                    className="text-[18px] md:text-[22px] font-medium tracking-tight text-white hover:underline w-fit decoration-white decoration-2 underline-offset-4 cursor-pointer transition-colors leading-[1.3] line-clamp-2 select-none"
+                    className="text-[17px] md:text-[19px] font-light tracking-tight text-white leading-[1.2] hover:opacity-70 transition-opacity line-clamp-2 min-h-[2.4em]"
                   >
                     {item.title}
                   </Link>
+
+                  <div className="font-sans text-[11px] text-white/40 leading-relaxed line-clamp-1">
+                    {item.date}
+                  </div>
                 </div>
               </div>
             </Reveal>

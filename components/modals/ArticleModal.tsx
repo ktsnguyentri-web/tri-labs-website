@@ -43,15 +43,15 @@ export function ArticleModal({ article, onClose }: ArticleModalProps) {
         aria-label="Close modal background"
       />
 
-      <div className="bg-white w-full max-w-7xl h-[85vh] relative overflow-hidden flex flex-col shadow-2xl z-10 scale-in-95 duration-300">
+      <div className="bg-black w-full max-w-7xl h-[85vh] relative overflow-hidden flex flex-col shadow-2xl z-10 scale-in-95 duration-300 border border-white/10">
 
         {/* Close Button */}
         <button
           onClick={handleClose}
-          className="absolute top-6 right-6 p-2 bg-white/80 backdrop-blur-sm hover:bg-gray-100 transition-colors z-20 shadow-sm"
+          className="absolute top-6 right-6 p-2 bg-white/5 backdrop-blur-sm hover:bg-white/10 transition-colors z-20 shadow-sm"
           aria-label="Close"
         >
-          <X className="w-6 h-6 text-black" strokeWidth={1.5} />
+          <X className="w-6 h-6 text-white" strokeWidth={1.5} />
         </button>
 
         {/* Scrollable Container */}
@@ -59,17 +59,17 @@ export function ArticleModal({ article, onClose }: ArticleModalProps) {
           <div className="max-w-3xl mx-auto py-20 px-6 md:px-12">
 
             {/* Header */}
-            <header className="mb-12 pb-12 border-b border-gray-100">
+            <header className="mb-12 pb-12 border-b border-black/10">
               <div className="flex flex-col gap-4">
-                <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.1em] text-[#4C4546]">
+                <div className="flex items-center gap-3 font-mono text-[11px] uppercase tracking-[0.1em] text-white/40">
                   <span>{article.date}</span>
-                  <span className="w-1 h-1 bg-gray-300 rounded-full" />
+                  <span className="w-1 h-1 bg-white/20 rounded-full" />
                   <span>{article.category}</span>
                 </div>
-                <h1 className="text-4xl md:text-5xl font-medium tracking-tight text-black leading-[1.1] font-sans">
+                <h1 className="text-4xl md:text-5xl font-medium tracking-tight text-white leading-[1.1] font-sans">
                   {article.title}
                 </h1>
-                <div className="text-[#4C4546] font-sans text-lg italic">
+                <div className="text-white/40 font-sans text-lg italic">
                   By Tri Labs Team
                 </div>
               </div>
@@ -77,12 +77,12 @@ export function ArticleModal({ article, onClose }: ArticleModalProps) {
 
             {/* Body — Prose HTML from CMS */}
             <div
-              className="prose prose-lg max-w-none prose-headings:text-black prose-headings:font-medium prose-p:text-gray-600 prose-p:leading-[1.8] prose-p:font-sans prose-a:text-blue-600 prose-a:no-underline hover:prose-a:underline prose-img:rounded-none prose-strong:text-black"
+              className="prose prose-lg max-w-none prose-headings:text-white prose-headings:font-medium prose-p:text-white/60 prose-p:leading-[1.8] prose-p:font-sans prose-a:text-blue-400 prose-a:no-underline hover:prose-a:underline prose-img:rounded-none prose-strong:text-white"
               dangerouslySetInnerHTML={{ __html: article.contentHtml }}
             />
 
             {/* Footer */}
-            <div className="mt-20 pt-10 border-t border-gray-100 text-center">
+            <div className="mt-20 pt-10 border-t border-black/10 text-center">
               <Button variant="ghost" onClick={handleClose}>
                 Close Article
               </Button>

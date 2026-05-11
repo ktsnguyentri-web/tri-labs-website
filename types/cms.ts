@@ -90,6 +90,12 @@ export interface ModalProject {
   status?: string;
   scope?: string;
   gallery?: string[];
+  // Extended details for blowup layout
+  siteArea?: string;
+  buildingHeight?: string;
+  stories?: string;
+  grossArea?: string;
+  collaborators?: string[];
 }
 
 // ---------------------------------------------------------------------------

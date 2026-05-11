@@ -5,7 +5,6 @@ import Image from "next/image";
 import { usePathname } from "next/navigation";
 import type { Project } from "@/types/cms";
 import { Reveal } from "@/components/animations/Reveal";
-
 import * as React from "react";
 
 export function FeaturedGrid({ works }: { works: Project[] }) {
@@ -41,8 +40,8 @@ export function FeaturedGrid({ works }: { works: Project[] }) {
   };
 
   return (
-    <div className="relative group/section -mx-10 px-10">
-      {/* Navigation Arrows — Circular and centered on image */}
+    <div className="relative group/section -mx-4 px-4 md:-mx-10 md:px-10">
+      {/* Navigation Arrows */}
       <button 
         onClick={() => scroll('left')}
         className="absolute left-4 top-[35%] -translate-y-1/2 z-30 w-12 h-12 rounded-full bg-white/10 hover:bg-white/20 backdrop-blur-md text-white flex items-center justify-center opacity-0 group-hover/section:opacity-100 transition-all duration-300 border border-white/10 hidden md:flex"
@@ -64,7 +63,7 @@ export function FeaturedGrid({ works }: { works: Project[] }) {
         onMouseMove={handleMouseMove}
         onMouseUp={handleMouseUp}
         onMouseLeave={handleMouseUp}
-        className={`flex flex-nowrap overflow-x-auto gap-6 pb-12 no-scrollbar ${isDragging ? 'cursor-grabbing select-none scroll-auto snap-none' : 'cursor-default scroll-smooth snap-x snap-mandatory'}`}
+        className={`flex flex-nowrap overflow-x-auto gap-3 pb-12 no-scrollbar ${isDragging ? 'cursor-grabbing select-none scroll-auto snap-none' : 'cursor-default scroll-smooth snap-x snap-mandatory'}`}
       >
         {works.map((work, i) => {
           const href = `/work/${work.slug}`;
@@ -73,69 +72,45 @@ export function FeaturedGrid({ works }: { works: Project[] }) {
           return (
             <div 
               key={work.slug} 
-              className="flex-shrink-0 w-[85vw] md:w-[calc((100%-48px)/3)] snap-start"
+              className={`flex-shrink-0 w-[85vw] sm:w-[calc((100%-12px)/2)] lg:w-[calc((100%-36px)/4)] snap-start border-white/10`}
             >
               <Reveal width="100%" delay={i * 0.1}>
                 <div className="flex flex-col gap-6 group h-full text-left">
-                  {/* 1. Image container - Clickable area */}
-                  {isWorkPage ? (
-                    <a
-                      href={href}
-                      onClick={(e) => isDragging && e.preventDefault()}
-                      className="w-full aspect-[3/2] relative overflow-hidden bg-white/5 cursor-pointer block"
-                    >
-                      <Image
-                        src={work.coverImage}
-                        alt={work.title}
-                        fill
-                        draggable={false}
-                        className="object-cover transition-transform duration-1000 group-hover:scale-105 select-none"
-                        sizes="(max-width: 768px) 300px, 600px"
-                      />
-                    </a>
-                  ) : (
+                  {/* 1. Image container */}
+                  <Link
+                    href={href}
+                    scroll={false}
+                    onClick={(e) => isDragging && e.preventDefault()}
+                    className="w-full aspect-[3/2] relative overflow-hidden bg-black cursor-pointer block"
+                  >
+                    <Image
+                      src={work.coverImage}
+                      alt={work.title}
+                      fill
+                      draggable={false}
+                      className="object-cover transition-transform duration-1000 group-hover:scale-105 select-none"
+                      sizes="(max-width: 768px) 100vw, (max-width: 1200px) 50vw, 25vw"
+                    />
+                  </Link>
+
+                  {/* 2. Content Section */}
+                  <div className="flex flex-col gap-1">
+                    <div className="font-sans text-[11px] font-bold text-white tracking-tight">
+                      {work.category || 'Architecture'}
+                    </div>
+
                     <Link
                       href={href}
                       scroll={false}
                       onClick={(e) => isDragging && e.preventDefault()}
-                      className="w-full aspect-[3/2] relative overflow-hidden bg-white/5 cursor-pointer block"
+                      className="text-[17px] md:text-[19px] font-light tracking-tight text-white leading-[1.2] hover:opacity-70 transition-opacity line-clamp-2 min-h-[2.4em]"
                     >
-                      <Image
-                        src={work.coverImage}
-                        alt={work.title}
-                        fill
-                        draggable={false}
-                        className="object-cover transition-transform duration-1000 group-hover:scale-105 select-none"
-                        sizes="(max-width: 768px) 300px, 600px"
-                      />
+                      {work.title}
                     </Link>
-                  )}
 
-                  {/* 2. Content below image - Clickable area */}
-                  <div className="flex flex-col gap-3">
-                    <div className="flex justify-between items-center font-sans text-[11px] text-white/30 uppercase tracking-[0.1em] select-none">
-                      <span>{work.location}</span>
-                      {work.completionYear && <span>{work.completionYear}</span>}
+                    <div className="font-sans text-[11px] text-white/40 leading-relaxed line-clamp-1">
+                      {work.location}
                     </div>
-                    
-                    {isWorkPage ? (
-                      <a
-                        href={href}
-                        onClick={(e) => isDragging && e.preventDefault()}
-                        className="text-[18px] md:text-[22px] font-medium tracking-tight text-white hover:underline w-fit decoration-white decoration-2 underline-offset-4 cursor-pointer transition-colors leading-[1.3] line-clamp-2 select-none"
-                      >
-                        {work.title}
-                      </a>
-                    ) : (
-                      <Link
-                        href={href}
-                        scroll={false}
-                        onClick={(e) => isDragging && e.preventDefault()}
-                        className="text-[18px] md:text-[22px] font-medium tracking-tight text-white hover:underline w-fit decoration-white decoration-2 underline-offset-4 cursor-pointer transition-colors leading-[1.3] line-clamp-2 select-none"
-                      >
-                        {work.title}
-                      </Link>
-                    )}
                   </div>
                 </div>
               </Reveal>

@@ -19,7 +19,7 @@ export default async function WorkPage() {
   }));
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-accent selection:text-black">
+    <div className="min-h-screen bg-black text-foreground font-sans selection:bg-accent selection:text-black">
       <Navbar />
       <main className="w-full pt-[60px]">
         <Suspense fallback={<div className="pt-40 px-10">Loading gallery...</div>}>

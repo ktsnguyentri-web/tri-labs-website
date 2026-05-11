@@ -14,7 +14,7 @@ export default async function Home() {
   ]);
 
   return (
-    <div className="min-h-screen bg-background text-foreground font-sans selection:bg-accent selection:text-black">
+    <div className="min-h-screen bg-black text-foreground font-sans selection:bg-accent selection:text-black">
       <Navbar />
       <main className="w-full">
         <Hero />

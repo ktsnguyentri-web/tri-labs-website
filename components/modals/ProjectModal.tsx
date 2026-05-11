@@ -3,7 +3,7 @@
 import { useRouter } from "next/navigation";
 import { useEffect, useState } from "react";
 import Image from "next/image";
-import { X } from "lucide-react";
+import { X, ChevronDown } from "lucide-react";
 import { motion, AnimatePresence } from "framer-motion";
 import type { ModalProject } from "@/types/cms";
 import Link from "next/link";
@@ -63,12 +63,12 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
         transition={{ type: "spring", damping: 25, stiffness: 300 }}
-        className="bg-white w-full max-w-7xl h-[85vh] overflow-hidden flex flex-col md:flex-row shadow-2xl relative z-10"
+        className="bg-black w-full max-w-7xl h-[85vh] overflow-hidden flex flex-col md:flex-row shadow-2xl relative z-10 border border-white/10"
       >
         {/* Left Panel — Info (~35%) */}
         <div className={`w-full md:w-[35%] flex flex-col h-full overscroll-contain custom-scrollbar ${isExpanded ? 'overflow-y-auto' : 'overflow-hidden'}`}>
           {/* Sticky Header */}
-          <div className="sticky top-0 bg-white z-20 p-8 pb-4 flex justify-between items-center">
+          <div className="sticky top-0 bg-black z-20 p-8 pb-4 flex justify-between items-center border-b border-white/10">
             {project.slug ? (
               <button
                 onClick={() => {
@@ -76,40 +76,89 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   document.documentElement.style.overflow = "auto";
                   window.location.href = `/work/${project.slug}`;
                 }}
-                className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#4C4546]/60 hover:text-black transition-colors"
+                className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors"
               >
                 Gallery ↗
               </button>
             ) : (
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#4C4546]/60">
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
                 Gallery
               </span>
             )}
             <button
               onClick={handleClose}
-              className="p-1.5 hover:bg-gray-100 transition-colors"
+              className="p-1.5 hover:bg-white/10 transition-colors"
               aria-label="Close"
             >
-              <X className="w-5 h-5 text-black" strokeWidth={1.2} />
+              <X className="w-5 h-5 text-white" strokeWidth={1.2} />
             </button>
           </div>
 
           <div className="px-8 pb-8 flex flex-col flex-grow">
-            <h2 className="text-3xl md:text-[42px] font-light leading-[1.1] tracking-tight text-black mb-6">
+            <h2 className="text-3xl md:text-[42px] font-light leading-[1.1] tracking-tight text-white mb-6">
               {project.title}
             </h2>
 
-            <div className="flex flex-col gap-1 font-mono text-[10px] uppercase tracking-[0.1em] text-[#4C4546] mb-8 border-l border-black/20 pl-4">
-              {project.location && <div>LOC: {project.location}</div>}
-              {project.category && <div>TYP: {project.category}</div>}
-              {project.completionYear && <div>YEA: {project.completionYear}</div>}
-              {project.architect && <div>ARC: {project.architect}</div>}
-              {project.status && <div>STA: {project.status}</div>}
-              {project.scope && <div>SCO: {project.scope}</div>}
+            <div className="flex flex-col gap-12 mt-8 mb-12">
+              {/* 1. Information Section */}
+              <div className="flex flex-col gap-6">
+                <h3 className="text-white text-[16px] font-bold uppercase tracking-[0.15em] border-b border-white/10 pb-4 mb-2">Information</h3>
+                
+                <div className="flex flex-col gap-5">
+                  <div className="flex flex-col gap-1">
+                    <div className="text-white text-[15px] font-bold">Location:</div>
+                    <div className="text-white/40 text-[15px] font-light leading-snug">{project.location || "24-26 Phan Dinh Giot Street, Tan Binh Dist."}</div>
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <div className="text-white text-[15px] font-bold">Lead Architect:</div>
+                    <div className="text-white/40 text-[15px] font-light leading-snug">{project.architect || "Di+ Architects"}</div>
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <div className="text-white text-[15px] font-bold">Status:</div>
+                    <div className="text-white/40 text-[15px] font-light leading-snug">{project.status || `Completed in ${project.completionYear || "2022"}`}</div>
+                  </div>
+
+                  <div className="flex flex-col gap-1">
+                    <div className="text-white text-[15px] font-bold">My scope:</div>
+                    <div className="text-white/40 text-[15px] font-light leading-snug">{project.scope || "Facade design & Construction Documentation"}</div>
+                  </div>
+                </div>
+              </div>
+
+              {/* 2. Size Section */}
+              <div className="flex flex-col gap-6">
+                <h3 className="text-white text-[16px] font-bold uppercase tracking-[0.15em] border-b border-white/10 pb-4 mb-2">Size</h3>
+                <div className="flex flex-col gap-2 text-white/40 text-[15px] font-light leading-snug">
+                  {project.siteArea && <div>Site Area: {project.siteArea}</div>}
+                  {project.buildingHeight && <div>Building Height: {project.buildingHeight}</div>}
+                  {project.stories && <div>Number of Stories: {project.stories}</div>}
+                  {project.grossArea && <div>Building Gross Area: {project.grossArea}</div>}
+                  {!project.siteArea && !project.buildingHeight && (
+                    <>
+                      <div>Site Area: 10 acres</div>
+                      <div>Building Height: 130 feet</div>
+                      <div>Number of Stories: 12</div>
+                      <div>Building Gross Area: 2,200,000 square feet</div>
+                    </>
+                  )}
+                </div>
+              </div>
+
+              {/* 3. Collaborators (Optional, keeping subtle) */}
+              {project.collaborators && (
+                <div className="flex flex-col gap-6">
+                  <h3 className="text-white text-[16px] font-bold uppercase tracking-[0.15em] border-b border-white/10 pb-4 mb-2">Collaborators</h3>
+                  <div className="flex flex-col gap-4 text-white/40 text-[15px] font-light">
+                    {project.collaborators.map((c, i) => <div key={i}>{c}</div>)}
+                  </div>
+                </div>
+              )}
             </div>
 
             <div className="relative">
-              <p className={`font-sans text-[15px] text-[#4C4546] leading-[1.6] ${!isExpanded ? 'line-clamp-6' : ''}`}>
+              <p className={`font-sans text-[15px] text-white/80 leading-[1.6] ${!isExpanded ? 'line-clamp-6' : ''}`}>
                 {description}
               </p>
             </div>
@@ -118,7 +167,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
               <div className="mt-6">
                 <button 
                   onClick={() => setIsExpanded(true)}
-                  className="font-mono text-[10px] uppercase tracking-[0.2em] text-black hover:opacity-50 transition-all flex items-center gap-2 group"
+                  className="font-mono text-[10px] uppercase tracking-[0.2em] text-white hover:opacity-50 transition-all flex items-center gap-2 group"
                 >
                   Read More 
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -127,10 +176,10 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             )}
 
             {isExpanded && (
-              <div className="mt-12 pt-12 border-t border-gray-100">
+              <div className="mt-12 pt-12 border-t border-white/10">
                 <button 
                   onClick={() => setIsExpanded(false)}
-                  className="font-mono text-[10px] uppercase tracking-[0.2em] text-[#4C4546] hover:text-black transition-all"
+                  className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60 hover:text-white transition-all"
                 >
                   Show Less
                 </button>

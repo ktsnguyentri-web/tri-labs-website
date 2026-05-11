@@ -9,6 +9,11 @@ export default {
     extend: {
       colors: {
         'on-surface-variant': '#4C4546',
+        'background': '#000000',
+        'card': '#000000',
+        'popover': '#000000',
+        'secondary': '#000000',
+        'muted': '#000000',
       },
       fontSize: {
         'display-2xl': ['144px', { lineHeight: '1.0', letterSpacing: '-0.04em', fontWeight: '700' }],
