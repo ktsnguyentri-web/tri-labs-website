@@ -47,7 +47,7 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
   const description = project.description || defaultDescription;
 
   return (
-    <div className="fixed inset-0 z-40 flex items-center justify-center p-4 md:p-10">
+    <div className="fixed inset-0 z-40 flex items-center justify-center p-2 md:p-4">
       {/* Backdrop */}
       <motion.div
         initial={{ opacity: 0 }}
@@ -63,12 +63,12 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.9, opacity: 0 }}
         transition={{ type: "spring", damping: 25, stiffness: 300 }}
-        className="bg-black w-full max-w-7xl h-[85vh] overflow-hidden flex flex-col md:flex-row shadow-2xl relative z-10 border border-white/10"
+        className="bg-white w-[96vw] max-w-[1600px] h-[93vh] rounded-[6px] overflow-hidden flex flex-col md:flex-row shadow-2xl relative z-10 border border-black/10"
       >
         {/* Left Panel — Info (~35%) */}
-        <div className={`w-full md:w-[35%] flex flex-col h-full overscroll-contain custom-scrollbar ${isExpanded ? 'overflow-y-auto' : 'overflow-hidden'}`}>
+        <div className={`w-full md:w-[35%] flex flex-col h-full overscroll-contain border-b md:border-b-0 md:border-r border-black/10 overflow-y-auto ${isExpanded ? 'custom-scrollbar-light' : 'no-scrollbar'}`}>
           {/* Sticky Header */}
-          <div className="sticky top-0 bg-black z-20 p-8 pb-4 flex justify-between items-center border-b border-white/10">
+          <div className="sticky top-0 bg-white z-20 px-6 py-3.5 flex justify-between items-center border-b border-black/10">
             {project.slug ? (
               <button
                 onClick={() => {
@@ -76,61 +76,61 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
                   document.documentElement.style.overflow = "auto";
                   window.location.href = `/work/${project.slug}`;
                 }}
-                className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60 hover:text-white transition-colors"
+                className="font-mono text-[10px] uppercase tracking-[0.2em] text-black/50 hover:text-black transition-colors"
               >
                 Gallery ↗
               </button>
             ) : (
-              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60">
+              <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-black/50">
                 Gallery
               </span>
             )}
             <button
               onClick={handleClose}
-              className="p-1.5 hover:bg-white/10 transition-colors"
+              className="p-1.5 hover:bg-black/5 transition-colors"
               aria-label="Close"
             >
-              <X className="w-5 h-5 text-white" strokeWidth={1.2} />
+              <X className="w-4.5 h-4.5 text-black" strokeWidth={1.2} />
             </button>
           </div>
 
-          <div className="px-8 pb-8 flex flex-col flex-grow">
-            <h2 className="text-3xl md:text-[42px] font-light leading-[1.1] tracking-tight text-white mb-6">
+          <div className="px-6 pt-5 pb-6 flex flex-col flex-grow">
+            <h2 className="text-3xl md:text-[36px] font-light leading-[1.15] tracking-tight text-black mb-4">
               {project.title}
             </h2>
 
-            <div className="flex flex-col gap-12 mt-8 mb-12">
+            <div className="flex flex-col gap-6 mt-2 mb-6">
               {/* 1. Information Section */}
-              <div className="flex flex-col gap-6">
-                <h3 className="text-white text-[16px] font-bold uppercase tracking-[0.15em] border-b border-white/10 pb-4 mb-2">Information</h3>
+              <div className="flex flex-col gap-3">
+                <h3 className="text-black/50 text-[11px] font-bold uppercase tracking-[0.2em] border-b border-black/10 pb-2 mb-1">Information</h3>
                 
-                <div className="flex flex-col gap-5">
-                  <div className="flex flex-col gap-1">
-                    <div className="text-white text-[15px] font-bold">Location:</div>
-                    <div className="text-white/40 text-[15px] font-light leading-snug">{project.location || "24-26 Phan Dinh Giot Street, Tan Binh Dist."}</div>
+                <div className="flex flex-col gap-3">
+                  <div className="flex flex-col gap-0.5">
+                    <div className="text-black/90 text-[13px] font-bold">Location:</div>
+                    <div className="text-black/60 text-[13px] font-light leading-snug">{project.location || "24-26 Phan Dinh Giot Street, Tan Binh Dist."}</div>
                   </div>
 
-                  <div className="flex flex-col gap-1">
-                    <div className="text-white text-[15px] font-bold">Lead Architect:</div>
-                    <div className="text-white/40 text-[15px] font-light leading-snug">{project.architect || "Di+ Architects"}</div>
+                  <div className="flex flex-col gap-0.5">
+                    <div className="text-black/90 text-[13px] font-bold">Lead Architect:</div>
+                    <div className="text-black/60 text-[13px] font-light leading-snug">{project.architect || "Di+ Architects"}</div>
                   </div>
 
-                  <div className="flex flex-col gap-1">
-                    <div className="text-white text-[15px] font-bold">Status:</div>
-                    <div className="text-white/40 text-[15px] font-light leading-snug">{project.status || `Completed in ${project.completionYear || "2022"}`}</div>
+                  <div className="flex flex-col gap-0.5">
+                    <div className="text-black/90 text-[13px] font-bold">Status:</div>
+                    <div className="text-black/60 text-[13px] font-light leading-snug">{project.status || `Completed in ${project.completionYear || "2022"}`}</div>
                   </div>
 
-                  <div className="flex flex-col gap-1">
-                    <div className="text-white text-[15px] font-bold">My scope:</div>
-                    <div className="text-white/40 text-[15px] font-light leading-snug">{project.scope || "Facade design & Construction Documentation"}</div>
+                  <div className="flex flex-col gap-0.5">
+                    <div className="text-black/90 text-[13px] font-bold">My scope:</div>
+                    <div className="text-black/60 text-[13px] font-light leading-snug">{project.scope || "Facade design & Construction Documentation"}</div>
                   </div>
                 </div>
               </div>
 
               {/* 2. Size Section */}
-              <div className="flex flex-col gap-6">
-                <h3 className="text-white text-[16px] font-bold uppercase tracking-[0.15em] border-b border-white/10 pb-4 mb-2">Size</h3>
-                <div className="flex flex-col gap-2 text-white/40 text-[15px] font-light leading-snug">
+              <div className="flex flex-col gap-3">
+                <h3 className="text-black/50 text-[11px] font-bold uppercase tracking-[0.2em] border-b border-black/10 pb-2 mb-1">Size</h3>
+                <div className="flex flex-col gap-1.5 text-black/60 text-[13px] font-light leading-snug">
                   {project.siteArea && <div>Site Area: {project.siteArea}</div>}
                   {project.buildingHeight && <div>Building Height: {project.buildingHeight}</div>}
                   {project.stories && <div>Number of Stories: {project.stories}</div>}
@@ -148,26 +148,26 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
 
               {/* 3. Collaborators (Optional, keeping subtle) */}
               {project.collaborators && (
-                <div className="flex flex-col gap-6">
-                  <h3 className="text-white text-[16px] font-bold uppercase tracking-[0.15em] border-b border-white/10 pb-4 mb-2">Collaborators</h3>
-                  <div className="flex flex-col gap-4 text-white/40 text-[15px] font-light">
+                <div className="flex flex-col gap-3">
+                  <h3 className="text-black/50 text-[11px] font-bold uppercase tracking-[0.2em] border-b border-black/10 pb-2 mb-1">Collaborators</h3>
+                  <div className="flex flex-col gap-1 text-black/60 text-[13px] font-light">
                     {project.collaborators.map((c, i) => <div key={i}>{c}</div>)}
                   </div>
                 </div>
               )}
             </div>
 
-            <div className="relative">
-              <p className={`font-sans text-[15px] text-white/80 leading-[1.6] ${!isExpanded ? 'line-clamp-6' : ''}`}>
+            <div className="relative border-t border-black/5 pt-4 mt-2">
+              <p className={`font-sans text-[13px] text-black/80 leading-[1.6] ${!isExpanded ? 'line-clamp-4' : ''}`}>
                 {description}
               </p>
             </div>
 
             {!isExpanded && (
-              <div className="mt-6">
+              <div className="mt-3">
                 <button 
                   onClick={() => setIsExpanded(true)}
-                  className="font-mono text-[10px] uppercase tracking-[0.2em] text-white hover:opacity-50 transition-all flex items-center gap-2 group"
+                  className="font-mono text-[10px] uppercase tracking-[0.2em] text-black hover:opacity-50 transition-all flex items-center gap-2 group"
                 >
                   Read More 
                   <span className="group-hover:translate-x-1 transition-transform">→</span>
@@ -176,10 +176,10 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
             )}
 
             {isExpanded && (
-              <div className="mt-12 pt-12 border-t border-white/10">
+              <div className="mt-6 pt-6 border-t border-black/10">
                 <button 
                   onClick={() => setIsExpanded(false)}
-                  className="font-mono text-[10px] uppercase tracking-[0.2em] text-white/60 hover:text-white transition-all"
+                  className="font-mono text-[10px] uppercase tracking-[0.2em] text-black/50 hover:text-black transition-all"
                 >
                   Show Less
                 </button>
@@ -189,12 +189,12 @@ export function ProjectModal({ project, onClose }: ProjectModalProps) {
         </div>
 
         {/* Right Panel — Scrollable Gallery (~65%) */}
-        <div className="w-full md:w-[65%] h-full pr-4 pt-0 pl-0 pb-0 overflow-y-auto custom-scrollbar overscroll-contain">
-          <div className="flex flex-col gap-4">
+        <div className="w-full md:w-[65%] h-full p-3.5 overflow-y-auto custom-scrollbar-light overscroll-contain">
+          <div className="flex flex-col gap-3.5">
             {[project.coverImage, ...(project.gallery || [])]
               .filter((url, index, self) => self.indexOf(url) === index) // Remove duplicates
               .map((imgUrl, idx) => (
-                <div key={idx} className="relative w-full aspect-[3/2] overflow-hidden bg-gray-50">
+                <div key={idx} className={`relative w-full overflow-hidden bg-gray-100 shrink-0 ${idx === 0 ? 'h-[60vh] md:h-[calc(93vh-30px)]' : 'aspect-[3/2]'}`}>
                   <Image
                     src={imgUrl}
                     alt={`${project.title} - image ${idx + 1}`}

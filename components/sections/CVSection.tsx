@@ -92,7 +92,7 @@ export function CVSection({ theme = "dark" }: CVSectionProps) {
           >
             <div className={`relative w-full aspect-[4/5] overflow-hidden rounded-[24px] ${isLight ? "bg-black/5" : "bg-black"}`}>
               <Image
-                src="/portrait.jpg"
+                src="/portrait.jpeg"
                 alt="Tri Nguyen Minh Portrait"
                 fill
                 className="object-cover"
