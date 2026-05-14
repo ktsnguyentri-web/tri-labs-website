@@ -45,7 +45,7 @@ export function ArticleModal({ article, onClose }: ArticleModalProps) {
         aria-label="Close modal background"
       />
 
-      <div className="bg-white w-[96vw] max-w-[1600px] h-[93vh] rounded-[6px] relative overflow-hidden flex flex-col shadow-2xl z-10 scale-in-95 duration-300 border border-black/10">
+      <div className="bg-white w-[96vw] max-w-4xl h-[93vh] rounded-[6px] relative overflow-hidden flex flex-col shadow-2xl z-10 scale-in-95 duration-300 border border-black/10">
 
         {/* Sticky Header */}
         <div className="sticky top-0 bg-white z-20 px-6 py-3.5 flex justify-between items-center border-b border-black/10 shrink-0">

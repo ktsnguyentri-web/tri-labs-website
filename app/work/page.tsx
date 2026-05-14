@@ -16,7 +16,8 @@ export default async function WorkPage() {
     completionYear: p.completionYear || '2023',
     coverImage: p.coverImage,
     span: p.span,
-    location: p.location
+    location: p.location,
+    role: p.role
   }));
 
   return (

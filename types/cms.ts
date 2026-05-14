@@ -30,6 +30,7 @@ export interface Project {
   architect?: string;
   status?: string;
   scope?: string;
+  role?: string;
   /** Additional image URLs for a gallery carousel */
   gallery?: string[];
 }
@@ -73,6 +74,7 @@ export interface WorkItem {
   span: string;
   /** Human-readable location string */
   location?: string;
+  role?: string;
 }
 
 // ---------------------------------------------------------------------------
@@ -91,6 +93,7 @@ export interface ModalProject {
   architect?: string;
   status?: string;
   scope?: string;
+  role?: string;
   gallery?: string[];
   // Extended details for blowup layout
   siteArea?: string;

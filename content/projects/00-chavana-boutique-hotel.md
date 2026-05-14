@@ -4,6 +4,7 @@ location: "68 Vo Nguyen Giap Street, Son Tra, Da Nang City"
 architect: "Studio Duo"
 status: "Under construction"
 scope: "Concept Design & Construction document"
+role: "Lead Architect"
 span: "md:col-span-2 md:row-span-2"
 img: "/images/projects/chavana/front.jpg"
 order: 0

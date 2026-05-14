@@ -41,6 +41,7 @@ interface RawProject {
   architect?: string;
   status?: string;
   scope?: string;
+  role?: string;
   gallery?: string[];
 }
 
@@ -75,6 +76,7 @@ function toProject(raw: RawProject): Project {
     architect: raw.architect,
     status: raw.status,
     scope: raw.scope,
+    role: raw.role,
     gallery: raw.gallery,
   };
 }

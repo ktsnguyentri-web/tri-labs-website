@@ -6,6 +6,7 @@
       "architect": "Studio Duo",
       "status": "Under construction",
       "scope": "Concept Design & Construction document",
+      "role": "Lead Architect",
       "span": "md:col-span-2 md:row-span-2",
       "img": "/images/projects/chavana/front.jpg",
       "order": 0,
@@ -17,6 +18,7 @@
     {
       "title": "Shenzhen Bay Culture Park",
       "location": "SHENZHEN, CHINA",
+      "role": "Design Director",
       "span": "md:col-span-2 md:row-span-2",
       "img": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
       "order": 1
@@ -24,6 +26,7 @@
     {
       "title": "Harbin Opera House",
       "location": "HARBIN, CHINA",
+      "role": "Project Architect",
       "span": "md:col-span-1 md:row-span-1",
       "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
       "order": 2
@@ -31,6 +34,7 @@
     {
       "title": "Absolute Towers",
       "location": "MISSISSAUGA, CANADA",
+      "role": "Concept Designer",
       "span": "md:col-span-1 md:row-span-2",
       "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
       "order": 3
@@ -38,6 +42,7 @@
     {
       "title": "Ordos Museum",
       "location": "ORDOS, CHINA",
+      "role": "Computational Designer",
       "span": "md:col-span-1 md:row-span-1",
       "img": "https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=1200&q=80",
       "order": 4
@@ -45,6 +50,7 @@
     {
       "title": "Huzhou Sheraton",
       "location": "HUZHOU, CHINA",
+      "role": "Project Architect",
       "span": "md:col-span-2 md:row-span-1",
       "img": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
       "order": 5
@@ -52,6 +58,7 @@
     {
       "title": "Chaoyang Park Plaza",
       "location": "BEIJING, CHINA",
+      "role": "Lead Architect",
       "span": "md:col-span-1 md:row-span-2",
       "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
       "order": 6
@@ -59,6 +66,7 @@
     {
       "title": "Huangshan Mountain Village",
       "location": "HUANGSHAN, CHINA",
+      "role": "Design Director",
       "span": "md:col-span-1 md:row-span-1",
       "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
       "order": 7
@@ -66,6 +74,7 @@
     {
       "title": "Clover House",
       "location": "OKAZAKI, JAPAN",
+      "role": "Concept Designer",
       "span": "md:col-span-2 md:row-span-1",
       "img": "https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=1200&q=80",
       "order": 8
@@ -73,6 +82,7 @@
     {
       "title": "Nanjing Zendai Himalayas",
       "location": "NANJING, CHINA",
+      "role": "Lead Architect",
       "span": "md:col-span-1 md:row-span-1",
       "img": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
       "order": 9
