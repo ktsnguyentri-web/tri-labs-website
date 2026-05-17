@@ -31,6 +31,7 @@ export interface Project {
   status?: string;
   scope?: string;
   role?: string;
+  author?: string;
   /** Additional image URLs for a gallery carousel */
   gallery?: string[];
 }

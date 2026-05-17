@@ -4,7 +4,7 @@ import { useState, useEffect } from "react";
 import { Menu, X, Search } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { motion, useScroll, useMotionValueEvent } from "framer-motion";
+import { motion, useScroll, useMotionValueEvent, AnimatePresence } from "framer-motion";
 import { Logo } from "./Logo";
 
 /**
@@ -55,6 +55,7 @@ export function Navbar() {
   const [hasMounted, setHasMounted] = useState(false);
   const [isIntroFinished, setIsIntroFinished] = useState(false);
   const [hidden, setHidden] = useState(false);
+  const [isContactOpen, setIsContactOpen] = useState(false);
 
   const { scrollY } = useScroll();
 
@@ -92,6 +93,21 @@ export function Navbar() {
     
     return () => observer.disconnect();
   }, []);
+
+  // Handle click outside to close the contact pill
+  useEffect(() => {
+    if (!isContactOpen) return;
+
+    const handleOutsideClick = (e: MouseEvent) => {
+      const target = e.target as HTMLElement;
+      if (!target.closest(".contact-container")) {
+        setIsContactOpen(false);
+      }
+    };
+
+    document.addEventListener("mousedown", handleOutsideClick);
+    return () => document.removeEventListener("mousedown", handleOutsideClick);
+  }, [isContactOpen]);
 
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
@@ -172,61 +188,83 @@ export function Navbar() {
 
           {/* 3. Right Section: Search + Language + Mobile Toggle */}
           <div className="flex-1 flex justify-end items-center gap-6">
-            <div className="hidden md:flex items-center gap-5">
-              {/* Twitter / X */}
-              <a 
-                href="https://twitter.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className={`${isLight ? "text-black/60 hover:text-black" : "text-foreground/60 hover:text-foreground"} transition-all duration-300 hover:-translate-y-0.5`}
-                aria-label="X (Twitter)"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                  <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
-                </svg>
-              </a>
+            <div className="hidden md:flex items-center gap-5 contact-container relative">
+              <AnimatePresence>
+                {isContactOpen && (
+                  <motion.div
+                    key="social-icons"
+                    initial={{ opacity: 0, x: 20, width: 0 }}
+                    animate={{ opacity: 1, x: 0, width: "auto" }}
+                    exit={{ opacity: 0, x: 20, width: 0 }}
+                    transition={{ type: "spring", damping: 25, stiffness: 150 }}
+                    className="flex items-center gap-5 overflow-hidden mr-2"
+                  >
+                    {/* Twitter */}
+                    <a
+                      href="https://twitter.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${isLight ? "text-black/60 hover:text-black" : "text-foreground/60 hover:text-foreground"} transition-all duration-300 hover:-translate-y-0.5`}
+                      aria-label="X (Twitter)"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
+                        <path d="M18.244 2.25h3.308l-7.227 8.26 8.502 11.24H16.17l-5.214-6.817L4.99 21.75H1.68l7.73-8.835L1.254 2.25H8.08l4.713 6.231zm-1.161 17.52h1.833L7.084 4.126H5.117z"/>
+                      </svg>
+                    </a>
 
-              {/* LinkedIn */}
-              <a 
-                href="https://linkedin.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className={`${isLight ? "text-black/60 hover:text-black" : "text-foreground/60 hover:text-foreground"} transition-all duration-300 hover:-translate-y-0.5`}
-                aria-label="LinkedIn"
-              >
-                <svg width="16" height="16" viewBox="2 2 18 18" fill="currentColor" className="w-4 h-4">
-                  <circle cx="4.98" cy="5.09" r="2.69"/>
-                  <path d="M3.48 9h3v11h-3zM10.48 9h2.87v1.51h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.6v5.45h-3v-4.83c0-1.15-.02-2.63-1.6-2.63-1.6 0-1.84 1.25-1.84 2.54v4.92h-3V9z"/>
-                </svg>
-              </a>
+                    {/* LinkedIn */}
+                    <a
+                      href="https://linkedin.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${isLight ? "text-black/60 hover:text-black" : "text-foreground/60 hover:text-foreground"} transition-all duration-300 hover:-translate-y-0.5`}
+                      aria-label="LinkedIn"
+                    >
+                      <svg width="14" height="14" viewBox="2 2 18 18" fill="currentColor" className="w-3.5 h-3.5">
+                        <circle cx="4.98" cy="5.09" r="2.69"/>
+                        <path d="M3.48 9h3v11h-3zM10.48 9h2.87v1.51h.04c.4-.76 1.38-1.56 2.84-1.56 3.04 0 3.6 2 3.6 4.6v5.45h-3v-4.83c0-1.15-.02-2.63-1.6-2.63-1.6 0-1.84 1.25-1.84 2.54v4.92h-3V9z"/>
+                      </svg>
+                    </a>
 
-              {/* Facebook */}
-              <a 
-                href="https://facebook.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className={`${isLight ? "text-black/60 hover:text-black" : "text-foreground/60 hover:text-foreground"} transition-all duration-300 hover:-translate-y-0.5`}
-                aria-label="Facebook"
-              >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="currentColor" className="w-4 h-4">
-                  <path d="M15.4 5.3h2.9V.3C17.8.2 16 .1 14.1.1 11.2.1 9.2 1.9 9.2 5.2v3.1H5.7v5.3h3.5v10.3h5.5V13.6h3.4l.5-5.3h-3.9V5.8c0-1.5.4-2.5 2.6-2.5z"/>
-                </svg>
-              </a>
+                    {/* Facebook */}
+                    <a
+                      href="https://facebook.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${isLight ? "text-black/60 hover:text-black" : "text-foreground/60 hover:text-foreground"} transition-all duration-300 hover:-translate-y-0.5`}
+                      aria-label="Facebook"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor" className="w-3.5 h-3.5">
+                        <path d="M15.4 5.3h2.9V.3C17.8.2 16 .1 14.1.1 11.2.1 9.2 1.9 9.2 5.2v3.1H5.7v5.3h3.5v10.3h5.5V13.6h3.4l.5-5.3h-3.9V5.8c0-1.5.4-2.5 2.6-2.5z"/>
+                      </svg>
+                    </a>
 
-              {/* Instagram */}
-              <a 
-                href="https://instagram.com" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className={`${isLight ? "text-black/60 hover:text-black" : "text-foreground/60 hover:text-foreground"} transition-all duration-300 hover:-translate-y-0.5`}
-                aria-label="Instagram"
+                    {/* Instagram */}
+                    <a
+                      href="https://instagram.com"
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className={`${isLight ? "text-black/60 hover:text-black" : "text-foreground/60 hover:text-foreground"} transition-all duration-300 hover:-translate-y-0.5`}
+                      aria-label="Instagram"
+                    >
+                      <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-3.5 h-3.5">
+                        <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
+                        <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
+                        <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
+                      </svg>
+                    </a>
+                  </motion.div>
+                )}
+              </AnimatePresence>
+
+              <button
+                onClick={() => setIsContactOpen(!isContactOpen)}
+                className={`label-caps font-bold tracking-wider text-[11px] cursor-pointer select-none transition-all duration-300 hover:text-[#61F9E9] ${
+                  isLight ? "text-black" : "text-white"
+                }`}
               >
-                <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round" className="w-4 h-4">
-                  <rect width="20" height="20" x="2" y="2" rx="5" ry="5"/>
-                  <path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/>
-                  <line x1="17.5" x2="17.51" y1="6.5" y2="6.5"/>
-                </svg>
-              </a>
+                CONTACT ME
+              </button>
             </div>
 
             {/* Mobile Toggle */}

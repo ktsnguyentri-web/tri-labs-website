@@ -42,6 +42,7 @@ interface RawProject {
   status?: string;
   scope?: string;
   role?: string;
+  author?: string;
   gallery?: string[];
 }
 
@@ -77,6 +78,7 @@ function toProject(raw: RawProject): Project {
     status: raw.status,
     scope: raw.scope,
     role: raw.role,
+    author: raw.author,
     gallery: raw.gallery,
   };
 }

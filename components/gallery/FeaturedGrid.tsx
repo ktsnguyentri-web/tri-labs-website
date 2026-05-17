@@ -68,6 +68,7 @@ export function FeaturedGrid({ works }: { works: Project[] }) {
         {works.map((work, i) => {
           const href = `/work/${work.slug}`;
           const isWorkPage = pathname?.includes('/work') || pathname?.includes('/projects');
+          const isIndependent = !!work.author || !work.architect;
 
           return (
             <div 
@@ -94,22 +95,35 @@ export function FeaturedGrid({ works }: { works: Project[] }) {
                   </Link>
 
                   {/* 2. Content Section */}
-                  <div className="flex flex-col gap-1">
-                    <div className="font-sans text-[11px] font-bold text-white tracking-tight">
-                      {work.category || 'Architecture'}
-                    </div>
-
+                  <div className="flex flex-col mt-4">
                     <Link
                       href={href}
                       scroll={false}
                       onClick={(e) => isDragging && e.preventDefault()}
-                      className="text-[17px] md:text-[19px] font-light tracking-tight text-white leading-[1.2] hover:opacity-70 transition-opacity line-clamp-2 min-h-[2.4em]"
+                      className="text-[13px] md:text-[14px] font-semibold tracking-wider uppercase text-white hover:text-[#61F9E9] transition-colors leading-snug truncate block w-full"
+                      title={work.title}
                     >
                       {work.title}
                     </Link>
 
-                    <div className="font-sans text-[11px] text-white/40 leading-relaxed line-clamp-1">
-                      {work.location}
+                    <div 
+                      className="font-mono text-[9px] uppercase tracking-widest text-white/40 mt-1.5 mb-3 leading-relaxed truncate block w-full"
+                      title={isIndependent ? "Independent Work" : `${work.category || 'Architecture'} // ${work.location} // ${work.status || work.completionYear}`}
+                    >
+                      {isIndependent 
+                        ? "Independent Work" 
+                        : `${work.category || 'Architecture'} // ${work.location} // ${work.status || work.completionYear}`}
+                    </div>
+
+                    <div className="flex flex-col gap-2 font-mono text-[9px] text-white/70 tracking-wider uppercase border-t border-white/10 pt-3">
+                      <div className="flex justify-between items-start gap-2 min-w-0">
+                         <span className="text-white/40 shrink-0">Role</span>
+                         <span className="text-right text-white truncate max-w-[70%] min-w-0 block" title={work.role}>{work.role}</span>
+                      </div>
+                      <div className="flex justify-between items-start gap-2 min-w-0">
+                         <span className="text-white/40 shrink-0">Scope</span>
+                         <span className="text-right text-white truncate max-w-[70%] min-w-0 block" title={work.scope}>{work.scope}</span>
+                      </div>
                     </div>
                   </div>
                 </div>

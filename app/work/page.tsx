@@ -7,29 +7,25 @@ import { Suspense } from "react";
 export default async function WorkPage() {
   const projects = await getProjects();
 
-  // Map Project to the shape expected by WorkGallery (WorkItem)
-  const works = projects.map(p => ({
-    id: p.slug,
-    slug: p.slug,
-    title: p.title,
-    category: (p.category || 'Architecture') as 'Architecture' | 'Interior' | 'Design',
-    completionYear: p.completionYear || '2023',
-    coverImage: p.coverImage,
-    span: p.span,
-    location: p.location,
-    role: p.role
-  }));
-
   return (
-    <div className="min-h-screen bg-black text-foreground font-sans selection:bg-accent selection:text-black">
+    <div className="min-h-screen bg-black text-white font-sans selection:bg-[#61F9E9] selection:text-black">
       <Navbar />
       <main className="w-full pt-[60px]">
-        <Suspense fallback={<div className="pt-40 px-10">Loading gallery...</div>}>
-          <WorkGallery works={works} />
+        {/* Intro / Disclaimer Header */}
+        <div className="w-full max-w-[1440px] mx-auto px-6 md:px-10 pt-20 pb-4">
+          <h1 className="text-4xl md:text-5xl font-light tracking-tight text-white mb-6 uppercase">
+            Work
+          </h1>
+          <p className="font-mono text-[11px] text-white/50 max-w-xl uppercase tracking-widest leading-relaxed">
+            Selected professional and independent works. Credits and individual contributions are noted per project.
+          </p>
+        </div>
+
+        <Suspense fallback={<div className="pt-20 px-10 font-mono text-[10px] text-white/40 uppercase tracking-widest">Loading visual chronicles...</div>}>
+          <WorkGallery works={projects} />
         </Suspense>
         <Contact />
       </main>
     </div>
   );
 }
-
