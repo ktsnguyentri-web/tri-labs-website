@@ -1,0 +1,552 @@
+<html class="" lang="en" style=""><head></head><body class="bg-white text-on-surface font-body-md antialiased selection:bg-tertiary-fixed selection:text-tertiary-container" style="">
+<style>.project-info-panel { background: linear-gradient(to top, rgba(0, 0, 0, 0.8) 0%, rgba(0, 0, 0, 0) 100%); transition: opacity 0.4s ease; opacity: 0; }.group:hover .project-info-panel { opacity: 1; }</style>
+<meta charset="utf-8"/>
+<style>.work-card-container {
+    display: flex;
+  }
+  .work-card {
+    flex: 1;
+    transition: flex 0.7s ease-in-out, opacity 0.7s ease-in-out;
+    display: flex;
+    flex-direction: column;
+  }.work-card-container:hover .work-card {
+    opacity: 0.4;
+  }
+  .work-card-container .work-card:hover {
+    flex: 3;
+    opacity: 1;
+  }.card-label h3 {
+    display: inline-flex;
+    align-items: center;
+    gap: 0;
+    transition: gap 0.7s ease-in-out;
+  }
+  .card-label h3::after {
+    content: '→';
+    opacity: 0;
+    max-width: 0;
+    display: inline-block;
+    transition: all 0.7s ease-in-out;
+    font-weight: 300;
+    margin-left: 0;
+    transform: translateX(-10px);
+    overflow: hidden;
+  }
+  .work-card:hover .card-label h3::after {
+    opacity: 1;
+    max-width: 30px;
+    margin-left: 0.5rem;
+    transform: translateX(0);
+  }
+  @keyframes slide-in-left {
+    0% { transform: translateX(-100%); opacity: 0; }
+    100% { transform: translateX(0); opacity: 1; }
+  }
+  .animate-slide-in-left {
+    animation: slide-in-left 1s cubic-bezier(0.16, 1, 0.3, 1) forwards;
+  }
+  .feathered-top-edge { position: absolute; top: 0; left: 0; right: 0; height: 15%; background: linear-gradient(to bottom, #ffffff 0%, rgba(255, 255, 255, 0) 100%); pointer-events: none; z-index: 10; }
+  
+  /* Modal Animation Styles */
+  .modal-enter {
+      opacity: 1 !important;
+  }
+  .modal-content-enter {
+      transform: scale(1) !important;
+  }
+
+  /* Hide scrollbar for cleaner look but keep functionality */
+  .no-scrollbar::-webkit-scrollbar {
+      display: none;
+  }
+  .no-scrollbar {
+      -ms-overflow-style: none;
+      scrollbar-width: none;
+  }
+  </style><div class="fixed top-0 left-0 right-0 h-24 z-[90] pointer-events-none" style="background: linear-gradient(to bottom, rgba(255, 255, 255, 0.2) 0%, rgba(255, 255, 255, 0) 100%);"></div>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>TRI NGUYEN - Portfolio</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<style>
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .scribble-hover { position: relative; }
+        .scribble-hover:hover::after {
+            content: '';
+            position: absolute;
+            bottom: -4px;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background-color: #61f9e9;transform: rotate(-1deg);
+            z-index: -1;
+        }
+  </style>
+<script id="tailwind-config">tailwind.config = {darkMode: "class", theme: {extend: {keyframes: {"scale-down": {"0%": {transform: "scale(1.1)"}, "100%": {transform: "scale(1)"}}}, animation: {"scale-down": "scale-down 7s ease-out forwards"}, colors: {"on-secondary": "#ffffff", "error-container": "#ffdad6", "secondary-container": "#dfe0e0", "on-tertiary-fixed": "#00201d", "surface-dim": "#dadada", primary: "#000000", error: "#ba1a1a", "surface-container-low": "#f3f3f3", "surface-container-highest": "#e2e2e2", "on-error-container": "#93000a", "secondary-fixed-dim": "#c6c6c7", "on-primary-fixed": "#1b1b1b", "on-surface": "#1a1c1c", "surface-container-lowest": "#ffffff", "on-tertiary": "#ffffff", "on-surface-variant": "#4c4546", "surface-tint": "#5e5e5e", "primary-fixed": "#e2e2e2", "inverse-on-surface": "#f1f1f1", "on-primary-container": "#848484", "on-secondary-container": "#616363", outline: "#7e7576", "on-primary": "#ffffff", "tertiary-fixed-dim": "#3adccc", "surface-variant": "#e2e2e2", "inverse-surface": "#2f3131", "on-primary-fixed-variant": "#474747", "tertiary-fixed": "#61f9e9", secondary: "#5d5f5f", "surface-container": "#eeeeee", "secondary-fixed": "#e2e2e2", background: "#f9f9f9", "inverse-primary": "#c6c6c6", "on-secondary-fixed": "#1a1c1c", "outline-variant": "#cfc4c5", "surface-bright": "#f9f9f9", "surface-container-high": "#e8e8e8", "on-secondary-fixed-variant": "#454747", "on-tertiary-container": "#009488", tertiary: "#000000", "tertiary-container": "#00201d", "primary-fixed-dim": "#c6c6c6", "on-tertiary-fixed-variant": "#005049", "primary-container": "#1b1b1b", surface: "#f9f9f9", "on-error": "#ffffff", "on-background": "#1a1c1c"}, borderRadius: {DEFAULT: "0.25rem", lg: "0.5rem", xl: "0.75rem", full: "9999px"}, spacing: {gutter: "24px", unit: "8px", "section-gap": "160px", "margin-edge": "48px", "container-max": "1440px"}, fontFamily: {"body-md": ["Inter"], "heading-lg": ["Inter"], "data-mono": ["Inter"], "display-xl": ["Inter"], "label-caps": ["Inter"]}, fontSize: {"body-md": ["16px", {lineHeight: "1.6", letterSpacing: "0", fontWeight: "400"}], "heading-lg": ["32px", {lineHeight: "1.2", letterSpacing: "-0.02em", fontWeight: "500"}], "data-mono": ["14px", {lineHeight: "1.4", letterSpacing: "0.05em", fontWeight: "400"}], "display-xl": ["80px", {lineHeight: "1.0", letterSpacing: "-0.04em", fontWeight: "700"}], "label-caps": ["12px", {lineHeight: "1.0", letterSpacing: "0.1em", fontWeight: "700"}]}}}};</script>
+<nav class="fixed top-0 left-0 right-0 z-[100] flex justify-between items-center px-[20px] h-[40px] pointer-events-none">
+<div class="text-lg font-bold tracking-[0.2em] text-black pointer-events-auto" style="">
+        TRI NGUYEN
+    </div>
+<div class="flex items-center pointer-events-auto text-black">
+<a class="hover:text-tertiary-fixed transition-colors duration-200 cursor-pointer" id="open-menu-btn" style=""><span class="material-symbols-outlined text-3xl" style="">menu</span></a>
+</div>
+</nav>
+<div class="flex relative w-full h-screen overflow-hidden">
+<!-- Hero Section (Left Side) -->
+<section class="relative w-full overflow-hidden flex-shrink-0 transition-all duration-700 ease-in-out flex items-center justify-center bg-white min-h-screen" id="hero-main" style="width: 100%;">
+<div class="absolute z-0 rounded-3xl overflow-hidden top-[40px] right-[13px] bottom-[13px] left-[13px]">
+<img alt="Brutalist concrete structure with high contrast light and shadow" class="w-full h-full absolute left-0 top-0 object-cover object-center animate-scale-down" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4Ty-r-dQM0y0d8lavt3l-CxVwpUNyxMqJ395nUEINSSCG2Hsg8hwhCS9-p_fXu1eslSPxsoeyMcWikK17pJaF0wO2vo767OFbeq248jthK5yI21i2jM7zMDWf85LypiM6kL-upErBjEbUPhvRESlXYkgMThONFLfL3HM_RnwJasqGQfug_tPO7biqcLJJoIaJxxs30R0PjVkGM79b6xEo3Eq4BYyjlBxWO1X1AghiIYnFDD3QPgKHCgbWQwHAAlaJF8z757FM-Scl" style="height: 100%; width: 100%;"/>
+<div class="absolute bottom-8 left-8 z-30 max-w-[280px] bg-black/40 backdrop-blur-md rounded-xl border-t border-tertiary-fixed p-5 text-white shadow-2xl animate-slide-in-left">
+<div class="flex flex-wrap gap-3 mb-4">
+<span class="font-data-mono text-[10px] tracking-widest text-tertiary-fixed border border-tertiary-fixed/30 px-1.5 py-0.5 rounded" style="">VIEW</span>
+<span class="font-data-mono text-[10px] tracking-widest text-white/70 py-0.5" style="">UPDATE</span>
+</div>
+<h4 class="font-body-md text-sm md:text-base font-medium leading-snug mb-3" style="">
+        Ma Yansong Named Guest Editor of...
+    </h4>
+<div class="font-data-mono text-[9px] tracking-tighter text-white/50 uppercase" style="">
+        PUBLICATION | [TAG]
+    </div>
+</div>
+</div>
+<div class="relative z-10 text-center flex flex-col items-center">
+</div>
+</section>
+<!-- Menu Panel (Right Side) -->
+<section class="absolute right-0 top-0 w-1/2 h-full bg-white z-[110] transform translate-x-full transition-transform duration-700 ease-in-out border-l border-gray-200 flex flex-col items-center justify-center" id="hero-menu" style="transform: translateX(100%);">
+<button class="absolute top-8 right-8 p-4 hover:bg-gray-100 rounded-full transition-colors" id="close-menu-btn" style="">
+<span class="material-symbols-outlined text-4xl" style="">close</span>
+</button>
+<nav class="flex flex-col gap-8 text-center font-display-xl">
+<a class="text-4xl md:text-6xl font-bold text-black hover:text-tertiary-fixed transition-colors" href="#" style="">Home</a>
+<a class="text-4xl md:text-6xl font-bold text-black hover:text-tertiary-fixed transition-colors" href="#featured-works" style="">Work</a>
+<a class="text-4xl md:text-6xl font-bold text-black hover:text-tertiary-fixed transition-colors" href="#" style="">Bio</a>
+<a class="text-4xl md:text-6xl font-bold text-black hover:text-tertiary-fixed transition-colors" href="#cv-section" style="">CV</a><a class="text-4xl md:text-6xl font-bold text-black hover:text-tertiary-fixed transition-colors" href="#contact-section" style="">Contact</a>
+</nav>
+</section>
+</div>
+<script>document.addEventListener('DOMContentLoaded', () => {
+        const openMenuBtn = document.getElementById('open-menu-btn');
+        const closeMenuBtn = document.getElementById('close-menu-btn');
+        const heroMain = document.getElementById('hero-main');
+        const heroMenu = document.getElementById('hero-menu');
+        const workLink = document.querySelector("#hero-menu nav a[href='#featured-works']");
+        const contactLink = document.querySelector("#hero-menu nav a[href='#contact-section']");
+
+        const closeMenu = () => {
+            heroMain.style.width = '100%';
+            heroMenu.style.transform = 'translateX(100%)';
+        };
+
+        const openMenu = () => {
+            heroMain.style.width = '50%';
+            heroMenu.style.transform = 'translateX(0)';
+            // Smooth scroll to top if not already there
+            if (window.scrollY > 0) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
+        };
+
+        openMenuBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            openMenu();
+        });
+
+        closeMenuBtn.addEventListener('click', (e) => {
+            e.preventDefault();
+            closeMenu();
+        });
+
+        if (workLink) {
+            workLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.getElementById('featured-works');
+                if (target) {
+                    closeMenu();
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }, 400); // Wait for menu close animation
+                }
+            });
+        }
+        
+        if (contactLink) {
+            contactLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.getElementById('contact-section');
+                if (target) {
+                    closeMenu();
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }, 400);
+                }
+            });
+        }
+        
+        // Modal Logic
+        const modal = document.getElementById('project-modal');
+        const modalContent = document.getElementById('project-modal-content');
+        const closeModalBtnModal = document.getElementById('close-modal-detail-btn');
+        const modalImage = document.getElementById('modal-image');
+        const workItems = document.querySelectorAll('#featured-works .group');
+        
+        // Read More Logic
+        const readMoreBtn = document.getElementById('read-more-btn');
+        const modalTextContent = document.getElementById('modal-text-content');
+
+        if (readMoreBtn && modalTextContent) {
+            readMoreBtn.addEventListener('click', () => {
+                const isExpanded = modalTextContent.style.maxHeight !== '4.5rem' && modalTextContent.style.maxHeight !== '';
+                
+                if (isExpanded) {
+                    modalTextContent.style.maxHeight = '4.5rem';
+                    readMoreBtn.innerHTML = 'READ MORE <span class="material-symbols-outlined text-sm">add</span>';
+                } else {
+                    modalTextContent.style.maxHeight = '1000px';
+                    readMoreBtn.innerHTML = 'READ LESS <span class="material-symbols-outlined text-sm">remove</span>';
+                }
+            });
+        }
+
+        const openModal = (imgSrc) => {
+            modalImage.src = imgSrc;
+            modal.classList.remove('hidden');
+            // Force reflow
+            void modal.offsetWidth;
+            modal.classList.add('modal-enter');
+            modalContent.classList.add('modal-content-enter');
+            document.body.style.overflow = 'hidden';
+            
+            // Reset read more state
+            if (modalTextContent && readMoreBtn) {
+                modalTextContent.style.maxHeight = '4.5rem';
+                readMoreBtn.innerHTML = 'READ MORE <span class="material-symbols-outlined text-sm">add</span>';
+            }
+        };
+
+        const closeModalFunction = () => {
+            modal.classList.remove('modal-enter');
+            modalContent.classList.remove('modal-content-enter');
+            setTimeout(() => {
+                modal.classList.add('hidden');
+                document.body.style.overflow = '';
+            }, 500); // Matches the duration-500 class
+        };
+
+        workItems.forEach(item => {
+            item.classList.add('cursor-pointer');
+            item.addEventListener('click', (e) => {
+                const img = item.querySelector('img');
+                if(img) {
+                    openModal(img.src);
+                }
+            });
+        });
+
+        if(closeModalBtnModal) {
+            closeModalBtnModal.addEventListener('click', closeModalFunction);
+        }
+        
+        if(modal) {
+            modal.addEventListener('click', (e) => {
+                if (e.target === modal) {
+                    closeModalFunction();
+                }
+            });
+        }
+    });document.addEventListener('DOMContentLoaded', () => {
+        const cvLink = document.querySelector("#hero-menu nav a[href='#cv-section']");
+        if (cvLink) {
+            cvLink.addEventListener('click', (e) => {
+                e.preventDefault();
+                const target = document.getElementById('cv-section');
+                if (target) {
+                    // Access existing closeMenu function if possible, or define logic
+                    const heroMain = document.getElementById('hero-main');
+                    const heroMenu = document.getElementById('hero-menu');
+                    heroMain.style.width = '100%';
+                    heroMenu.style.transform = 'translateX(100%)';
+                    
+                    setTimeout(() => {
+                        target.scrollIntoView({ behavior: 'smooth' });
+                    }, 400);
+                }
+            });
+        }
+    });</script>
+<section class="bg-surface-container-lowest py-12 px-[5vw] w-full mx-auto relative">
+<div class="flex flex-col md:flex-row gap-12 items-start w-full pt-12">
+<div class="w-full md:w-1/3 pt-2">
+<div class="font-data-mono text-xs uppercase text-on-surface tracking-widest flex flex-col gap-1">
+<span class="font-bold scribble-hover inline-block w-fit" style="">TRI NGUYEN</span>
+<span class="text-gray-500" style="">FOUNDER &amp; PRINCIPLE PARTNER</span>
+</div>
+</div>
+<div class="w-full md:w-2/3">
+<p class="font-body-md text-3xl md:text-5xl lg:text-5xl font-light leading-tight text-black tracking-tight" style="">Building spaces and tools that bridge the gap between physical and digital experiences</p>
+</div>
+</div>
+</section>
+<section class="bg-surface-container-lowest pt-24 pb-16 px-[5vw] w-full mx-auto overflow-hidden relative"><div class="feathered-top-edge"></div>
+<div class="flex flex-col gap-12 items-center w-full mb-16 md:mb-32">
+<div class="w-full text-center pt-4">
+<h2 class="text-2xl md:text-3xl font-light tracking-tight text-on-surface" style="">My work spans</h2>
+</div>
+<div class="w-full flex gap-1 md:gap-2 items-start justify-center work-card-container h-[450px] md:h-[550px]">
+<div class="w-full h-full relative cursor-pointer group/item work-card"><div class="relative w-full h-full overflow-hidden rounded-2xl bg-surface-container shadow-lg transition-shadow duration-700 hover:shadow-2xl">
+<img alt="Brutalist architecture detail" class="w-full h-full object-cover transition-all duration-700 group-hover/item:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4Ty-r-dQM0y0d8lavt3l-CxVwpUNyxMqJ395nUEINSSCG2Hsg8hwhCS9-p_fXu1eslSPxsoeyMcWikK17pJaF0wO2vo767OFbeq248jthK5yI21i2jM7zMDWf85LypiM6kL-upErBjEbUPhvRESlXYkgMThONFLfL3HM_RnwJasqGQfug_tPO7biqcLJJoIaJxxs30R0PjVkGM79b6xEo3Eq4BYyjlBxWO1X1AghiIYnFDD3QPgKHCgbWQwHAAlaJF8z757FM-Scl" style=""/>
+</div>
+<div class="mt-6 text-center card-label w-full">
+<h3 class="text-2xl font-bold tracking-tight text-on-surface whitespace-nowrap" style="">Design</h3>
+</div></div>
+<div class="w-full h-full relative cursor-pointer group/item work-card"><div class="relative w-full h-full overflow-hidden rounded-2xl bg-surface-container shadow-lg transition-shadow duration-700 hover:shadow-2xl">
+<img alt="Concrete formwork detail" class="w-full h-full object-cover transition-all duration-700 group-hover/item:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4Ty-r-dQM0y0d8lavt3l-CxVwpUNyxMqJ395nUEINSSCG2Hsg8hwhCS9-p_fXu1eslSPxsoeyMcWikK17pJaF0wO2vo767OFbeq248jthK5yI21i2jM7zMDWf85LypiM6kL-upErBjEbUPhvRESlXYkgMThONFLfL3HM_RnwJasqGQfug_tPO7biqcLJJoIaJxxs30R0PjVkGM79b6xEo3Eq4BYyjlBxWO1X1AghiIYnFDD3QPgKHCgbWQwHAAlaJF8z757FM-Scl" style=""/>
+</div>
+<div class="mt-6 text-center card-label w-full">
+<h3 class="text-2xl font-bold tracking-tight text-on-surface whitespace-nowrap" style="">Tool</h3>
+</div></div>
+<div class="w-full h-full relative cursor-pointer group/item work-card"><div class="relative w-full h-full overflow-hidden rounded-2xl bg-surface-container shadow-lg transition-shadow duration-700 hover:shadow-2xl">
+<img alt="Architectural shadow play" class="w-full h-full object-cover transition-all duration-700 group-hover/item:scale-110" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4Ty-r-dQM0y0d8lavt3l-CxVwpUNyxMqJ395nUEINSSCG2Hsg8hwhCS9-p_fXu1eslSPxsoeyMcWikK17pJaF0wO2vo767OFbeq248jthK5yI21i2jM7zMDWf85LypiM6kL-upErBjEbUPhvRESlXYkgMThONFLfL3HM_RnwJasqGQfug_tPO7biqcLJJoIaJxxs30R0PjVkGM79b6xEo3Eq4BYyjlBxWO1X1AghiIYnFDD3QPgKHCgbWQwHAAlaJF8z757FM-Scl" style=""/>
+</div>
+<div class="mt-6 text-center card-label w-full">
+<h3 class="text-2xl font-bold tracking-tight text-on-surface whitespace-nowrap" style="">Art</h3>
+</div></div>
+</div>
+</div>
+</section>
+<section class="bg-surface-container-lowest pt-24 pb-16 px-[5vw] w-full mx-auto overflow-hidden relative mt-2" id="featured-works"><div class="feathered-top-edge"></div>
+<div class="flex justify-between items-center mb-6">
+<h2 class="text-2xl md:text-3xl font-light tracking-tight text-on-surface" style="">Featured Works</h2>
+<button class="px-4 py-1.5 bg-gray-100 hover:bg-gray-200 text-[10px] font-data-mono uppercase tracking-widest rounded transition-colors flex items-center gap-2 text-gray-700" style="">
+            ALL WORK <span class="material-symbols-outlined text-sm" style="">arrow_right_alt</span>
+</button>
+</div>
+<div class="grid grid-cols-1 md:grid-cols-4 auto-rows-[250px] gap-2 grid-flow-dense w-full">
+<div class="md:col-span-2 md:row-span-2 overflow-hidden rounded-xl bg-surface-container relative group cursor-pointer">
+<img alt="Featured Work 1" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4Ty-r-dQM0y0d8lavt3l-CxVwpUNyxMqJ395nUEINSSCG2Hsg8hwhCS9-p_fXu1eslSPxsoeyMcWikK17pJaF0wO2vo767OFbeq248jthK5yI21i2jM7zMDWf85LypiM6kL-upErBjEbUPhvRESlXYkgMThONFLfL3HM_RnwJasqGQfug_tPO7biqcLJJoIaJxxs30R0PjVkGM79b6xEo3Eq4BYyjlBxWO1X1AghiIYnFDD3QPgKHCgbWQwHAAlaJF8z757FM-Scl" style=""/>
+<div class="project-info-panel absolute bottom-0 left-0 right-0 p-6 pointer-events-none">
+<div class="font-data-mono text-white">
+<div class="text-sm font-bold uppercase tracking-wider mb-1">Shenzhen Bay Culture Park</div>
+<div class="text-[10px] opacity-70 uppercase tracking-widest">SHENZHEN, CHINA</div>
+</div>
+</div></div>
+<div class="md:col-span-1 md:row-span-1 overflow-hidden rounded-xl bg-surface-container relative group cursor-pointer">
+<img alt="Featured Work 2" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRUtj0zLOuAcVTeJCCHmEZ8CRv99UM5ufIZi10ZwB00ZUQAHM1KowTPJj1o8TOBTUH9Py5g9gTU2RoPMDCO9O_8l9EntvYJHftDrgvSFbGQ-ralCtEjA0zc8yvWo399_Ee3Mlz0bKrv-JljeGgYOLCFiCq61v4rFko0f9OCOEszkrxBD0a_2TpE4QDJSC1wJBs8-zRzEtfqZWg-1LPVO_VShH5OS-c-I-46e-bQ2LEvhXtUbwUW7Gvx8oeaXS2VUTuYLYFyj0FEOon" style=""/>
+<div class="project-info-panel absolute bottom-0 left-0 right-0 p-6 pointer-events-none">
+<div class="font-data-mono text-white">
+<div class="text-sm font-bold uppercase tracking-wider mb-1">Shenzhen Bay Culture Park</div>
+<div class="text-[10px] opacity-70 uppercase tracking-widest">SHENZHEN, CHINA</div>
+</div>
+</div></div>
+<div class="md:col-span-1 md:row-span-2 overflow-hidden rounded-xl bg-surface-container relative group cursor-pointer">
+<img alt="Featured Work 3" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4Ty-r-dQM0y0d8lavt3l-CxVwpUNyxMqJ395nUEINSSCG2Hsg8hwhCS9-p_fXu1eslSPxsoeyMcWikK17pJaF0wO2vo767OFbeq248jthK5yI21i2jM7zMDWf85LypiM6kL-upErBjEbUPhvRESlXYkgMThONFLfL3HM_RnwJasqGQfug_tPO7biqcLJJoIaJxxs30R0PjVkGM79b6xEo3Eq4BYyjlBxWO1X1AghiIYnFDD3QPgKHCgbWQwHAAlaJF8z757FM-Scl" style=""/>
+<div class="project-info-panel absolute bottom-0 left-0 right-0 p-6 pointer-events-none">
+<div class="font-data-mono text-white">
+<div class="text-sm font-bold uppercase tracking-wider mb-1">Shenzhen Bay Culture Park</div>
+<div class="text-[10px] opacity-70 uppercase tracking-widest">SHENZHEN, CHINA</div>
+</div>
+</div></div>
+<div class="md:col-span-1 md:row-span-1 overflow-hidden rounded-xl bg-surface-container relative group cursor-pointer">
+<img alt="Featured Work 4" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmtc_dApOVHhDm1p06u8A1jMeOjRyMkFUNgUwm0d34yszh1jDI9_QQJbN7BTBfzm_a_07fWrpexyFxxjASbJH2GxE5gc-SaLfB8j_BMVr9oj_maMTDRfFA1SJeitThqxFji0CPQ0JTCgTWFbeOXjYgAFpFOYXmMcCj5HOcj-699koq6BQTrCvl4KQZw5EfTsIgS5UT-3uivAiaoPFUjBVdYkP9hinR9VRep2Cec0wyWZQAR1_I9rnC4gxas3mOTkf8DcuKLJ9ZH3oP" style=""/>
+<div class="project-info-panel absolute bottom-0 left-0 right-0 p-6 pointer-events-none">
+<div class="font-data-mono text-white">
+<div class="text-sm font-bold uppercase tracking-wider mb-1">Shenzhen Bay Culture Park</div>
+<div class="text-[10px] opacity-70 uppercase tracking-widest">SHENZHEN, CHINA</div>
+</div>
+</div></div>
+<div class="md:col-span-2 md:row-span-1 overflow-hidden rounded-xl bg-surface-container relative group cursor-pointer">
+<img alt="Featured Work 5" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYDV63gI48XShq_IHC7O8Ovx3qQbwUcVsZLRp9QHJ9F4sLzjPx9alswxc5hCcZOXJakWHtLLWeyFoatXaO5KUTdgUu54DRYmLRry966ZLyPpxXCgw-CZOsmmd-8-643imjOBsCra6RuoLUKGQw1Vyozne3wVs6Za8pFoDqbHBgVZ3sbwj3P78YNmTcEZUcUKeYrL1i_Dkh6r6jAo1Yt7-huxdWzkYvUUrwc7wThtM552gnhzC2dSr40yta0gOH-9u7yOKW-dwbYVtl" style=""/>
+<div class="project-info-panel absolute bottom-0 left-0 right-0 p-6 pointer-events-none">
+<div class="font-data-mono text-white">
+<div class="text-sm font-bold uppercase tracking-wider mb-1">Shenzhen Bay Culture Park</div>
+<div class="text-[10px] opacity-70 uppercase tracking-widest">SHENZHEN, CHINA</div>
+</div>
+</div></div>
+<div class="md:col-span-1 md:row-span-2 overflow-hidden rounded-xl bg-surface-container relative group cursor-pointer">
+<img alt="Featured Work 6" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4Ty-r-dQM0y0d8lavt3l-CxVwpUNyxMqJ395nUEINSSCG2Hsg8hwhCS9-p_fXu1eslSPxsoeyMcWikK17pJaF0wO2vo767OFbeq248jthK5yI21i2jM7zMDWf85LypiM6kL-upErBjEbUPhvRESlXYkgMThONFLfL3HM_RnwJasqGQfug_tPO7biqcLJJoIaJxxs30R0PjVkGM79b6xEo3Eq4BYyjlBxWO1X1AghiIYnFDD3QPgKHCgbWQwHAAlaJF8z757FM-Scl" style=""/>
+<div class="project-info-panel absolute bottom-0 left-0 right-0 p-6 pointer-events-none">
+<div class="font-data-mono text-white">
+<div class="text-sm font-bold uppercase tracking-wider mb-1">Shenzhen Bay Culture Park</div>
+<div class="text-[10px] opacity-70 uppercase tracking-widest">SHENZHEN, CHINA</div>
+</div>
+</div></div>
+<div class="md:col-span-1 md:row-span-1 overflow-hidden rounded-xl bg-surface-container relative group cursor-pointer">
+<img alt="Featured Work 7" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRUtj0zLOuAcVTeJCCHmEZ8CRv99UM5ufIZi10ZwB00ZUQAHM1KowTPJj1o8TOBTUH9Py5g9gTU2RoPMDCO9O_8l9EntvYJHftDrgvSFbGQ-ralCtEjA0zc8yvWo399_Ee3Mlz0bKrv-JljeGgYOLCFiCq61v4rFko0f9OCOEszkrxBD0a_2TpE4QDJSC1wJBs8-zRzEtfqZWg-1LPVO_VShH5OS-c-I-46e-bQ2LEvhXtUbwUW7Gvx8oeaXS2VUTuYLYFyj0FEOon" style=""/>
+<div class="project-info-panel absolute bottom-0 left-0 right-0 p-6 pointer-events-none">
+<div class="font-data-mono text-white">
+<div class="text-sm font-bold uppercase tracking-wider mb-1">Shenzhen Bay Culture Park</div>
+<div class="text-[10px] opacity-70 uppercase tracking-widest">SHENZHEN, CHINA</div>
+</div>
+</div></div>
+<div class="md:col-span-2 md:row-span-2 overflow-hidden rounded-xl bg-surface-container relative group cursor-pointer">
+<img alt="Featured Work 8" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4Ty-r-dQM0y0d8lavt3l-CxVwpUNyxMqJ395nUEINSSCG2Hsg8hwhCS9-p_fXu1eslSPxsoeyMcWikK17pJaF0wO2vo767OFbeq248jthK5yI21i2jM7zMDWf85LypiM6kL-upErBjEbUPhvRESlXYkgMThONFLfL3HM_RnwJasqGQfug_tPO7biqcLJJoIaJxxs30R0PjVkGM79b6xEo3Eq4BYyjlBxWO1X1AghiIYnFDD3QPgKHCgbWQwHAAlaJF8z757FM-Scl" style=""/>
+<div class="project-info-panel absolute bottom-0 left-0 right-0 p-6 pointer-events-none">
+<div class="font-data-mono text-white">
+<div class="text-sm font-bold uppercase tracking-wider mb-1">Shenzhen Bay Culture Park</div>
+<div class="text-[10px] opacity-70 uppercase tracking-widest">SHENZHEN, CHINA</div>
+</div>
+</div></div>
+<div class="md:col-span-1 md:row-span-1 overflow-hidden rounded-xl bg-surface-container relative group cursor-pointer">
+<img alt="Featured Work 9" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuAmtc_dApOVHhDm1p06u8A1jMeOjRyMkFUNgUwm0d34yszh1jDI9_QQJbN7BTBfzm_a_07fWrpexyFxxjASbJH2GxE5gc-SaLfB8j_BMVr9oj_maMTDRfFA1SJeitThqxFji0CPQ0JTCgTWFbeOXjYgAFpFOYXmMcCj5HOcj-699koq6BQTrCvl4KQZw5EfTsIgS5UT-3uivAiaoPFUjBVdYkP9hinR9VRep2Cec0wyWZQAR1_I9rnC4gxas3mOTkf8DcuKLJ9ZH3oP" style=""/>
+<div class="project-info-panel absolute bottom-0 left-0 right-0 p-6 pointer-events-none">
+<div class="font-data-mono text-white">
+<div class="text-sm font-bold uppercase tracking-wider mb-1">Shenzhen Bay Culture Park</div>
+<div class="text-[10px] opacity-70 uppercase tracking-widest">SHENZHEN, CHINA</div>
+</div>
+</div></div>
+<div class="md:col-span-1 md:row-span-2 overflow-hidden rounded-xl bg-surface-container relative group cursor-pointer">
+<img alt="Featured Work 10" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDYDV63gI48XShq_IHC7O8Ovx3qQbwUcVsZLRp9QHJ9F4sLzjPx9alswxc5hCcZOXJakWHtLLWeyFoatXaO5KUTdgUu54DRYmLRry966ZLyPpxXCgw-CZOsmmd-8-643imjOBsCra6RuoLUKGQw1Vyozne3wVs6Za8pFoDqbHBgVZ3sbwj3P78YNmTcEZUcUKeYrL1i_Dkh6r6jAo1Yt7-huxdWzkYvUUrwc7wThtM552gnhzC2dSr40yta0gOH-9u7yOKW-dwbYVtl" style=""/>
+<div class="project-info-panel absolute bottom-0 left-0 right-0 p-6 pointer-events-none">
+<div class="font-data-mono text-white">
+<div class="text-sm font-bold uppercase tracking-wider mb-1">Shenzhen Bay Culture Park</div>
+<div class="text-[10px] opacity-70 uppercase tracking-widest">SHENZHEN, CHINA</div>
+</div>
+</div></div>
+<div class="md:col-span-1 md:row-span-2 overflow-hidden rounded-xl bg-surface-container relative group cursor-pointer">
+<img alt="Featured Work 11" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuC4Ty-r-dQM0y0d8lavt3l-CxVwpUNyxMqJ395nUEINSSCG2Hsg8hwhCS9-p_fXu1eslSPxsoeyMcWikK17pJaF0wO2vo767OFbeq248jthK5yI21i2jM7zMDWf85LypiM6kL-upErBjEbUPhvRESlXYkgMThONFLfL3HM_RnwJasqGQfug_tPO7biqcLJJoIaJxxs30R0PjVkGM79b6xEo3Eq4BYyjlBxWO1X1AghiIYnFDD3QPgKHCgbWQwHAAlaJF8z757FM-Scl" style=""/>
+<div class="project-info-panel absolute bottom-0 left-0 right-0 p-6 pointer-events-none">
+<div class="font-data-mono text-white">
+<div class="text-sm font-bold uppercase tracking-wider mb-1">Shenzhen Bay Culture Park</div>
+<div class="text-[10px] opacity-70 uppercase tracking-widest">SHENZHEN, CHINA</div>
+</div>
+</div></div>
+<div class="md:col-span-2 md:row-span-1 overflow-hidden rounded-xl bg-surface-container relative group cursor-pointer">
+<img alt="Featured Work 12" class="w-full h-full object-cover hover:scale-105 transition-transform duration-700" src="https://lh3.googleusercontent.com/aida-public/AB6AXuDRUtj0zLOuAcVTeJCCHmEZ8CRv99UM5ufIZi10ZwB00ZUQAHM1KowTPJj1o8TOBTUH9Py5g9gTU2RoPMDCO9O_8l9EntvYJHftDrgvSFbGQ-ralCtEjA0zc8yvWo399_Ee3Mlz0bKrv-JljeGgYOLCFiCq61v4rFko0f9OCOEszkrxBD0a_2TpE4QDJSC1wJBs8-zRzEtfqZWg-1LPVO_VShH5OS-c-I-46e-bQ2LEvhXtUbwUW7Gvx8oeaXS2VUTuYLYFyj0FEOon" style=""/>
+<div class="project-info-panel absolute bottom-0 left-0 right-0 p-6 pointer-events-none">
+<div class="font-data-mono text-white">
+<div class="text-sm font-bold uppercase tracking-wider mb-1">Shenzhen Bay Culture Park</div>
+<div class="text-[10px] opacity-70 uppercase tracking-widest">SHENZHEN, CHINA</div>
+</div>
+</div></div>
+</div>
+</section>
+<section class="bg-surface-container-lowest py-24 px-[5vw] w-full mx-auto relative" id="blog-section">
+<div class="flex flex-col gap-16 w-full max-w-[1440px] mx-auto">
+<div class="flex justify-between items-end border-b border-black pb-4">
+<h2 class="text-4xl md:text-5xl font-light tracking-tight text-on-surface">Log</h2>
+</div>
+<div class="flex flex-col gap-8">
+<div class="flex flex-col md:flex-row gap-6 md:gap-12 group cursor-pointer border-b border-gray-200 pb-8 hover:border-black transition-colors">
+<div class="w-full md:w-1/4 shrink-0">
+<span class="font-data-mono text-sm tracking-widest text-gray-500 group-hover:text-black transition-colors">2023.10.15</span>
+</div>
+<div class="w-full md:w-3/4 flex flex-col gap-3">
+<h3 class="font-body-md text-2xl font-bold text-black group-hover:text-tertiary-fixed transition-colors">Parametric Optimization in High-Density Urban Cores</h3>
+<p class="font-body-md text-base text-gray-600 leading-relaxed max-w-3xl">Exploring computational methodologies to maximize daylight and natural ventilation in ultra-dense urban environments without compromising structural integrity.</p>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-6 md:gap-12 group cursor-pointer border-b border-gray-200 pb-8 hover:border-black transition-colors">
+<div class="w-full md:w-1/4 shrink-0">
+<span class="font-data-mono text-sm tracking-widest text-gray-500 group-hover:text-black transition-colors">2023.08.22</span>
+</div>
+<div class="w-full md:w-3/4 flex flex-col gap-3">
+<h3 class="font-body-md text-2xl font-bold text-black group-hover:text-tertiary-fixed transition-colors">Materiality and Code: The Brutalist Digital Twin</h3>
+<p class="font-body-md text-base text-gray-600 leading-relaxed max-w-3xl">Bridging the tactile qualities of raw concrete with the precision of data-driven modeling in our latest workflow update.</p>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-6 md:gap-12 group cursor-pointer border-b border-gray-200 pb-8 hover:border-black transition-colors">
+<div class="w-full md:w-1/4 shrink-0">
+<span class="font-data-mono text-sm tracking-widest text-gray-500 group-hover:text-black transition-colors">2023.05.04</span>
+</div>
+<div class="w-full md:w-3/4 flex flex-col gap-3">
+<h3 class="font-body-md text-2xl font-bold text-black group-hover:text-tertiary-fixed transition-colors">Reflections on the Shenzhen Bay Culture Park</h3>
+<p class="font-body-md text-base text-gray-600 leading-relaxed max-w-3xl">A retrospective on integrating fluid spatial narratives within rigid infrastructural constraints during the conceptual phase.</p>
+</div>
+</div>
+</div>
+<div class="pt-8 flex justify-center md:justify-start">
+<button class="px-6 py-3 bg-white border border-black hover:bg-black hover:text-white text-black text-xs font-data-mono uppercase tracking-widest rounded-full transition-all flex items-center gap-3 w-max">
+        VIEW ALL LOGS <span class="material-symbols-outlined text-sm">arrow_forward</span>
+</button>
+</div>
+</div>
+</section>
+<section class="bg-white py-32 px-[5vw] w-full mx-auto relative" id="cv-section">
+<div class="flex flex-col gap-24 w-full max-w-[1440px] mx-auto">
+<!-- CV Header -->
+<div class="flex flex-col md:flex-row gap-12 w-full">
+<div class="w-full md:w-1/3">
+<h2 class="text-6xl md:text-8xl font-light tracking-tighter text-on-surface scribble-hover inline-block" style="">CV</h2>
+</div>
+<div class="w-full md:w-2/3">
+<p class="font-body-md text-2xl md:text-3xl text-gray-800 leading-tight tracking-tight mb-12" style="">
+                    A multidisciplinary architect and designer dedicated to the intersection of physical space and computational tools. Specializing in high-performance digital environments and brutalist-informed physical structures.
+                </p>
+<button class="px-8 py-4 bg-black text-white hover:bg-gray-800 text-xs font-data-mono uppercase tracking-widest rounded-full transition-all flex items-center gap-3 w-max" style="">
+                    DOWNLOAD FULL CV <span class="material-symbols-outlined text-lg" style="">download</span>
+</button>
+</div>
+</div>
+<!-- Experience & Education Grid -->
+<div class="grid grid-cols-1 md:grid-cols-3 gap-20">
+<!-- Experience -->
+<div class="md:col-span-2">
+<h3 class="font-data-mono text-xs uppercase tracking-widest text-gray-400 mb-10 font-bold border-b border-gray-100 pb-4" style="">Experience</h3>
+<div class="flex flex-col gap-12">
+<div class="flex flex-col md:flex-row gap-4 md:gap-12">
+<div class="font-data-mono text-xs text-gray-400 w-32 shrink-0" style="">2020 — PRES.</div>
+<div>
+<h4 class="font-body-md text-2xl font-medium text-black mb-1" style="">Founder &amp; Principal Architect</h4>
+<p class="font-body-md text-lg text-gray-500 mb-4" style="">TRI NGUYEN Studio, Ho Chi Minh City</p>
+<p class="font-body-md text-sm text-gray-600 leading-relaxed max-w-xl" style="">Leading a studio focused on experimental architectural forms and the development of custom BIM plugins. Managing a team of 12 across diverse projects from commercial hubs to digital art installations.</p>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-4 md:gap-12">
+<div class="font-data-mono text-xs text-gray-400 w-32 shrink-0" style="">2015 — 2020</div>
+<div>
+<h4 class="font-body-md text-2xl font-medium text-black mb-1" style="">Senior Associate / Lead Designer</h4>
+<p class="font-body-md text-lg text-gray-500 mb-4" style="">Global Design Partners, London / HK</p>
+<p class="font-body-md text-sm text-gray-600 leading-relaxed max-w-xl" style="">Headed the Computational Design Group. Spearheaded the digital twin initiative for large-scale urban developments in Southeast Asia. Awarded "Young Architect of the Year" in 2018.</p>
+</div>
+</div>
+<div class="flex flex-col md:flex-row gap-4 md:gap-12">
+<div class="font-data-mono text-xs text-gray-400 w-32 shrink-0" style="">2013 — 2015</div>
+<div>
+<h4 class="font-body-md text-2xl font-medium text-black mb-1" style="">Architectural Designer</h4>
+<p class="font-body-md text-lg text-gray-500 mb-4" style="">Format &amp; Scale, New York</p>
+<p class="font-body-md text-sm text-gray-600 leading-relaxed max-w-xl" style="">Contributed to high-profile cultural competitions and residential luxury developments. Focused on parametric façade optimization and sustainable material sourcing.</p>
+</div>
+</div>
+</div>
+</div>
+<!-- Education -->
+<div>
+<h3 class="font-data-mono text-xs uppercase tracking-widest text-gray-400 mb-10 font-bold border-b border-gray-100 pb-4" style="">Education</h3>
+<div class="flex flex-col gap-12">
+<div>
+<div class="font-data-mono text-xs text-gray-400 mb-2" style="">2011 — 2013</div>
+<h4 class="font-body-md text-xl font-medium text-black" style="">M.Arch II</h4>
+<p class="font-body-md text-sm text-gray-500" style="">Graduate School of Design, Harvard University</p>
+</div>
+<div>
+<div class="font-data-mono text-xs text-gray-400 mb-2" style="">2006 — 2011</div>
+<h4 class="font-body-md text-xl font-medium text-black" style="">Bachelor of Architecture</h4>
+<p class="font-body-md text-sm text-gray-500" style="">Southern California Institute of</p></div></div></div></div></div></section>
+<!-- Contact Section -->
+<section class="bg-white py-32 px-[5vw] w-full mx-auto relative border-t border-gray-200" id="contact-section">
+<div class="flex flex-col gap-16 w-full max-w-[1440px] mx-auto">
+<div class="flex flex-col gap-8 items-start">
+<h2 class="text-6xl md:text-[100px] font-bold tracking-tighter text-black leading-none" style="">Let's build<br/>something.</h2>
+<a class="text-2xl md:text-4xl font-medium text-black hover:text-tertiary-fixed transition-colors inline-flex items-center gap-4 group" href="mailto:hello@tringuyen.studio">
+            hello@tringuyen.studio
+            <span class="material-symbols-outlined text-4xl group-hover:translate-x-2 transition-transform">arrow_forward</span>
+</a>
+</div>
+<div class="flex flex-col md:flex-row justify-between items-start md:items-end pt-16 border-t border-black w-full gap-8">
+<div class="flex flex-col gap-4">
+<h4 class="font-data-mono text-xs uppercase tracking-widest text-gray-400 font-bold">Social</h4>
+<div class="flex flex-col gap-2">
+<a class="font-body-md text-lg text-black hover:text-tertiary-fixed transition-colors" href="#">Instagram</a>
+<a class="font-body-md text-lg text-black hover:text-tertiary-fixed transition-colors" href="#">LinkedIn</a>
+</div>
+</div>
+<div class="font-data-mono text-xs text-gray-500 uppercase tracking-widest">
+            © 2024 Tri Nguyen Studio. All rights reserved.
+        </div>
+</div>
+</div>
+</section>
+</body></html>
