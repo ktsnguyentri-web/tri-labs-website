@@ -15,7 +15,9 @@ const researchDir = path.join(contentDir, 'research');
 const toolsDir = path.join(contentDir, 'tools');
 
 async function build() {
-  const projectFiles = fs.existsSync(projectsDir) ? fs.readdirSync(projectsDir) : [];
+  const projectFiles = fs.existsSync(projectsDir)
+    ? fs.readdirSync(projectsDir).filter(f => f.endsWith('.md'))
+    : [];
   const projects = projectFiles.map(fileName => {
     const fullPath = path.join(projectsDir, fileName);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
@@ -23,7 +25,9 @@ async function build() {
     return matterResult.data;
   }).sort((a, b) => a.order - b.order);
 
-  const logFiles = fs.existsSync(logsDir) ? fs.readdirSync(logsDir) : [];
+  const logFiles = fs.existsSync(logsDir)
+    ? fs.readdirSync(logsDir).filter(f => f.endsWith('.md'))
+    : [];
   let logData = null;
   if (logFiles.length > 0) {
     const fileName = logFiles[0];
@@ -40,24 +44,42 @@ async function build() {
     };
   }
 
-  const researchFiles = fs.existsSync(researchDir) ? fs.readdirSync(researchDir) : [];
+  const researchFiles = fs.existsSync(researchDir)
+    ? fs.readdirSync(researchDir).filter(f => f.endsWith('.md'))
+    : [];
   const parsedResearch = await Promise.all(researchFiles.map(async (fileName) => {
     const fullPath = path.join(researchDir, fileName);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const matterResult = matter(fileContents);
     const processedContent = await remark().use(html).process(matterResult.content);
     const contentHtml = processedContent.toString();
-    return { ...matterResult.data, contentHtml, category: matterResult.data.category || 'Research' };
+
+    // Extract first image from markdown body
+    const imgRegex = /!\[.*?\]\((.*?)\)/;
+    const match = matterResult.content.match(imgRegex);
+    const firstImage = match ? match[1] : null;
+    const img = firstImage || matterResult.data.img || '';
+
+    return { ...matterResult.data, img, contentHtml, category: matterResult.data.category || 'Research' };
   }));
 
-  const toolFiles = fs.existsSync(toolsDir) ? fs.readdirSync(toolsDir) : [];
+  const toolFiles = fs.existsSync(toolsDir)
+    ? fs.readdirSync(toolsDir).filter(f => f.endsWith('.md'))
+    : [];
   const parsedTools = await Promise.all(toolFiles.map(async (fileName) => {
     const fullPath = path.join(toolsDir, fileName);
     const fileContents = fs.readFileSync(fullPath, 'utf8');
     const matterResult = matter(fileContents);
     const processedContent = await remark().use(html).process(matterResult.content);
     const contentHtml = processedContent.toString();
-    return { ...matterResult.data, contentHtml, category: matterResult.data.category || 'Tool' };
+
+    // Extract first image from markdown body
+    const imgRegex = /!\[.*?\]\((.*?)\)/;
+    const match = matterResult.content.match(imgRegex);
+    const firstImage = match ? match[1] : null;
+    const img = firstImage || matterResult.data.img || '';
+
+    return { ...matterResult.data, img, contentHtml, category: matterResult.data.category || 'Tool' };
   }));
 
   const research = [...parsedResearch, ...parsedTools]

@@ -1,7 +1,7 @@
 "use client";
 
 import { useRouter } from "next/navigation";
-import { useEffect, useState } from "react";
+import { useEffect } from "react";
 import Image from "next/image";
 import { X } from "lucide-react";
 import type { ResearchArticle } from "@/types/cms";
@@ -14,7 +14,6 @@ interface ArticleModalProps {
 
 export function ArticleModal({ article, onClose }: ArticleModalProps) {
   const router = useRouter();
-  const [isExpanded, setIsExpanded] = useState(false);
 
   const handleClose = () => {
     if (onClose) {
@@ -23,6 +22,7 @@ export function ArticleModal({ article, onClose }: ArticleModalProps) {
       router.back();
     }
   };
+
   // Lock body scroll when modal is open
   useEffect(() => {
     const originalOverflow = document.body.style.overflow;
@@ -36,6 +36,9 @@ export function ArticleModal({ article, onClose }: ArticleModalProps) {
       document.documentElement.style.overflow = originalHtmlOverflow;
     };
   }, []);
+
+  // Check if the cover image is already included in the article content HTML to avoid duplicates
+  const isImageInContent = article.coverImage && article.contentHtml.includes(article.coverImage);
 
   return (
     <div className="fixed inset-0 z-[100] bg-black/20 backdrop-blur-md flex items-center justify-center p-2 md:p-4 animate-in fade-in duration-300">
@@ -63,9 +66,9 @@ export function ArticleModal({ article, onClose }: ArticleModalProps) {
           </button>
         </div>
 
-        {/* Dynamic Container based on isExpanded state */}
-        <div className={`w-full h-full overscroll-contain ${isExpanded ? 'overflow-y-auto custom-scrollbar-light' : 'overflow-hidden'}`}>
-          <div className="max-w-4xl mx-auto pt-8 pb-12 px-6 md:px-12 flex flex-col h-full min-h-full">
+        {/* Always scrollable container with full article */}
+        <div className="w-full h-full overscroll-contain overflow-y-auto custom-scrollbar-light">
+          <div className="max-w-4xl mx-auto pt-8 pb-12 px-6 md:px-12 flex flex-col min-h-full">
 
             {/* Header */}
             <header className="mb-6 pb-6 border-b border-black/10 shrink-0">
@@ -79,8 +82,8 @@ export function ArticleModal({ article, onClose }: ArticleModalProps) {
               </div>
             </header>
 
-            {/* Cover Image */}
-            {article.coverImage && (
+            {/* Cover Image - only show if it does not appear inside the content HTML */}
+            {article.coverImage && !isImageInContent && (
               <div className="relative w-full h-[30vh] md:h-[40vh] bg-gray-100 shrink-0 mb-8 overflow-hidden rounded-none">
                 <Image
                   src={article.coverImage}
@@ -93,48 +96,18 @@ export function ArticleModal({ article, onClose }: ArticleModalProps) {
               </div>
             )}
 
-            {!isExpanded ? (
-              <>
-                {/* Preview Excerpt fitting in initial un-scrollable view */}
-                <div className="relative flex-grow overflow-hidden">
-                  <p className="font-sans text-base md:text-lg text-black/80 leading-[1.7] line-clamp-4">
-                    {article.excerpt || "Explore our comprehensive research findings, methodologies, and interactive tools designed to push the boundaries of digital architecture and spatial computing."}
-                  </p>
-                </div>
+            {/* Full Compiled Prose Body */}
+            <div
+              className="prose prose-lg max-w-none prose-headings:text-black prose-headings:font-light prose-headings:tracking-tight prose-p:text-black/80 prose-p:leading-[1.8] prose-p:font-sans prose-a:text-black prose-a:underline hover:prose-a:text-black/60 prose-img:rounded-none prose-strong:text-black prose-strong:font-semibold shrink-0"
+              dangerouslySetInnerHTML={{ __html: article.contentHtml }}
+            />
 
-                {/* Read More Trigger */}
-                <div className="pt-4 border-t border-black/10 shrink-0 mt-4">
-                  <button 
-                    onClick={() => setIsExpanded(true)}
-                    className="font-mono text-[11px] uppercase tracking-[0.2em] text-black hover:opacity-50 transition-all flex items-center gap-2 group py-2"
-                  >
-                    Read More 
-                    <span className="group-hover:translate-x-1 transition-transform">→</span>
-                  </button>
-                </div>
-              </>
-            ) : (
-              <>
-                {/* Full Compiled Prose Body */}
-                <div
-                  className="prose prose-lg max-w-none prose-headings:text-black prose-headings:font-light prose-headings:tracking-tight prose-p:text-black/80 prose-p:leading-[1.8] prose-p:font-sans prose-a:text-black prose-a:underline hover:prose-a:text-black/60 prose-img:rounded-none prose-strong:text-black prose-strong:font-semibold shrink-0"
-                  dangerouslySetInnerHTML={{ __html: article.contentHtml }}
-                />
-
-                {/* Expanded Footer Actions */}
-                <div className="mt-16 pt-8 border-t border-black/10 flex items-center justify-between shrink-0">
-                  <button 
-                    onClick={() => setIsExpanded(false)}
-                    className="font-mono text-[10px] uppercase tracking-[0.2em] text-black/50 hover:text-black transition-all"
-                  >
-                    ← Show Less
-                  </button>
-                  <Button variant="ghost" onClick={handleClose} showIcon={false}>
-                    Close Article
-                  </Button>
-                </div>
-              </>
-            )}
+            {/* Expanded Footer Actions */}
+            <div className="mt-16 pt-8 border-t border-black/10 flex items-center justify-end shrink-0">
+              <Button variant="ghost" onClick={handleClose} showIcon={false}>
+                Close Article
+              </Button>
+            </div>
 
           </div>
         </div>
