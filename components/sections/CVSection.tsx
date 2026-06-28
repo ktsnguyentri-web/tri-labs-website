@@ -336,6 +336,40 @@ export function CVSection({ theme = "dark" }: CVSectionProps) {
            </div>
         </div>
 
+        {/* ── READY TO COLLABORATE ────────────────────────────────── */}
+        <div className="mt-32">
+           <Reveal>
+             <div className={`border-b ${isLight ? "border-black/10" : "border-white/10"} pb-4 mb-12 flex items-baseline justify-between`}>
+                <h2 className={`text-lg md:text-xl font-light tracking-tight ${textColor} uppercase`}>
+                  Ready to Collaborate?
+                </h2>
+                <span className={`font-mono text-[10px] uppercase tracking-[0.2em] ${mutedTextColor}`}>04</span>
+             </div>
+           </Reveal>
+           
+           <Reveal delay={0.1}>
+             <div className="flex flex-col md:flex-row justify-between items-start md:items-center gap-8 pt-4">
+                <p className={`text-[15px] md:text-[16px] ${subTextColor} font-light leading-[1.65] max-w-[500px]`}>
+                   Whether you have a project in mind, want to discuss design concepts, or are looking to explore creative tech opportunities—let's connect.
+                </p>
+                <div className="shrink-0">
+                   <Button
+                     onClick={() => {
+                       window.dispatchEvent(new CustomEvent("open-chat"));
+                     }}
+                     className={`text-[11px] h-10 px-8 rounded-none ${
+                       isLight 
+                         ? "bg-black text-white hover:bg-black/80" 
+                         : "bg-white text-black hover:bg-white/80"
+                     } transition-all uppercase tracking-widest font-mono`}
+                   >
+                     Get in touch
+                   </Button>
+                </div>
+             </div>
+           </Reveal>
+        </div>
+
       </div>
     </section>
   );

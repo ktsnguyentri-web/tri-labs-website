@@ -41,6 +41,13 @@ export function ChatWidget() {
       timestamp: new Date(),
     },
   ]);
+
+  // Listen for custom event to open the chat window
+  useEffect(() => {
+    const handleOpenChat = () => setIsOpen(true);
+    window.addEventListener("open-chat", handleOpenChat);
+    return () => window.removeEventListener("open-chat", handleOpenChat);
+  }, []);
   const [inputValue, setInputValue] = useState("");
   const [isSending, setIsSending] = useState(false);
   const [submitStatus, setSubmitStatus] = useState<"idle" | "success" | "error">("idle");
