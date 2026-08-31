@@ -153,6 +153,57 @@ export interface HeroSlide {
 }
 
 // ---------------------------------------------------------------------------
+// Career & Profile
+// ---------------------------------------------------------------------------
+
+export interface CareerExperience {
+  periodStart: string;
+  periodEnd: string;
+  role: string;
+  company: string;
+  logo?: string;
+  description: string;
+  keyProjects?: { name: string; slug?: string }[];
+  isFreelancer?: boolean;
+}
+
+export interface EducationEntry {
+  period: string;
+  degree: string;
+  school: string;
+  logo?: string;
+  note?: string;
+}
+
+export interface ToolItem {
+  name: string;
+  proficiency?: number;
+  category?: string;
+}
+
+export interface ToolkitModule {
+  module: string;
+  tools: ToolItem[];
+}
+
+export interface PersonalProfile {
+  name: string;
+  title: string;
+  tagline: string;
+  bioParagraphs: string[];
+  status: {
+    availableForHire: boolean;
+    statusText: string;
+    manualOverride?: string | null;
+  };
+  contact: {
+    email: string;
+    location: string;
+    socials: { label: string; url: string }[];
+  };
+}
+
+// ---------------------------------------------------------------------------
 // Deprecated aliases — kept for incremental migration, remove after CMS integration
 // ---------------------------------------------------------------------------
 
@@ -161,3 +212,4 @@ export type ProjectData = Project;
 
 /** @deprecated Use ResearchArticle instead */
 export type ResearchData = ResearchArticle;
+

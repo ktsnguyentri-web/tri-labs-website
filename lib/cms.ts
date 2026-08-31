@@ -10,12 +10,21 @@
  */
 
 import rawData from './cms-data.json';
-import type { Project, ResearchArticle } from '@/types/cms';
+import type { Project, ResearchArticle, CareerExperience, EducationEntry, ToolkitModule, PersonalProfile } from '@/types/cms';
 
 // ---------------------------------------------------------------------------
 // Re-export canonical types for convenience
 // ---------------------------------------------------------------------------
-export type { Project, ResearchArticle, WorkItem, ModalProject } from '@/types/cms';
+export type { 
+  Project, 
+  ResearchArticle, 
+  WorkItem, 
+  ModalProject,
+  CareerExperience,
+  EducationEntry,
+  ToolkitModule,
+  PersonalProfile 
+} from '@/types/cms';
 
 // ---------------------------------------------------------------------------
 // Deprecated aliases — kept during incremental migration
@@ -126,17 +135,17 @@ function toResearchArticle(raw: RawResearch): ResearchArticle {
 // ---------------------------------------------------------------------------
 
 export async function getProjects(): Promise<Project[]> {
-  return (rawData.projects as RawProject[]).map(toProject);
+  return (rawData.projects as RawProject[]).map(toProject).sort((a, b) => a.order - b.order);
 }
 
 export async function getToolArticles(): Promise<ResearchArticle[]> {
   const all = (rawData.research as RawResearch[]).map(toResearchArticle);
-  return all.filter((item) => item.category === 'Tool').slice(0, 3);
+  return all.filter((item) => item.category === 'Tool');
 }
 
 export async function getResearchArticles(): Promise<ResearchArticle[]> {
   const all = (rawData.research as RawResearch[]).map(toResearchArticle);
-  return all.filter((item) => item.category === 'Research').slice(0, 3);
+  return all.filter((item) => item.category === 'Research');
 }
 
 export async function getAllResearchInsights(): Promise<ResearchArticle[]> {
@@ -154,4 +163,116 @@ export async function getResearchBySlug(
   const all = (rawData.research as RawResearch[]).map(toResearchArticle);
   return all.find((item) => item.slug === slug) ?? null;
 }
+
+export async function getCareerExperiences(): Promise<CareerExperience[]> {
+  return [
+    {
+      periodStart: "JAN 2024",
+      periodEnd: "PRES.",
+      role: "Interior Architect",
+      company: "THIEN PHUOC COMPANY",
+      description: "Received concept design from the Korean team, developed detailed drawings, and executed shop drawings on-site.",
+      keyProjects: [
+        { name: "Chavana Boutique Hotel", slug: "chavana-boutique-hotel" },
+        { name: "Clover House", slug: "clover-house" }
+      ]
+    },
+    {
+      periodStart: "MAR 2022",
+      periodEnd: "JAN 2024",
+      role: "Concept Architect",
+      company: "HTA+PIZZINI ARCHITECTS",
+      description: "Worked directly with the director to develop the project from concept to schematic design stage.",
+      keyProjects: [
+        { name: "Shenzhen Bay Culture Park", slug: "shenzhen-bay-culture-park" },
+        { name: "Harbin Opera House", slug: "harbin-opera-house" }
+      ]
+    },
+    {
+      periodStart: "FEB 2021",
+      periodEnd: "FEB 2022",
+      role: "Project Architect",
+      company: "STUDIO DUO",
+      description: "Responsible for concept design and the development of construction documents across multiple projects.",
+      keyProjects: [
+        { name: "Huzhou Sheraton", slug: "huzhou-sheraton" },
+        { name: "Chaoyang Park Plaza", slug: "chaoyang-park-plaza" }
+      ]
+    },
+    {
+      periodStart: "AUG 2019",
+      periodEnd: "DEC 2020",
+      role: "Project Architect",
+      company: "PHILIPPE PIERGA DESIGN",
+      description: "Assisted senior architects in developing design concepts and producing construction drawings for high-rise buildings and upscale resort projects.",
+      keyProjects: [
+        { name: "Huangshan Mountain Village", slug: "huangshan-mountain-village" },
+        { name: "Nanjing Zendai Himalayas", slug: "nanjing-zendai-himalayas" }
+      ]
+    },
+    {
+      periodStart: "APR 2021",
+      periodEnd: "MAY 2023",
+      role: "Freelancer Architect",
+      company: "DI+ARCHITECTS",
+      description: "Assisted in construction drawings for Singapore townhouses and supported concept design on some large-scale projects.",
+      keyProjects: [
+        { name: "Absolute Towers", slug: "absolute-towers" },
+        { name: "Ordos Museum", slug: "ordos-museum" }
+      ],
+      isFreelancer: true
+    }
+  ];
+}
+
+export async function getEducation(): Promise<EducationEntry[]> {
+  return [
+    {
+      period: "2011 — 2013",
+      degree: "M.Arch II",
+      school: "Graduate School of Design, Harvard University",
+      note: "Thesis: Adaptive High-Rise Envelopes"
+    },
+    {
+      period: "2006 — 2011",
+      degree: "Bachelor of Architecture",
+      school: "Southern California Institute of Architecture (SCI-Arc)",
+      note: "Honours Graduate"
+    }
+  ];
+}
+
+export async function getToolkits(): Promise<ToolkitModule[]> {
+  return [
+    {
+      module: "Architectural & Spatial Design",
+      tools: [
+        { name: "Rhino / Grasshopper", proficiency: 95 },
+        { name: "Revit / BIM", proficiency: 90 },
+        { name: "AutoCAD", proficiency: 95 },
+        { name: "SketchUp", proficiency: 90 },
+        { name: "Adobe Creative Suite", proficiency: 95 },
+        { name: "Maya", proficiency: 85 }
+      ]
+    },
+    {
+      module: "Computational & Engineering Code",
+      tools: [
+        { name: "React / Next.js", proficiency: 90 },
+        { name: "Three.js / WebGL", proficiency: 85 },
+        { name: "TypeScript / JavaScript", proficiency: 90 },
+        { name: "Python / Data", proficiency: 80 },
+        { name: "Unreal Engine 5", proficiency: 85 },
+        { name: "Dynamo / Parametric", proficiency: 88 }
+      ]
+    }
+  ];
+}
+
+import profileJson from '@/content/profile.json';
+
+export async function getProfile(): Promise<PersonalProfile> {
+  return profileJson as PersonalProfile;
+}
+
 

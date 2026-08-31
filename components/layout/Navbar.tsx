@@ -132,8 +132,8 @@ export function Navbar() {
   // Prevent hydration mismatch: render a static shell on server/first-pass
   if (!hasMounted) {
     return (
-      <nav className={`fixed top-0 left-0 w-full z-50 ${isLight ? "bg-white/50" : "bg-black/50"} backdrop-blur-md h-[60px] px-4 md:px-10`}>
-        <div className="flex h-full items-center justify-between max-w-[1440px] mx-auto w-full opacity-0">
+      <nav className={`fixed top-0 left-0 w-full z-50 ${isLight ? "bg-white/50" : "bg-black/50"} backdrop-blur-md h-[60px] px-5 sm:px-6 md:px-8`}>
+        <div className="flex h-full items-center justify-between max-w-3xl mx-auto w-full opacity-0">
           <Logo className={isLight ? "text-black" : "text-foreground"} />
         </div>
       </nav>
@@ -146,9 +146,9 @@ export function Navbar() {
         variants={navVariants}
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className={`fixed top-0 left-0 w-full z-50 ${isLight ? "bg-white/50 text-black" : "bg-black/50 text-white"} backdrop-blur-md h-[60px] px-4 md:px-10`}
+        className={`fixed top-0 left-0 w-full z-50 ${isLight ? "bg-white/50 text-black" : "bg-black/50 text-white"} backdrop-blur-md h-[60px] px-5 sm:px-6 md:px-8`}
       >
-        <div className="flex h-full items-center justify-between max-w-[1440px] mx-auto w-full relative">
+        <div className="flex h-full items-center justify-between max-w-3xl mx-auto w-full relative">
           
           {/* 1. Left Section: Logo */}
           <div className="flex-1 flex justify-start">
@@ -167,24 +167,8 @@ export function Navbar() {
             </motion.div>
           </div>
 
-          {/* 2. Center Section: Desktop Menu */}
-          <motion.div 
-            className="hidden md:flex gap-10 items-center justify-center flex-1 h-full"
-            variants={menuContainerVariants}
-            initial={shouldAnimate ? "initial" : "static"}
-            animate={shouldAnimate ? "animate" : "static"}
-          >
-            {links.map((item) => (
-              <motion.div key={item.label} variants={menuItemVariants}>
-                <Link
-                  href={item.href}
-                  className={`label-caps normal-case text-[13px] font-normal ${isLight ? "text-black/60 hover:text-black" : "text-foreground/60 hover:text-foreground"} transition-all duration-300 hover:tracking-[0.3em]`}
-                >
-                  {item.label}
-                </Link>
-              </motion.div>
-            ))}
-          </motion.div>
+          {/* 2. Center Section: Left empty for clean architectural breathing room */}
+          <div className="hidden md:flex flex-1" />
 
           {/* 3. Right Section: Search + Language + Mobile Toggle */}
           <div className="flex-1 flex justify-end items-center gap-6">

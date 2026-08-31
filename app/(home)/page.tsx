@@ -1,44 +1,56 @@
 import { Navbar } from "@/components/layout/Navbar";
-import { Hero } from "@/components/sections/Hero";
-import { Statement } from "@/components/sections/Statement";
-import { FeaturedWorks } from "@/components/sections/FeaturedWorks";
-import { ResearchSection } from "@/components/sections/ResearchSection";
+import { HeroPersonal } from "@/components/sections/HeroPersonal";
+import { PortfolioAccordion } from "@/components/accordion/PortfolioAccordion";
 import { Contact } from "@/components/sections/Contact";
-import { getProjects, getToolArticles, getResearchArticles } from "@/lib/cms";
+import {
+  getProjects,
+  getAllResearchInsights,
+  getCareerExperiences,
+  getEducation,
+  getToolkits,
+  getProfile,
+} from "@/lib/cms";
 
 export default async function Home() {
-  const [works, toolArticles, researchArticles] = await Promise.all([
+  const [
+    projects,
+    labArticles,
+    careerExperiences,
+    education,
+    toolkits,
+    profile,
+  ] = await Promise.all([
     getProjects(),
-    getToolArticles(),
-    getResearchArticles(),
+    getAllResearchInsights(),
+    getCareerExperiences(),
+    getEducation(),
+    getToolkits(),
+    getProfile(),
   ]);
 
   return (
-    <div className="min-h-screen bg-black text-foreground font-sans selection:bg-accent selection:text-black">
+    <div className="min-h-screen bg-black text-foreground font-sans selection:bg-white selection:text-black flex flex-col justify-between">
       <Navbar />
-      <main className="w-full">
-        <Hero />
-        <div className="max-w-[1440px] mx-auto px-4 md:px-10">
-          <div className="h-[1px] bg-white/10 mt-6 mb-6" />
-        </div>
-        <Statement />
-        <FeaturedWorks works={works} />
-        <div className="max-w-[1440px] mx-auto px-4 md:px-10">
-          <div className="h-[1px] bg-white/10 mt-8 mb-6" />
-        </div>
-        
-        {/* Section: Research & Tools */}
-        <ResearchSection insights={toolArticles} title="Research & Tools" />
-        
-        <div className="max-w-[1440px] mx-auto px-4 md:px-10">
-          <div className="h-[1px] bg-white/10 mt-8 mb-6" />
-        </div>
+      <main className="w-full flex-1 flex flex-col justify-start">
+        {/* ── Above the Fold: Identity & Actionable Bio ──────────── */}
+        <HeroPersonal profile={profile} />
 
-        {/* Section: Insights */}
-        <ResearchSection insights={researchArticles} title="Insights" />
-
-        <Contact />
+        {/* ── Interactive Collapsible Accordion & Carousels ──────── */}
+        <div className="w-full mt-2 sm:mt-3">
+          <PortfolioAccordion
+            projects={projects}
+            labArticles={labArticles}
+            careerExperiences={careerExperiences}
+            education={education}
+            toolkits={toolkits}
+            profile={profile}
+          />
+        </div>
       </main>
+
+      {/* ── Bottom Contact & Editorial Footer ──────────────────── */}
+      <Contact email={profile.contact.email} />
     </div>
   );
 }
+

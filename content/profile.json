@@ -1,0 +1,25 @@
+{
+  "name": "Tri Nguyen Minh",
+  "title": "Architect & Design Technologist",
+  "tagline": "Exploring the evolving intersection of architectural craft, computational geometry, and creative engineering.",
+  "bioParagraphs": [
+    "I am an Architect and Computational Design Technologist based in Vietnam. My practice merges rigorous spatial problem-solving with cutting-edge digital tooling, generative algorithms, and frontend engineering.",
+    "Over the past 8+ years, I have collaborated with leading architectural studios across Asia on high-rise residential towers, boutique hospitality resorts, cultural centers, and bespoke computational workflows.",
+    "Beyond traditional practice, I actively develop open-source spatial algorithms, WebGL design viewers, and BIM automation utilities through Tri-Labs."
+  ],
+  "status": {
+    "availableForHire": true,
+    "statusText": "AVAILABLE FOR SELECT COMMISSIONS & COLLABORATIONS",
+    "manualOverride": null
+  },
+  "contact": {
+    "email": "contact@tringuyen-design.com",
+    "location": "Saigon, Vietnam (UTC+7)",
+    "socials": [
+      { "label": "LinkedIn", "url": "https://linkedin.com" },
+      { "label": "Twitter / X", "url": "https://twitter.com" },
+      { "label": "GitHub", "url": "https://github.com" },
+      { "label": "Instagram", "url": "https://instagram.com" }
+    ]
+  }
+}

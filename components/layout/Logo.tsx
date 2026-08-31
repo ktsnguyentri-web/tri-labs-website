@@ -12,20 +12,10 @@ interface LogoProps {
 export function Logo({ className }: LogoProps) {
   return (
     <div 
-      className={className}
-      style={{ 
-        fontFamily: 'var(--font-titan)',
-        fontWeight: 400,
-        fontSize: '28px',
-        textTransform: 'lowercase',
-        letterSpacing: '-0.02em',
-        lineHeight: 1,
-        display: 'flex',
-        alignItems: 'center',
-        height: '100%'
-      }}
+      className={`flex items-center gap-2 select-none font-mono text-xs tracking-[0.25em] uppercase text-foreground/70 hover:text-foreground transition-colors ${className || ""}`}
     >
-      tri-labs
+      <span className="font-semibold text-foreground">TNM.</span>
+      <span className="text-foreground/30 text-[10px] hidden sm:inline-block">/ STUDIO</span>
     </div>
   );
 }
