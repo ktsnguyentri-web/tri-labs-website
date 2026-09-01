@@ -1,5 +1,6 @@
 "use client";
 
+import Link from "next/link";
 import type { PersonalProfile, ToolkitModule } from "@/types/cms";
 import { ArrowUpRight } from "lucide-react";
 import { LiveStatusPill } from "@/components/hero/LiveStatusPill";
@@ -15,7 +16,7 @@ export function AboutAccordionContent({
 }: AboutAccordionContentProps) {
   return (
     <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-16 pt-2">
-      {/* ── Left Column: Narrative Bio (7 cols) ────────────────────── */}
+      {/* ── Left Column: Narrative Bio & Manifesto (7 cols) ────────── */}
       <div className="lg:col-span-7 flex flex-col gap-6">
         <div className="pb-3 border-b border-neutral-200 dark:border-neutral-800">
           <span className="font-mono text-[12px] text-neutral-500 dark:text-neutral-400 tracking-normal">
@@ -33,9 +34,17 @@ export function AboutAccordionContent({
           ))}
         </div>
 
-        {/* Live Status Pill */}
-        <div className="mt-2">
+        {/* Live Status Pill & CV Link */}
+        <div className="mt-3 flex flex-col sm:flex-row sm:items-center justify-between gap-4 pt-4 border-t border-neutral-200 dark:border-neutral-800">
           <LiveStatusPill manualStatus={profile.status.manualOverride} />
+          
+          <Link
+            href="/cv"
+            className="group inline-flex items-center gap-1.5 font-mono text-[12px] text-neutral-800 dark:text-neutral-200 hover:text-black dark:hover:text-white border border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600 px-3 py-1.5 rounded-sm bg-black/[0.02] dark:bg-white/[0.02] transition-colors self-start sm:self-auto"
+          >
+            <span>Full CV &amp; Career History</span>
+            <ArrowUpRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+          </Link>
         </div>
       </div>
 

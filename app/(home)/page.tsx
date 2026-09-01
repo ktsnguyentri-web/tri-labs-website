@@ -4,9 +4,8 @@ import { PortfolioAccordion } from "@/components/accordion/PortfolioAccordion";
 import { Contact } from "@/components/sections/Contact";
 import {
   getProjects,
-  getAllResearchInsights,
-  getCareerExperiences,
-  getEducation,
+  getToolArticles,
+  getResearchArticles,
   getToolkits,
   getProfile,
 } from "@/lib/cms";
@@ -15,15 +14,13 @@ export default async function Home() {
   const [
     projects,
     labArticles,
-    careerExperiences,
-    education,
+    writingArticles,
     toolkits,
     profile,
   ] = await Promise.all([
     getProjects(),
-    getAllResearchInsights(),
-    getCareerExperiences(),
-    getEducation(),
+    getToolArticles(),
+    getResearchArticles(),
     getToolkits(),
     getProfile(),
   ]);
@@ -40,8 +37,7 @@ export default async function Home() {
           <PortfolioAccordion
             projects={projects}
             labArticles={labArticles}
-            careerExperiences={careerExperiences}
-            education={education}
+            writingArticles={writingArticles}
             toolkits={toolkits}
             profile={profile}
           />
@@ -53,4 +49,3 @@ export default async function Home() {
     </div>
   );
 }
-

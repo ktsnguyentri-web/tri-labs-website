@@ -116,24 +116,64 @@
       "category": "Research"
     },
     {
-      "title": "Streaming 3DGS worlds on the...",
+      "title": "Adaptive Façade Solver — Grasshopper & Python",
+      "date": "May 12, 2026",
+      "excerpt": "Algorithmic solar radiation analysis and automated kinetic panel orientation engine built for complex building envelopes.",
+      "img": "https://images.unsplash.com/photo-1508873696983-2df5293cb32f?auto=format&fit=crop&w=1200&q=80",
+      "featured": true,
+      "slug": "adaptive-facade-solver",
+      "category": "Tool",
+      "contentHtml": "<h2>Overview</h2>\n<p>Adaptive Façade Solver is an algorithmic envelope optimization suite built on Rhino, Grasshopper, and Python. It automates the calculation of solar insolation across complex double-curved architectural skins and computes panel aperture angles to minimize heat gain while maximizing daylight autonomy.</p>\n<h2>Computational Architecture</h2>\n<ul>\n<li><strong>Insolation Mesh Analysis</strong>: Real-time ray-tracing using Ladybug and custom NumPy matrix operations.</li>\n<li><strong>Kinetic Louver Mapping</strong>: Parametric attractor curves controlling panel rotation and perforation density.</li>\n<li><strong>Panel Rationalization</strong>: Planarization of quad panels to optimize manufacturing cost and structural fabrication.</li>\n</ul>\n"
+    },
+    {
+      "title": "Streaming 3DGS Worlds on the Modern Web",
       "date": "April 14, 2026",
-      "excerpt": "A technical deep dive into Spark 2.0's streamable, Level-of-Detail system for 3D...",
+      "excerpt": "A technical deep dive into Level-of-Detail octrees and radix sorting for real-time 3D Gaussian Splatting in the browser.",
       "img": "https://images.unsplash.com/photo-1449844908441-8829872d2607?q=80&w=2070&auto=format&fit=crop",
       "featured": true,
       "slug": "streaming-3dgs-worlds",
-      "contentHtml": "<p>Content goes here.</p>\n",
-      "category": "Research"
+      "category": "Research",
+      "contentHtml": "<h2>Introduction</h2>\n<p>3D Gaussian Splatting (3DGS) has rapidly become the dominant representation for photorealistic radiance fields. However, bringing multi-million splat scenes to browser-based architectural viewers poses significant challenges in memory footprint and bandwidth.</p>\n<h2>Spatial Chunking &#x26; LOD</h2>\n<p>To stream massive urban captures efficiently, we partition the global splat dataset into hierarchical bounding octrees. The client dynamically requests splat clusters based on screen-space projected area and camera frustum intersection.</p>\n<h2>WebGL 2.0 &#x26; WebGPU Considerations</h2>\n<p>By offloading radix sort directly to compute shaders and binding compact 16-bit half-float buffers, we achieve smooth 60 FPS rendering across standard consumer hardware without requiring native client installations.</p>\n"
     },
     {
-      "title": "World Labs Announces New...",
+      "title": "Spark 3DGS — Realtime Gaussian Splatting WebGL",
+      "date": "March 20, 2026",
+      "excerpt": "A lightweight WebGL 2.0 spatial renderer streaming 3D Gaussian Splats directly in the browser at 60 FPS.",
+      "img": "https://images.unsplash.com/photo-1518770660439-4636190af475?auto=format&fit=crop&w=1200&q=80",
+      "featured": true,
+      "slug": "spark-3dgs-viewer",
+      "category": "Tool",
+      "contentHtml": "<h2>Overview</h2>\n<p>Spark 3DGS is an experimental client-side spatial renderer designed for real-time architectural walkthroughs. By utilizing WebGL 2.0 compute passes and custom radix sort shaders, it streams dense 3D Gaussian Splatting models with sub-millimeter geometric fidelity on mobile and desktop browsers.</p>\n<h2>Technical Specifications</h2>\n<ul>\n<li><strong>Progressive LOD Octree</strong>: Spatial chunking to stream multi-gigabyte point clouds under constrained network bandwidth.</li>\n<li><strong>Custom Tile Sorting</strong>: GPU-accelerated radix sort maintaining steady 60 FPS rendering on modern laptops.</li>\n<li><strong>Architectural Camera Controls</strong>: First-person walkthrough, orbital BIM section cuts, and orthographic dimension overlays.</li>\n</ul>\n"
+    },
+    {
+      "title": "Spatial Intelligence & Generative World Models",
       "date": "February 18, 2026",
-      "excerpt": "An update on our vision for spatial intelligence in 2026.",
+      "excerpt": "An architectural perspective on spatial AI models, multi-modal physical world priors, and the shift from 2D pixel generation to 3D native synthesis.",
       "img": "https://images.unsplash.com/photo-1451187580459-43490279c0fa?q=80&w=2072&auto=format&fit=crop",
       "featured": true,
       "slug": "world-labs-announces-new",
-      "contentHtml": "<p>Content goes here.</p>\n",
-      "category": "Research"
+      "category": "Research",
+      "contentHtml": "<h2>The Paradigm Shift in Generative AI</h2>\n<p>For decades, CAD and computational architecture relied on explicit procedural modeling. Generative AI initially entered the field through 2D diffusion models that suffered from geometric inconsistency and lack of spatial awareness.</p>\n<h2>World Models as Architectural Tools</h2>\n<p>World models understand physical constraints: persistence of mass, gravity, occlusion, and topological connectivity. For architects, this enables direct generation of coherent 3D volumetric representations rather than superficial rendering passes.</p>\n<h2>Looking Forward</h2>\n<p>As generative world models integrate directly with parametric constraint engines (Grasshopper, Dynamo), the design process will evolve from manual drafting to intentional steering of generative spatial possibilities.</p>\n"
+    },
+    {
+      "title": "SpaceSyntax Graph — Urban Spatial Topology",
+      "date": "January 15, 2026",
+      "excerpt": "Graph-based spatial configuration analysis computing visual integration, choice values, and isovist fields in real-time.",
+      "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
+      "featured": true,
+      "slug": "spacesyntax-isovist",
+      "category": "Tool",
+      "contentHtml": "<h2>Overview</h2>\n<p>SpaceSyntax Graph is an open-source spatial network topology engine. It calculates syntactic measures of urban masterplans and interior layouts, computing axial connectivity, visual depth, and pedestrian flow probabilities.</p>\n<h2>Features</h2>\n<ul>\n<li><strong>Isovist Field Generation</strong>: Real-time 2D ray casting for spatial visibility calculation.</li>\n<li><strong>Topological Integration</strong>: Graph shortest-path algorithms evaluating urban accessibility.</li>\n<li><strong>Agent-based Movement Simulation</strong>: 10,000+ simultaneous pedestrian agents for wayfinding analysis.</li>\n</ul>\n"
+    },
+    {
+      "title": "The Future of Computational Architecture in the Agentic Era",
+      "date": "January 08, 2026",
+      "excerpt": "How autonomous coding agents, BIM automation, and parametric algorithms redefine the craft of the modern architect.",
+      "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
+      "featured": true,
+      "slug": "future-of-computational-architecture",
+      "category": "Research",
+      "contentHtml": "<h2>The Evolution of the Toolmaker</h2>\n<p>Architects have historically oscillated between craftspersons and system designers. The introduction of computational design in the late 1990s created the architect-programmer. In 2026, we are witnessing another profound transition: the rise of the architect-director.</p>\n<h2>Agentic Workflows in Practice</h2>\n<p>Rather than scripting every individual node in a Grasshopper canvas, modern computational architects instruct specialized agents to execute complex parametric optimizations, evaluate structural load simulations, and generate production-ready documentation sets.</p>\n<h2>Human Sensibility &#x26; Guardrails</h2>\n<p>Computational power without editorial discipline produces noise. The architect's primary contribution remains cultural resonance, spatial nuance, and setting the rigorous guardrails within which computational algorithms flourish.</p>\n"
     }
   ]
 }

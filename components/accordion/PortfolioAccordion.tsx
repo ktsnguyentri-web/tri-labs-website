@@ -5,13 +5,11 @@ import { AccordionItem } from "./AccordionItem";
 import { HorizontalCarousel } from "@/components/carousel/HorizontalCarousel";
 import { ProjectCard } from "@/components/carousel/ProjectCard";
 import { LabCard } from "@/components/carousel/LabCard";
-import { CareerAccordionContent } from "./CareerAccordionContent";
+import { WritingAccordionContent } from "./WritingAccordionContent";
 import { AboutAccordionContent } from "./AboutAccordionContent";
 import type { 
   Project, 
   ResearchArticle, 
-  CareerExperience, 
-  EducationEntry, 
   ToolkitModule, 
   PersonalProfile 
 } from "@/types/cms";
@@ -19,8 +17,7 @@ import type {
 interface PortfolioAccordionProps {
   projects: Project[];
   labArticles: ResearchArticle[];
-  careerExperiences: CareerExperience[];
-  education: EducationEntry[];
+  writingArticles: ResearchArticle[];
   toolkits: ToolkitModule[];
   profile: PersonalProfile;
 }
@@ -28,16 +25,15 @@ interface PortfolioAccordionProps {
 export function PortfolioAccordion({
   projects,
   labArticles,
-  careerExperiences,
-  education,
+  writingArticles,
   toolkits,
   profile,
 }: PortfolioAccordionProps) {
-  // Default open first section (Architectural Works)
+  // Default open first section (01. Works)
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     works: true,
     labs: false,
-    career: false,
+    writing: false,
     about: false,
   });
 
@@ -55,11 +51,11 @@ export function PortfolioAccordion({
         <div className="border-t border-neutral-200 dark:border-neutral-800 w-full" />
       </div>
 
-      {/* ── 01. Architectural Works ──────────────────────────────── */}
+      {/* ── 01. Works ────────────────────────────────────────────── */}
       <AccordionItem
         id="works"
         number="01"
-        title="Architectural Works"
+        title="Works"
         badge={`${projects.length} Projects`}
         isOpen={!!openSections.works}
         onToggle={() => toggleSection("works")}
@@ -75,12 +71,12 @@ export function PortfolioAccordion({
         </HorizontalCarousel>
       </AccordionItem>
 
-      {/* ── 02. Tri-Labs / Experiments ───────────────────────────── */}
+      {/* ── 02. Labs ─────────────────────────────────────────────── */}
       <AccordionItem
         id="labs"
         number="02"
-        title="Tri-Labs / Experiments"
-        badge={`${labArticles.length} Entries`}
+        title="Labs"
+        badge={`${labArticles.length} Tools`}
         isOpen={!!openSections.labs}
         onToggle={() => toggleSection("labs")}
       >
@@ -95,26 +91,23 @@ export function PortfolioAccordion({
         </HorizontalCarousel>
       </AccordionItem>
 
-      {/* ── 03. Career & Experience ──────────────────────────────── */}
+      {/* ── 03. Writing ──────────────────────────────────────────── */}
       <AccordionItem
-        id="career"
+        id="writing"
         number="03"
-        title="Career & Experience"
-        badge="2019 — Present"
-        isOpen={!!openSections.career}
-        onToggle={() => toggleSection("career")}
+        title="Writing"
+        badge={`${writingArticles.length} Essays`}
+        isOpen={!!openSections.writing}
+        onToggle={() => toggleSection("writing")}
       >
-        <CareerAccordionContent
-          experiences={careerExperiences}
-          education={education}
-        />
+        <WritingAccordionContent articles={writingArticles} />
       </AccordionItem>
 
-      {/* ── 04. Philosophy & About ───────────────────────────────── */}
+      {/* ── 04. About ────────────────────────────────────────────── */}
       <AccordionItem
         id="about"
         number="04"
-        title="Philosophy & About"
+        title="About"
         badge="Profile"
         isOpen={!!openSections.about}
         onToggle={() => toggleSection("about")}

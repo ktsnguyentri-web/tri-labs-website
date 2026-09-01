@@ -11,7 +11,7 @@ interface LabCardProps {
 
 export function LabCard({ article, index }: LabCardProps) {
   const formattedIndex = String(index + 1).padStart(2, "0");
-  const href = article.category === "Tool" ? `/tool` : `/research/${article.slug}`;
+  const href = article.slug === "trace" ? "/tool" : `/research/${article.slug}`;
 
   return (
     <Link
@@ -52,7 +52,7 @@ export function LabCard({ article, index }: LabCardProps) {
         {/* Read / Run Trigger */}
         <div className="absolute bottom-2.5 right-2.5 opacity-0 group-hover:opacity-100 transition-opacity duration-300 pointer-events-none">
           <span className="font-sans text-[11px] font-medium tracking-normal bg-neutral-900 text-white dark:bg-white dark:text-black px-2 py-0.5 rounded-sm">
-            Read →
+            {article.slug === "trace" ? "Launch →" : "Read →"}
           </span>
         </div>
       </div>
