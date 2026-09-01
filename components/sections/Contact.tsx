@@ -1,9 +1,7 @@
 "use client";
 
-import { Mail, ExternalLink, ArrowRight, Link2, ArrowUp } from "lucide-react";
-import Image from "next/image";
-import Link from "next/link";
-import { Logo } from "../layout/Logo";
+import { useState, useEffect, useRef } from "react";
+import { ChatPopover } from "@/components/layout/ChatPopover";
 
 interface ContactProps {
   theme?: "light" | "dark";
@@ -11,46 +9,57 @@ interface ContactProps {
 }
 
 export function Contact({ theme = "dark", email = "contact@tringuyen-design.com" }: ContactProps) {
-  const isLight = theme === "light";
+  const [isChatOpen, setIsChatOpen] = useState(false);
   const currentYear = new Date().getFullYear();
+  const contactRef = useRef<HTMLElement>(null);
 
-  const scrollToTop = () => {
-    window.scrollTo({ top: 0, behavior: "smooth" });
-  };
-  
+  useEffect(() => {
+    const handleOpenChat = () => {
+      contactRef.current?.scrollIntoView({ behavior: "smooth", block: "end" });
+      setIsChatOpen(true);
+    };
+    window.addEventListener("open-chat", handleOpenChat);
+    return () => window.removeEventListener("open-chat", handleOpenChat);
+  }, []);
+
   return (
     <footer 
-      className="w-full bg-[#FAFAFA] dark:bg-[#0A0A0A] border-t border-neutral-200 dark:border-neutral-800/40 pt-4 pb-8 transition-colors duration-300" 
+      ref={contactRef}
+      className="w-full bg-[#FAFAFA] dark:bg-[#0A0A0A] border-t border-neutral-200 dark:border-neutral-800/40 pt-5 pb-10 transition-colors duration-300" 
       id="contact"
     >
       <div className="w-full max-w-3xl mx-auto px-5 sm:px-6 md:px-8">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-5 pt-2">
-          {/* Brand Monogram */}
-          <Logo />
+        <div className="flex justify-between items-center gap-4 pt-1">
+          {/* Left: Anchored Popover Trigger with Running Luminous Online Border */}
+          <div className="relative inline-flex">
+            <div className="relative inline-flex items-center justify-center p-[1px] rounded-full overflow-hidden group">
+              {/* Running luminous border beam ("always online" indicator) */}
+              <span 
+                className="absolute inset-[-150%] animate-[spin_3.5s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_0_70%,#10B981_88%,#6EE7B7_95%,transparent_100%)] dark:bg-[conic-gradient(from_0deg,transparent_0_70%,#10B981_88%,#34D399_95%,transparent_100%)] pointer-events-none"
+                aria-hidden="true"
+              />
 
-          {/* Action & Metadata */}
-          <div className="flex flex-wrap items-center gap-4 sm:gap-6 text-[12px] font-mono">
-            {/* Get In Touch Action */}
-            <a
-              href={`mailto:${email}`}
-              className="inline-flex items-center gap-1.5 px-3 py-1.5 border border-neutral-300 dark:border-neutral-800 text-neutral-800 dark:text-neutral-200 hover:border-neutral-900 dark:hover:border-neutral-600 hover:bg-black/[0.03] dark:hover:bg-white/[0.03] font-sans text-xs font-medium tracking-normal rounded-md transition-all duration-300 active:scale-[0.98]"
-            >
-              <Mail className="w-3.5 h-3.5" />
-              Get In Touch
-            </a>
-
-            <div className="flex items-center gap-4 text-neutral-500 dark:text-neutral-400 whitespace-nowrap">
-              <span>© {currentYear}</span>
-
-              {/* Back to Top Arrow */}
+              {/* High-Contrast Pill Button */}
               <button
-                onClick={scrollToTop}
-                className="w-8 h-8 border border-neutral-200 dark:border-neutral-800 text-neutral-500 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-white hover:border-neutral-900 dark:hover:border-neutral-600 rounded-sm flex items-center justify-center transition-all duration-300 group cursor-pointer"
-                aria-label="Back to top"
+                type="button"
+                onClick={() => setIsChatOpen((prev) => !prev)}
+                aria-expanded={isChatOpen}
+                className="relative z-10 px-5 py-2 rounded-full bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 font-sans font-medium text-base tracking-normal hover:bg-neutral-900 dark:hover:bg-neutral-100 transition-all duration-300 active:scale-[0.98] cursor-pointer whitespace-nowrap select-none"
               >
-                <ArrowUp size={14} className="group-hover:-translate-y-0.5 transition-transform duration-300" />
+                <span>&ldquo;Let&apos;s chat&rdquo;</span>
               </button>
             </div>
+
+            {/* Anchored Popover directly above the button */}
+            <ChatPopover 
+              isOpen={isChatOpen} 
+              onClose={() => setIsChatOpen(false)} 
+            />
+          </div>
+
+          {/* Right: Copyright Only */}
+          <div className="flex items-center text-[12px] font-mono text-neutral-500 dark:text-neutral-400 whitespace-nowrap">
+            <span>© {currentYear}</span>
           </div>
         </div>
       </div>

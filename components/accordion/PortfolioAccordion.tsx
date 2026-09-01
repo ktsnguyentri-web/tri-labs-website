@@ -56,7 +56,6 @@ export function PortfolioAccordion({
         id="works"
         number="01"
         title="Works"
-        badge={`${projects.length} Projects`}
         isOpen={!!openSections.works}
         onToggle={() => toggleSection("works")}
       >
@@ -76,7 +75,6 @@ export function PortfolioAccordion({
         id="labs"
         number="02"
         title="Labs"
-        badge={`${labArticles.length} Tools`}
         isOpen={!!openSections.labs}
         onToggle={() => toggleSection("labs")}
       >
@@ -96,7 +94,6 @@ export function PortfolioAccordion({
         id="writing"
         number="03"
         title="Writing"
-        badge={`${writingArticles.length} Essays`}
         isOpen={!!openSections.writing}
         onToggle={() => toggleSection("writing")}
       >
@@ -108,7 +105,6 @@ export function PortfolioAccordion({
         id="about"
         number="04"
         title="About"
-        badge="Profile"
         isOpen={!!openSections.about}
         onToggle={() => toggleSection("about")}
         hideBottomDivider={true}

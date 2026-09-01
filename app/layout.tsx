@@ -35,8 +35,6 @@ export const viewport = {
   userScalable: false, // Prevents unintended zooming/wobbling on some devices
 };
 
-import { ChatWidget } from "@/components/layout/ChatWidget";
-
 export default function RootLayout({
   children,
 }: Readonly<{
@@ -69,7 +67,6 @@ export default function RootLayout({
           <main className="flex-grow">
             {children}
           </main>
-          <ChatWidget />
         </IntroAnimationProvider>
       </body>
     </html>
