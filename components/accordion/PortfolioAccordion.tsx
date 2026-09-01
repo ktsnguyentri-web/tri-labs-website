@@ -52,15 +52,15 @@ export function PortfolioAccordion({
     <div className="w-full flex flex-col">
       {/* Top Divider line (Constrained to inner grid) */}
       <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 w-full">
-        <div className="border-t border-white/10 w-full" />
+        <div className="border-t border-neutral-200 dark:border-neutral-800 w-full" />
       </div>
 
-      {/* ── 01. ARCHITECTURAL WORKS ──────────────────────────────── */}
+      {/* ── 01. Architectural Works ──────────────────────────────── */}
       <AccordionItem
         id="works"
         number="01"
-        title="ARCHITECTURAL WORKS"
-        badge={`${projects.length} PROJECTS`}
+        title="Architectural Works"
+        badge={`${projects.length} Projects`}
         isOpen={!!openSections.works}
         onToggle={() => toggleSection("works")}
       >
@@ -75,12 +75,12 @@ export function PortfolioAccordion({
         </HorizontalCarousel>
       </AccordionItem>
 
-      {/* ── 02. TRI-LABS / EXPERIMENTS ───────────────────────────── */}
+      {/* ── 02. Tri-Labs / Experiments ───────────────────────────── */}
       <AccordionItem
         id="labs"
         number="02"
-        title="TRI-LABS / EXPERIMENTS"
-        badge={`${labArticles.length} ENTRIES`}
+        title="Tri-Labs / Experiments"
+        badge={`${labArticles.length} Entries`}
         isOpen={!!openSections.labs}
         onToggle={() => toggleSection("labs")}
       >
@@ -95,12 +95,12 @@ export function PortfolioAccordion({
         </HorizontalCarousel>
       </AccordionItem>
 
-      {/* ── 03. CAREER & EXPERIENCE ──────────────────────────────── */}
+      {/* ── 03. Career & Experience ──────────────────────────────── */}
       <AccordionItem
         id="career"
         number="03"
-        title="CAREER & EXPERIENCE"
-        badge="2019 — PRES."
+        title="Career & Experience"
+        badge="2019 — Present"
         isOpen={!!openSections.career}
         onToggle={() => toggleSection("career")}
       >
@@ -110,12 +110,12 @@ export function PortfolioAccordion({
         />
       </AccordionItem>
 
-      {/* ── 04. PHILOSOPHY & ABOUT ───────────────────────────────── */}
+      {/* ── 04. Philosophy & About ───────────────────────────────── */}
       <AccordionItem
         id="about"
         number="04"
-        title="PHILOSOPHY & ABOUT"
-        badge="ABOUT"
+        title="Philosophy & About"
+        badge="Profile"
         isOpen={!!openSections.about}
         onToggle={() => toggleSection("about")}
         hideBottomDivider={true}

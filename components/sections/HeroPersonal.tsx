@@ -17,7 +17,7 @@ export function HeroPersonal({ profile }: HeroPersonalProps) {
       <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8">
         <div className="flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-6 md:gap-8">
           {/* ── Left Column: Identity & Bio ──────────────────────────── */}
-          <div className="flex-1 flex flex-col gap-3 sm:gap-3.5">
+          <div className="flex-1 flex flex-col items-start gap-4">
             {/* 1. Live Status Pill */}
             <motion.div
               initial={{ opacity: 0, y: 8 }}
@@ -35,10 +35,10 @@ export function HeroPersonal({ profile }: HeroPersonalProps) {
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
               className="flex flex-col gap-1"
             >
-              <h1 className="font-serif text-2xl sm:text-3xl md:text-4xl lg:text-[40px] text-white tracking-tight font-light leading-[1.12]">
+              <h1 className="font-sans font-semibold text-2xl sm:text-3xl text-neutral-900 dark:text-neutral-100 tracking-tight leading-[1.2]">
                 {profile.name}
               </h1>
-              <p className="font-mono text-[10px] sm:text-[11px] text-neutral-400 tracking-[0.2em] uppercase">
+              <p className="font-mono text-[12px] text-neutral-500 dark:text-neutral-400 tracking-normal">
                 {profile.title}
               </p>
             </motion.div>
@@ -48,7 +48,7 @@ export function HeroPersonal({ profile }: HeroPersonalProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="text-xs sm:text-sm text-neutral-400 font-sans font-light max-w-xl leading-relaxed"
+              className="text-base text-neutral-600 dark:text-neutral-400 font-sans font-normal max-w-xl leading-relaxed"
             >
               {profile.tagline}
             </motion.p>
@@ -58,11 +58,11 @@ export function HeroPersonal({ profile }: HeroPersonalProps) {
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.2, ease: [0.22, 1, 0.36, 1] }}
-              className="flex items-center gap-3 pt-0.5"
+              className="flex items-center gap-3 pt-1"
             >
               <Link
                 href="/cv"
-                className="inline-flex items-center gap-2 px-4 md:px-5 py-2.5 bg-white text-black font-mono text-[10px] md:text-[11px] tracking-[0.2em] uppercase font-semibold hover:bg-neutral-200 active:scale-[0.98] transition-all"
+                className="inline-flex items-center gap-2 px-4 py-2 bg-neutral-900 text-white border border-neutral-900 hover:bg-neutral-800 dark:bg-white dark:text-black dark:border-white dark:hover:bg-neutral-200 font-sans text-xs font-medium tracking-normal rounded-md active:scale-[0.98] transition-all"
               >
                 <FileText className="w-3.5 h-3.5" />
                 View CV / Resume
@@ -77,12 +77,12 @@ export function HeroPersonal({ profile }: HeroPersonalProps) {
             transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
             className="flex-shrink-0 self-start sm:self-center"
           >
-            <div className="relative w-24 h-24 sm:w-28 sm:h-28 md:w-36 md:h-36 lg:w-40 lg:h-40 rounded-full overflow-hidden group">
+            <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden group border border-neutral-200 dark:border-neutral-800">
               <Image
                 src="/portrait.jpeg"
                 alt={profile.name}
                 fill
-                sizes="(max-width: 640px) 112px, 160px"
+                sizes="(max-width: 640px) 96px, 112px"
                 className="object-cover object-top grayscale contrast-110 group-hover:grayscale-0 group-hover:scale-105 transition-all duration-700 ease-out"
                 priority
               />

@@ -25,7 +25,7 @@ export default async function WorkDetailPage({
   );
 
   return (
-    <div className="min-h-screen bg-black text-white font-sans selection:bg-[#61F9E9] selection:text-black">
+    <div className="min-h-screen bg-[#FAFAFA] dark:bg-[#0A0A0A] text-neutral-900 dark:text-neutral-100 font-sans selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-black transition-colors duration-300">
       <Navbar />
 
       {/* 1. Full Screen Hero Image Header */}
@@ -50,7 +50,7 @@ export default async function WorkDetailPage({
               <div className="flex flex-col items-start">
                 <Link
                   href="/work"
-                  className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/50 hover:text-[#61F9E9] transition-all duration-300 hover:tracking-[0.3em] flex items-center mb-6"
+                  className="font-mono text-[10px] uppercase tracking-[0.22em] text-white/70 hover:text-white transition-all duration-300 hover:tracking-[0.3em] flex items-center mb-6"
                 >
                   ← Back to works
                 </Link>
@@ -58,12 +58,6 @@ export default async function WorkDetailPage({
                 <h1 className="text-4xl md:text-[72px] font-light leading-[1.05] tracking-tight text-white mb-6 max-w-4xl uppercase">
                   {project.title}
                 </h1>
-
-                {project.category && (
-                  <div className="font-mono text-[10px] uppercase tracking-[0.25em] text-[#61F9E9]">
-                    {project.category} {project.completionYear && `// YEAR: ${project.completionYear}`}
-                  </div>
-                )}
               </div>
             </Reveal>
           </div>
@@ -71,61 +65,61 @@ export default async function WorkDetailPage({
       </section>
 
     {/* 2. Metadata & Description Section */}
-    <section className="w-full flex justify-center bg-black py-20 border-b border-white/5">
+    <section className="w-full flex justify-center bg-[#FAFAFA] dark:bg-[#0A0A0A] py-20 border-b border-neutral-200 dark:border-white/5 transition-colors duration-300">
       <div className="w-full max-w-[800px] px-6 flex flex-col gap-12 text-left">
         
         {/* Top Block: Narrative Description */}
         <Reveal>
-          <p className="font-sans text-[16px] md:text-[18px] text-white/75 font-light leading-[1.7] md:leading-[1.8] tracking-wide">
+          <p className="font-sans text-[16px] md:text-[18px] text-neutral-700 dark:text-white/75 font-light leading-[1.7] md:leading-[1.8] tracking-wide">
             {project.description || "Exploring the intersection of architectural scale and digital fidelity. This project represents a comprehensive investigation into material, light, and geometry to establish a new paradigm in spatial experience."}
           </p>
         </Reveal>
 
         {/* Bottom Block: Technical Specifications */}
         <Reveal>
-          <div className="flex flex-wrap justify-between gap-x-6 gap-y-8 w-full pt-8 border-t border-white/10">
+          <div className="flex flex-wrap justify-between gap-x-6 gap-y-8 w-full pt-8 border-t border-neutral-200 dark:border-white/10">
             {/* Typology */}
             {project.category && (
               <div className="flex flex-col gap-1.5 min-w-[120px]">
-                <span className="text-white/40 font-mono text-[9px] uppercase tracking-[0.2em]">Typology</span>
-                <span className="text-white text-[13px] font-sans font-light leading-relaxed">{project.category}</span>
+                <span className="text-neutral-500 dark:text-white/40 font-mono text-[9px] uppercase tracking-[0.2em]">Typology</span>
+                <span className="text-neutral-900 dark:text-white text-[13px] font-sans font-light leading-relaxed">{project.category}</span>
               </div>
             )}
 
             {/* Location */}
             {(project.location && (!project.author && project.architect)) && (
               <div className="flex flex-col gap-1.5 min-w-[120px]">
-                <span className="text-white/40 font-mono text-[9px] uppercase tracking-[0.2em]">Location</span>
-                <span className="text-white text-[13px] font-sans font-light leading-relaxed">{project.location}</span>
+                <span className="text-neutral-500 dark:text-white/40 font-mono text-[9px] uppercase tracking-[0.2em]">Location</span>
+                <span className="text-neutral-900 dark:text-white text-[13px] font-sans font-light leading-relaxed">{project.location}</span>
               </div>
             )}
 
             {/* Year / Status */}
             {(project.completionYear || project.status) && (
               <div className="flex flex-col gap-1.5 min-w-[120px]">
-                <span className="text-white/40 font-mono text-[9px] uppercase tracking-[0.2em]">{project.completionYear ? "Year" : "Status"}</span>
-                <span className="text-white text-[13px] font-sans font-light leading-relaxed">{project.completionYear || project.status}</span>
+                <span className="text-neutral-500 dark:text-white/40 font-mono text-[9px] uppercase tracking-[0.2em]">{project.completionYear ? "Year" : "Status"}</span>
+                <span className="text-neutral-900 dark:text-white text-[13px] font-sans font-light leading-relaxed">{project.completionYear || project.status}</span>
               </div>
             )}
 
             {/* Office / Author */}
             {project.architect && !project.author ? (
               <div className="flex flex-col gap-1.5 min-w-[120px]">
-                <span className="text-white/40 font-mono text-[9px] uppercase tracking-[0.2em]">Office</span>
-                <span className="text-white text-[13px] font-sans font-light leading-relaxed">{project.architect}</span>
+                <span className="text-neutral-500 dark:text-white/40 font-mono text-[9px] uppercase tracking-[0.2em]">Office</span>
+                <span className="text-neutral-900 dark:text-white text-[13px] font-sans font-light leading-relaxed">{project.architect}</span>
               </div>
             ) : (
               <div className="flex flex-col gap-1.5 min-w-[120px]">
-                <span className="text-white/40 font-mono text-[9px] uppercase tracking-[0.2em]">{project.author ? "Author" : "Work Type"}</span>
-                <span className="text-white text-[13px] font-sans font-light leading-relaxed">{project.author || "Independent Work"}</span>
+                <span className="text-neutral-500 dark:text-white/40 font-mono text-[9px] uppercase tracking-[0.2em]">{project.author ? "Author" : "Work Type"}</span>
+                <span className="text-neutral-900 dark:text-white text-[13px] font-sans font-light leading-relaxed">{project.author || "Independent Work"}</span>
               </div>
             )}
 
             {/* Scope */}
             {project.scope && (
               <div className="flex flex-col gap-1.5 min-w-[120px]">
-                <span className="text-white/40 font-mono text-[9px] uppercase tracking-[0.2em]">Scope</span>
-                <span className="text-white text-[13px] font-sans font-light leading-relaxed">{project.scope}</span>
+                <span className="text-neutral-500 dark:text-white/40 font-mono text-[9px] uppercase tracking-[0.2em]">Scope</span>
+                <span className="text-neutral-900 dark:text-white text-[13px] font-sans font-light leading-relaxed">{project.scope}</span>
               </div>
             )}
           </div>

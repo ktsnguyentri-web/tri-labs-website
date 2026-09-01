@@ -29,7 +29,7 @@ export default async function Home() {
   ]);
 
   return (
-    <div className="min-h-screen bg-black text-foreground font-sans selection:bg-white selection:text-black flex flex-col justify-between">
+    <div className="min-h-screen bg-[#FAFAFA] dark:bg-[#0A0A0A] text-neutral-900 dark:text-neutral-100 font-sans selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-black flex flex-col justify-between transition-colors duration-300">
       <Navbar />
       <main className="w-full flex-1 flex flex-col justify-start">
         {/* ── Above the Fold: Identity & Actionable Bio ──────────── */}

@@ -14,6 +14,7 @@ const newsreader = Newsreader({
   subsets: ["latin"],
   style: ["normal", "italic"],
   display: "swap",
+  adjustFontFallback: false,
 });
 
 const jetbrainsMono = JetBrains_Mono({
@@ -44,9 +45,26 @@ export default function RootLayout({
   return (
     <html
       lang="en"
-      className={`${inter.variable} ${newsreader.variable} ${jetbrainsMono.variable} h-full antialiased scroll-smooth`}
+      className={`${inter.variable} ${newsreader.variable} ${jetbrainsMono.variable} h-full antialiased scroll-smooth dark`}
+      suppressHydrationWarning
     >
-      <body className="min-h-full flex flex-col font-sans selection:bg-accent selection:text-black">
+      <head>
+        <script
+          dangerouslySetInnerHTML={{
+            __html: `(function() {
+              try {
+                var theme = localStorage.getItem('theme');
+                if (theme === 'light') {
+                  document.documentElement.classList.remove('dark');
+                } else {
+                  document.documentElement.classList.add('dark');
+                }
+              } catch (e) {}
+            })()`,
+          }}
+        />
+      </head>
+      <body className="min-h-full flex flex-col font-sans selection:bg-accent selection:text-black bg-[#FAFAFA] dark:bg-[#0A0A0A] text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
         <IntroAnimationProvider>
           <main className="flex-grow">
             {children}

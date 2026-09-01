@@ -37,7 +37,7 @@ export default async function ResearchArticlePage({
   if (!article) notFound();
 
   return (
-    <div className="min-h-screen bg-black text-foreground font-sans selection:bg-accent selection:text-black">
+    <div className="min-h-screen bg-[#FAFAFA] dark:bg-[#0A0A0A] text-neutral-900 dark:text-neutral-100 font-sans selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-black transition-colors duration-300">
       <Navbar />
       <main className="w-full pt-[60px]">
         <div className="max-w-3xl mx-auto pt-0 pb-20 px-6 md:px-12">

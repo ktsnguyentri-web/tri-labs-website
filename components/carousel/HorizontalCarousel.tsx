@@ -94,8 +94,8 @@ export function HorizontalCarousel({ children, totalItems }: HorizontalCarouselP
       {/* ── Carousel Header Controls (Constrained to max-w-3xl) ──── */}
       <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 flex items-center justify-between mb-3">
         {/* Slide Counter */}
-        <div className="flex items-center gap-2 font-mono text-[10px] md:text-[11px] text-neutral-500 tracking-[0.2em]">
-          <span className="text-neutral-200 font-medium">
+        <div className="flex items-center gap-1.5 font-mono text-[12px] text-neutral-400 dark:text-neutral-500 tracking-normal">
+          <span className="text-neutral-800 dark:text-neutral-200 font-medium">
             {String(currentIndex + 1).padStart(2, "0")}
           </span>
           <span>/</span>
@@ -109,7 +109,7 @@ export function HorizontalCarousel({ children, totalItems }: HorizontalCarouselP
             onClick={() => scrollByAmount("left")}
             disabled={!canScrollLeft}
             aria-label="Scroll left"
-            className="p-1.5 border border-white/10 hover:border-white text-white disabled:opacity-20 disabled:hover:border-white/10 transition-colors cursor-pointer disabled:cursor-not-allowed bg-black/40 rounded-sm"
+            className="p-1.5 border border-neutral-200 dark:border-neutral-800 hover:border-neutral-900 dark:hover:border-neutral-600 text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white disabled:opacity-20 disabled:hover:border-neutral-200 dark:disabled:hover:border-neutral-800 transition-colors cursor-pointer disabled:cursor-not-allowed bg-neutral-100/80 dark:bg-neutral-900/50 rounded-sm"
           >
             <ArrowLeft className="w-3.5 h-3.5" />
           </button>
@@ -118,7 +118,7 @@ export function HorizontalCarousel({ children, totalItems }: HorizontalCarouselP
             onClick={() => scrollByAmount("right")}
             disabled={!canScrollRight}
             aria-label="Scroll right"
-            className="p-1.5 border border-white/10 hover:border-white text-white disabled:opacity-20 disabled:hover:border-white/10 transition-colors cursor-pointer disabled:cursor-not-allowed bg-black/40 rounded-sm"
+            className="p-1.5 border border-neutral-200 dark:border-neutral-800 hover:border-neutral-900 dark:hover:border-neutral-600 text-neutral-700 dark:text-neutral-300 hover:text-black dark:hover:text-white disabled:opacity-20 disabled:hover:border-neutral-200 dark:disabled:hover:border-neutral-800 transition-colors cursor-pointer disabled:cursor-not-allowed bg-neutral-100/80 dark:bg-neutral-900/50 rounded-sm"
           >
             <ArrowRight className="w-3.5 h-3.5" />
           </button>
@@ -148,9 +148,9 @@ export function HorizontalCarousel({ children, totalItems }: HorizontalCarouselP
 
       {/* ── Bottom Track Progress Bar (Constrained to max-w-3xl) ─── */}
       <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 mt-1">
-        <div className="w-full h-[1px] bg-white/10 relative overflow-hidden">
+        <div className="w-full h-[1px] bg-neutral-200 dark:bg-white/10 relative overflow-hidden">
           <div
-            className="h-full bg-white/50 transition-all duration-300 ease-out"
+            className="h-full bg-neutral-900 dark:bg-white/50 transition-all duration-300 ease-out"
             style={{
               width: `${totalItems > 0 ? ((currentIndex + 1) / totalItems) * 100 : 0}%`,
             }}
