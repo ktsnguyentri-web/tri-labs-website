@@ -120,10 +120,9 @@ export function Navbar() {
   });
 
   const links = [
-    { label: "Projects", href: "/work" },
-    { label: "Ideas", href: "/research" },
-    { label: "Tool", href: "/tool" },
-    { label: "About", href: "/cv" },
+    { label: "Works", href: "/works" },
+    { label: "Labs", href: "/labs" },
+    { label: "Writing", href: "/writing" },
   ];
 
   // Prevent hydration mismatch: render a static shell on server/first-pass
@@ -154,13 +153,10 @@ export function Navbar() {
               initial={shouldAnimate ? "initial" : "static"}
               animate={shouldAnimate ? "animate" : "static"}
             >
-              <Link
-                href="/"
-                className="flex items-center"
-                onClick={() => setIsMenuOpen(false)}
-              >
-                <Logo />
-              </Link>
+              <Logo
+                pathname={pathname}
+                onHomeClick={() => setIsMenuOpen(false)}
+              />
             </motion.div>
           </div>
 

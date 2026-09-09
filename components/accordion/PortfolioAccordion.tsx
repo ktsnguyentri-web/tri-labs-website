@@ -48,7 +48,7 @@ export function PortfolioAccordion({
     <div className="w-full flex flex-col">
       {/* Top Divider line (Constrained to inner grid) */}
       <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 w-full">
-        <div className="border-t border-neutral-200 dark:border-neutral-800 w-full" />
+        <div className="border-b border-neutral-200 dark:border-neutral-800 w-full" />
       </div>
 
       {/* ── 01. Works ────────────────────────────────────────────── */}
@@ -56,6 +56,7 @@ export function PortfolioAccordion({
         id="works"
         number="01"
         title="Works"
+        href="/works"
         isOpen={!!openSections.works}
         onToggle={() => toggleSection("works")}
       >
@@ -75,6 +76,7 @@ export function PortfolioAccordion({
         id="labs"
         number="02"
         title="Labs"
+        href="/labs"
         isOpen={!!openSections.labs}
         onToggle={() => toggleSection("labs")}
       >
@@ -94,6 +96,7 @@ export function PortfolioAccordion({
         id="writing"
         number="03"
         title="Writing"
+        href="/writing"
         isOpen={!!openSections.writing}
         onToggle={() => toggleSection("writing")}
       >

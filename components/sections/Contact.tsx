@@ -25,30 +25,21 @@ export function Contact({ theme = "dark", email = "contact@tringuyen-design.com"
   return (
     <footer 
       ref={contactRef}
-      className="w-full bg-[#FAFAFA] dark:bg-[#0A0A0A] border-t border-neutral-200 dark:border-neutral-800/40 pt-5 pb-10 transition-colors duration-300" 
+      className="w-full bg-[#FAFAFA] dark:bg-[#0A0A0A] border-t border-neutral-200 dark:border-neutral-800/40 py-6 sm:py-8 transition-colors duration-300" 
       id="contact"
     >
       <div className="w-full max-w-3xl mx-auto px-5 sm:px-6 md:px-8">
-        <div className="flex justify-between items-center gap-4 pt-1">
-          {/* Left: Anchored Popover Trigger with Running Luminous Online Border */}
-          <div className="relative inline-flex">
-            <div className="relative inline-flex items-center justify-center p-[1px] rounded-full overflow-hidden group">
-              {/* Running luminous border beam ("always online" indicator) */}
-              <span 
-                className="absolute inset-[-150%] animate-[spin_3.5s_linear_infinite] bg-[conic-gradient(from_0deg,transparent_0_70%,#10B981_88%,#6EE7B7_95%,transparent_100%)] dark:bg-[conic-gradient(from_0deg,transparent_0_70%,#10B981_88%,#34D399_95%,transparent_100%)] pointer-events-none"
-                aria-hidden="true"
-              />
-
-              {/* High-Contrast Pill Button */}
-              <button
-                type="button"
-                onClick={() => setIsChatOpen((prev) => !prev)}
-                aria-expanded={isChatOpen}
-                className="relative z-10 px-5 py-2 rounded-full bg-neutral-950 text-white dark:bg-white dark:text-neutral-950 font-sans font-medium text-base tracking-normal hover:bg-neutral-900 dark:hover:bg-neutral-100 transition-all duration-300 active:scale-[0.98] cursor-pointer whitespace-nowrap select-none"
-              >
-                <span>&ldquo;Let&apos;s chat&rdquo;</span>
-              </button>
-            </div>
+        <div className="flex justify-between items-center gap-4">
+          {/* Left-aligned item: Minimal CTA button with text "Let’s chat" */}
+          <div className="relative inline-flex items-center">
+            <button
+              type="button"
+              onClick={() => setIsChatOpen((prev) => !prev)}
+              aria-expanded={isChatOpen}
+              className="font-sans text-sm font-medium text-neutral-900 dark:text-neutral-100 hover:underline cursor-pointer select-none"
+            >
+              Let’s chat
+            </button>
 
             {/* Anchored Popover directly above the button */}
             <ChatPopover 
@@ -57,12 +48,22 @@ export function Contact({ theme = "dark", email = "contact@tringuyen-design.com"
             />
           </div>
 
-          {/* Right: Copyright Only */}
-          <div className="flex items-center text-[12px] font-mono text-neutral-500 dark:text-neutral-400 whitespace-nowrap">
-            <span>© {currentYear}</span>
+          {/* Right-aligned item: Minimal copyright text © 2026 + back-to-top glyph ↑ */}
+          <div className="flex items-center gap-3 font-mono text-xs text-neutral-400 select-none">
+            <span>© 2026</span>
+            <button
+              type="button"
+              onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
+              aria-label="Back to top"
+              className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors cursor-pointer"
+            >
+              ↑
+            </button>
           </div>
         </div>
       </div>
     </footer>
   );
 }
+
+export { Contact as Footer };
