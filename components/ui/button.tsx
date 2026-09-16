@@ -6,27 +6,29 @@ import { ArrowRight } from "lucide-react";
 import { cn } from "@/lib/utils";
 
 /**
- * Standardized CTA Button Component
+ * Standardized Modern CTA Button Component
  * 
- * Design: Square corners, Brutalist dark muted tone (#4A4443), White bold uppercase text.
+ * Design: Apple-inspired rounded pill shape, smooth tactile feedback (active:scale-[0.96]),
+ * adaptive dark/light contrast styling, uppercase tracking metadata font.
  * Features: Automatic ArrowRight icon (customizable), 'asChild' support for Next.js Links.
  */
 
 const buttonVariants = cva(
-  "inline-flex items-center justify-center gap-2 whitespace-nowrap label-caps transition-all focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.98]",
+  "inline-flex items-center justify-center gap-2 whitespace-nowrap label-caps rounded-full transition-all duration-200 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2 disabled:pointer-events-none disabled:opacity-50 active:scale-[0.96] cursor-pointer select-none",
   {
     variants: {
       variant: {
-        default: "bg-[#4A4443] text-white hover:bg-[#3D3837] shadow-lg",
-        outline: "border-2 border-[#4A4443] text-[#4A4443] hover:bg-[#4A4443] hover:text-white",
-        ghost: "text-[#4C4546] hover:bg-black/5",
-        secondary: "bg-[#F3F4F6] text-[#4A4443] hover:bg-[#E5E7EB]",
+        default: "bg-neutral-900 text-white hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-white shadow-sm hover:shadow-md",
+        outline: "border border-neutral-300 dark:border-neutral-700 text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-neutral-950 dark:hover:text-white",
+        ghost: "text-neutral-700 dark:text-neutral-300 hover:bg-black/5 dark:hover:bg-white/10",
+        secondary: "bg-neutral-100 text-neutral-900 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700",
+        pill: "bg-neutral-900/90 text-white hover:bg-neutral-900 dark:bg-white/90 dark:text-neutral-950 dark:hover:bg-white backdrop-blur-md shadow-sm",
       },
       size: {
-        default: "px-8 py-3",
-        sm: "px-6 py-2 text-xs",
-        lg: "px-10 py-4 text-base",
-        icon: "h-10 w-10",
+        default: "px-6 py-2.5 text-[11px]",
+        sm: "px-4 py-1.5 text-[10px]",
+        lg: "px-8 py-3.5 text-xs",
+        icon: "h-9 w-9 p-0 rounded-full",
       },
     },
     defaultVariants: {

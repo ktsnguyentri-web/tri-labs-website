@@ -1,68 +1,16 @@
 "use client";
 
-import React, { useState, useEffect } from "react";
+import React from "react";
 import Image from "next/image";
 import { motion } from "framer-motion";
 import type { PersonalProfile } from "@/types/cms";
+import { LiveStatusPill } from "@/components/hero/LiveStatusPill";
 
 interface HeroPersonalProps {
   profile: PersonalProfile;
 }
 
-function getSaigonStatus() {
-  try {
-    const now = new Date();
-    const parts = new Intl.DateTimeFormat("en-US", {
-      timeZone: "Asia/Ho_Chi_Minh",
-      weekday: "short",
-      hour: "numeric",
-      hourCycle: "h23",
-    }).formatToParts(now);
-
-    const weekday = parts.find((p) => p.type === "weekday")?.value;
-    const hour = parseInt(parts.find((p) => p.type === "hour")?.value || "0", 10);
-
-    if (weekday === "Sun") {
-      return { dotColor: "#E5E5E5", text: "SUNDAY — PERFECT DAY" };
-    }
-    if (weekday === "Sat") {
-      return { dotColor: "#A3A3A3", text: "WEEKEND — OFF THE CLOCK" };
-    }
-    if (hour >= 8 && hour < 17) {
-      return { dotColor: "#3B82F6", text: "SAIGON — AT WORK / 08–17" };
-    }
-    return { dotColor: "#22C55E", text: "SAIGON — FREE HOURS / OPEN TO IDEAS" };
-  } catch {
-    const now = new Date();
-    const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-    const vnTime = new Date(utc + 3600000 * 7);
-    const day = vnTime.getDay();
-    const hour = vnTime.getHours();
-
-    if (day === 0) {
-      return { dotColor: "#E5E5E5", text: "SUNDAY — PERFECT DAY" };
-    }
-    if (day === 6) {
-      return { dotColor: "#A3A3A3", text: "WEEKEND — OFF THE CLOCK" };
-    }
-    if (hour >= 8 && hour < 17) {
-      return { dotColor: "#3B82F6", text: "SAIGON — AT WORK / 08–17" };
-    }
-    return { dotColor: "#22C55E", text: "SAIGON — FREE HOURS / OPEN TO IDEAS" };
-  }
-}
-
 export function HeroPersonal({ profile }: HeroPersonalProps) {
-  const [status, setStatus] = useState(() => getSaigonStatus());
-
-  useEffect(() => {
-    setStatus(getSaigonStatus());
-    const interval = setInterval(() => {
-      setStatus(getSaigonStatus());
-    }, 30000);
-    return () => clearInterval(interval);
-  }, []);
-
   return (
     <section className="w-full pt-16 sm:pt-20 md:pt-22 pb-4 sm:pb-5">
       <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8">
@@ -76,40 +24,32 @@ export function HeroPersonal({ profile }: HeroPersonalProps) {
               transition={{ duration: 0.5, ease: "easeOut" }}
               className="flex items-center"
             >
-              <div
-                suppressHydrationWarning
-                className="inline-flex items-center gap-2 font-mono text-xs text-neutral-400 tracking-wider select-none"
-              >
-                <span
-                  className="w-1.5 h-1.5 rounded-full animate-pulse flex-shrink-0"
-                  style={{ backgroundColor: status.dotColor }}
-                  aria-hidden="true"
-                />
-                <span className="sr-only">● </span>
-                <span>{status.text}</span>
-              </div>
+              <LiveStatusPill manualStatus={profile?.status?.manualOverride} />
             </motion.div>
 
-            {/* 2. Name */}
+            {/* 2. Name & Title */}
             <motion.div
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
-              className="flex flex-col gap-1"
+              className="flex flex-col gap-1.5"
             >
               <h1 className="font-sans font-medium text-3xl sm:text-4xl tracking-tight text-neutral-900 dark:text-neutral-100">
                 {profile.name || "Tri Nguyen Minh"}
               </h1>
+              <p className="font-mono text-xs sm:text-[13px] text-neutral-500 dark:text-neutral-400 tracking-normal">
+                {profile?.title || "Architect · Tinkerer"}
+              </p>
             </motion.div>
 
-            {/* 3. Concise Bio Statement */}
+            {/* 3. Personal Motto */}
             <motion.p
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
-              className="text-base sm:text-lg text-neutral-600 dark:text-neutral-400 leading-relaxed max-w-xl font-sans mt-3"
+              className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 font-sans leading-snug mt-1.5 max-w-xl"
             >
-              I design buildings, systems, and small tools for architects.
+              &ldquo;Do what you love. Love what you do.&rdquo;
             </motion.p>
           </div>
 

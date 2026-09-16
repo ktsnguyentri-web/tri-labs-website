@@ -2,124 +2,100 @@
 
 import React, { useState, useEffect } from "react";
 
+export interface SaigonStatus {
+  dotColor: string;
+  text: string;
+  isWorking: boolean;
+}
+
+export function getSaigonStatus(manualOverride?: string | null): SaigonStatus {
+  if (manualOverride) {
+    return {
+      dotColor: "#10B981",
+      text: manualOverride,
+      isWorking: false,
+    };
+  }
+
+  try {
+    const now = new Date();
+    const parts = new Intl.DateTimeFormat("en-US", {
+      timeZone: "Asia/Ho_Chi_Minh",
+      weekday: "short",
+      hour: "numeric",
+      hourCycle: "h23",
+    }).formatToParts(now);
+
+    const weekday = parts.find((p) => p.type === "weekday")?.value;
+    const hour = parseInt(parts.find((p) => p.type === "hour")?.value || "0", 10);
+
+    if (weekday === "Sun") {
+      return { dotColor: "#E5E5E5", text: "SUNDAY — PERFECT DAY", isWorking: false };
+    }
+    if (weekday === "Sat") {
+      return { dotColor: "#A3A3A3", text: "WEEKEND — OFF THE CLOCK", isWorking: false };
+    }
+    if (hour >= 8 && hour < 17) {
+      return { dotColor: "#3B82F6", text: "SAIGON — AT WORK / 08–17", isWorking: true };
+    }
+    // Sau 17:00:
+    return {
+      dotColor: "#22C55E",
+      text: "SAIGON — RELAXING, THINKING ABOUT SOMETHING",
+      isWorking: false,
+    };
+  } catch {
+    const now = new Date();
+    const utc = now.getTime() + now.getTimezoneOffset() * 60000;
+    const vnTime = new Date(utc + 3600000 * 7);
+    const day = vnTime.getDay();
+    const hour = vnTime.getHours();
+
+    if (day === 0) {
+      return { dotColor: "#E5E5E5", text: "SUNDAY — PERFECT DAY", isWorking: false };
+    }
+    if (day === 6) {
+      return { dotColor: "#A3A3A3", text: "WEEKEND — OFF THE CLOCK", isWorking: false };
+    }
+    if (hour >= 8 && hour < 17) {
+      return { dotColor: "#3B82F6", text: "SAIGON — AT WORK / 08–17", isWorking: true };
+    }
+    return {
+      dotColor: "#22C55E",
+      text: "SAIGON — RELAXING, THINKING ABOUT SOMETHING",
+      isWorking: false,
+    };
+  }
+}
+
 interface LiveStatusPillProps {
   manualStatus?: string | null;
   className?: string;
 }
 
 export function LiveStatusPill({ manualStatus, className = "" }: LiveStatusPillProps) {
-  const [mounted, setMounted] = useState(false);
-  const [isWorkingHours, setIsWorkingHours] = useState<boolean>(false);
-  const [isSunday, setIsSunday] = useState<boolean>(false);
+  const [status, setStatus] = useState(() => getSaigonStatus(manualStatus));
 
   useEffect(() => {
-    setMounted(true);
-
-    const updateStatus = () => {
-      try {
-        const now = new Date();
-
-        // Extract hour and weekday in Asia/Ho_Chi_Minh (UTC+7)
-        const hourFormatter = new Intl.DateTimeFormat("en-GB", {
-          timeZone: "Asia/Ho_Chi_Minh",
-          hour: "numeric",
-          hour12: false,
-        });
-        const weekdayFormatter = new Intl.DateTimeFormat("en-US", {
-          timeZone: "Asia/Ho_Chi_Minh",
-          weekday: "short",
-        });
-
-        const hour = parseInt(hourFormatter.format(now), 10);
-        const weekday = weekdayFormatter.format(now);
-
-        setIsSunday(weekday === "Sun");
-        // Working hours: 08:00 to 16:59 on non-Sunday
-        setIsWorkingHours(hour >= 8 && hour < 17 && weekday !== "Sun");
-      } catch {
-        // Fallback calculation using UTC+7 offset
-        const now = new Date();
-        const utc = now.getTime() + now.getTimezoneOffset() * 60000;
-        const vnTime = new Date(utc + 3600000 * 7);
-        const hour = vnTime.getHours();
-        const day = vnTime.getDay();
-        setIsSunday(day === 0);
-        setIsWorkingHours(hour >= 8 && hour < 17 && day !== 0);
-      }
-    };
-
-    updateStatus();
-    // Update every minute (60,000 ms)
-    const interval = setInterval(updateStatus, 60000);
+    setStatus(getSaigonStatus(manualStatus));
+    const interval = setInterval(() => {
+      setStatus(getSaigonStatus(manualStatus));
+    }, 30000);
     return () => clearInterval(interval);
-  }, []);
+  }, [manualStatus]);
 
-  // SSR Skeleton / Hydration Guard
-  if (!mounted) {
-    return (
-      <div
-        className={`inline-flex items-center gap-2 font-mono text-[11px] tracking-normal text-neutral-400 dark:text-neutral-500 select-none ${className}`}
-      >
-        <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-600 animate-pulse" />
-        <span>INITIALIZING STATUS...</span>
-      </div>
-    );
-  }
-
-  // 1. Manual Override Status (if provided)
-  if (manualStatus) {
-    return (
-      <div
-        className={`inline-flex items-center gap-2 font-mono text-[11px] tracking-normal text-neutral-500 dark:text-neutral-400 select-none ${className}`}
-      >
-        <span className="relative flex h-1.5 w-1.5 flex-shrink-0">
-          <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-          <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
-        </span>
-        <span>{manualStatus}</span>
-      </div>
-    );
-  }
-
-  // 2. Sunday Rule (UTC+7)
-  if (isSunday) {
-    return (
-      <div
-        className={`inline-flex flex-wrap items-center gap-2 font-mono text-[11px] tracking-normal text-neutral-500 dark:text-neutral-400 select-none ${className}`}
-      >
-        <span className="w-1.5 h-1.5 rounded-full bg-sky-400 flex-shrink-0" />
-        <span>
-          SUNDAY — TOUCHING GRASS / NO CAD, NO DEADLINES
-        </span>
-      </div>
-    );
-  }
-
-  // 3. Automatic Weekday Time-based Status
   return (
     <div
-      className={`inline-flex flex-wrap items-center gap-2 font-mono text-[11px] tracking-normal text-neutral-500 dark:text-neutral-400 select-none ${className}`}
+      suppressHydrationWarning
+      className={`inline-flex items-center gap-2 font-mono text-xs text-neutral-400 tracking-wider select-none ${className}`}
     >
-      {isWorkingHours ? (
-        <>
-          {/* Active Work Mode: Glowing Green Dot */}
-          <span className="relative flex h-1.5 w-1.5 flex-shrink-0">
-            <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-            <span className="relative inline-flex rounded-full h-1.5 w-1.5 bg-emerald-500" />
-          </span>
-          <span>
-            AT WORK (8:00 – 17:00) — ONLY AVAILABLE FOR COFFEE &amp; EMERGENCIES
-          </span>
-        </>
-      ) : (
-        <>
-          {/* Night / Lab Mode: Muted Dot */}
-          <span className="w-1.5 h-1.5 rounded-full bg-neutral-400 dark:bg-neutral-500 flex-shrink-0" />
-          <span>
-            AFTER 17:00 — ARCHITECTURE MODE OFF, LAB MODE ON
-          </span>
-        </>
-      )}
+      <span
+        className="w-1.5 h-1.5 rounded-full animate-pulse flex-shrink-0"
+        style={{ backgroundColor: status.dotColor }}
+        aria-hidden="true"
+      />
+      <span className="sr-only">● </span>
+      <span>{status.text}</span>
     </div>
   );
 }

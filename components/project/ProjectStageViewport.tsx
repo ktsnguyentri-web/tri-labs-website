@@ -14,26 +14,25 @@ export function ProjectStageViewport({ project, onOpenGallery }: ProjectStageVie
 
   return (
     <div className="aspect-[16/10] w-full bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-neutral-800 relative overflow-hidden rounded-none">
-      {/* Minimal Toggle Pill in Top-Right Corner */}
-      <div className="absolute top-3 right-3 z-10 flex items-center bg-white/90 dark:bg-neutral-950/90 backdrop-blur-sm border border-neutral-300 dark:border-neutral-700 select-none">
+      {/* Apple-style Segmented Control Pill in Top-Right Corner */}
+      <div className="absolute top-3 right-3 z-10 flex items-center p-0.5 rounded-full bg-white/85 dark:bg-neutral-950/85 backdrop-blur-md border border-neutral-200/80 dark:border-neutral-800/80 shadow-sm select-none gap-0.5">
         <button
           type="button"
           onClick={() => setMode("2d")}
-          className={`font-mono text-[11px] tracking-wide px-2.5 py-1 rounded-none transition-colors cursor-pointer ${
+          className={`font-mono text-[11px] tracking-wide px-3 py-1 rounded-full transition-all duration-200 cursor-pointer active:scale-95 ${
             mode === "2d"
-              ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-950 font-medium"
+              ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-950 font-medium shadow-sm"
               : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200"
           }`}
         >
           2D Photos
         </button>
-        <span className="w-[1px] h-3.5 bg-neutral-300 dark:bg-neutral-700" />
         <button
           type="button"
           onClick={() => setMode("3d")}
-          className={`font-mono text-[11px] tracking-wide px-2.5 py-1 rounded-none transition-colors cursor-pointer ${
+          className={`font-mono text-[11px] tracking-wide px-3 py-1 rounded-full transition-all duration-200 cursor-pointer active:scale-95 ${
             mode === "3d"
-              ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-950 font-medium"
+              ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-950 font-medium shadow-sm"
               : "text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-200"
           }`}
         >
@@ -57,7 +56,7 @@ export function ProjectStageViewport({ project, onOpenGallery }: ProjectStageVie
           />
           {onOpenGallery && (
             <div className="absolute inset-0 bg-black/0 group-hover/stage:bg-black/15 transition-colors flex items-center justify-center">
-              <span className="font-mono text-[10px] text-white bg-black/75 px-2.5 py-1 opacity-0 group-hover/stage:opacity-100 transition-opacity tracking-wider">
+              <span className="font-mono text-[10px] text-white bg-black/75 backdrop-blur-md px-3 py-1 rounded-full opacity-0 group-hover/stage:opacity-100 transition-all tracking-wider shadow-md">
                 EXPAND GALLERY ↗
               </span>
             </div>

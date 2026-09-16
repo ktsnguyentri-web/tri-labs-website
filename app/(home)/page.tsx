@@ -8,6 +8,8 @@ import {
   getResearchArticles,
   getToolkits,
   getProfile,
+  getCareerExperiences,
+  getEducation,
 } from "@/lib/cms";
 
 export default async function Home() {
@@ -17,12 +19,16 @@ export default async function Home() {
     writingArticles,
     toolkits,
     profile,
+    experiences,
+    education,
   ] = await Promise.all([
     getProjects(),
     getToolArticles(),
     getResearchArticles(),
     getToolkits(),
     getProfile(),
+    getCareerExperiences(),
+    getEducation(),
   ]);
 
   return (
@@ -40,6 +46,8 @@ export default async function Home() {
             writingArticles={writingArticles}
             toolkits={toolkits}
             profile={profile}
+            experiences={experiences}
+            education={education}
           />
         </div>
       </main>

@@ -20,7 +20,7 @@ export function Statement() {
                 Architect & Design Tech Explorer
               </span>
               <div className="mt-8">
-                <Button asChild variant="outline" className="h-9 text-[10px] tracking-[0.2em] border-white/20 hover:bg-white hover:text-black transition-all duration-300">
+                <Button asChild variant="outline" className="h-9 px-6 text-[10px] tracking-[0.2em] rounded-full border-white/20 hover:bg-white hover:text-black transition-all duration-300 active:scale-95">
                   <Link href="/cv">VIEW MY CV</Link>
                 </Button>
               </div>

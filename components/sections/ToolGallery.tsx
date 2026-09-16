@@ -1,6 +1,6 @@
 "use client";
 
-import { useState } from "react";
+import { useState, useMemo } from "react";
 import Image from "next/image";
 import type { ResearchArticle } from "@/types/cms";
 import { ArticleModal } from "@/components/modals/ArticleModal";
@@ -10,82 +10,122 @@ interface ToolGalleryProps {
   toolArticles: ResearchArticle[];
 }
 
-function GridItem({
-  item,
-  onClick,
-  index,
-}: {
-  item: ResearchArticle;
-  onClick: () => void;
-  index: number;
-}) {
-  return (
-    <Reveal delay={0.2 + (index % 3) * 0.1}>
-      <div
-        onClick={onClick}
-        className="flex flex-col gap-4 group cursor-pointer h-full text-left"
-      >
-        <div className="flex flex-col gap-2 flex-grow">
-          <span className="data-mono text-white/30">
-            {item.date} | {item.category}
-          </span>
-          <h3 className="text-heading-lg font-bold tracking-tight text-white group-hover:text-white/60 transition-colors truncate">
-            {item.title}
-          </h3>
-
-          <p className="text-body-md text-white/50 line-clamp-2">
-            {item.excerpt}
-          </p>
-        </div>
-        {/* aspect-[16/10] + relative enables fill Image */}
-        <div className="w-full aspect-[16/10] overflow-hidden mt-auto relative">
-          <Image
-            src={item.coverImage}
-            alt={item.title}
-            fill
-            className="object-cover transition-transform duration-700 group-hover:scale-105"
-            sizes="(max-width: 768px) 100vw, (max-width: 1280px) 50vw, 33vw"
-          />
-        </div>
-      </div>
-    </Reveal>
-  );
-}
-
-export function ToolGallery({
-  toolArticles,
-}: ToolGalleryProps) {
+export function ToolGallery({ toolArticles }: ToolGalleryProps) {
+  const [activeFilter, setActiveFilter] = useState<string>("All");
   const [selectedArticle, setSelectedArticle] = useState<ResearchArticle | null>(null);
 
+  const counts = useMemo(() => {
+    const all = toolArticles.length;
+    const tools = toolArticles.filter((a) => a.category === "Tool").length;
+    const research = toolArticles.filter((a) => a.category === "Research").length;
+    return { all, tools, research };
+  }, [toolArticles]);
+
+  const categories = [
+    { id: "All", label: `All [${counts.all}]` },
+    { id: "Tool", label: `Tools [${String(counts.tools).padStart(2, "0")}]` },
+    { id: "Research", label: `Research [${String(counts.research).padStart(2, "0")}]` },
+  ];
+
+  const filteredArticles = useMemo(() => {
+    if (activeFilter === "All") return toolArticles;
+    return toolArticles.filter((item) => item.category === activeFilter);
+  }, [toolArticles, activeFilter]);
+
   return (
-    <div className="w-full max-w-[1440px] mx-auto pt-12 pb-32 flex flex-col gap-24 px-10">
-      {/* Tool Section */}
-      {toolArticles.length > 0 && (
-        <div className="w-full scroll-mt-[100px]" id="tool">
-          <Reveal>
-            <div className="flex flex-col md:flex-row items-baseline gap-6 mb-12">
-              <h1 className="text-[48px] font-light tracking-tight text-white uppercase leading-none">
-                Tool
-              </h1>
-              <p className="label-caps text-white/40">
-                Internal tools and computational workflows developed by Tri Labs.
-              </p>
-            </div>
-          </Reveal>
-
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
-            {toolArticles.map((item, i) => (
-              <GridItem
-                key={item.slug}
-                item={item}
-                onClick={() => setSelectedArticle(item)}
-                index={i}
-              />
-            ))}
-          </div>
+    <div className="w-full max-w-[1440px] mx-auto pb-16 sm:pb-20">
+      {/* ── Filter Bar (Matching 01 / WORK) ── */}
+      <div className="px-4 sm:px-6 md:px-10">
+        <div className="flex flex-wrap items-center gap-5 sm:gap-7 border-b border-neutral-200 dark:border-neutral-800 pb-3 mb-3.5 sm:mb-4">
+          {categories.map((cat) => {
+            const isSelected = activeFilter === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setActiveFilter(cat.id)}
+                className={`cursor-pointer transition-colors ${
+                  isSelected
+                    ? "font-mono text-xs text-neutral-900 dark:text-neutral-100 underline underline-offset-8"
+                    : "font-mono text-xs text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"
+                }`}
+              >
+                {cat.label}
+              </button>
+            );
+          })}
         </div>
-      )}
+      </div>
 
+      {/* ── Dense Grid: Matching 01 / WORK Grid and Text Layout ── */}
+      <section className="px-4 sm:px-6 md:px-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-1.5 md:gap-2">
+          {filteredArticles.map((article, i) => {
+            const formattedIndex = String(i + 1).padStart(2, "0");
+            const category = article.category || "Tool";
+            const date = article.date || "2026";
+
+            return (
+              <Reveal key={article.slug} delay={0.02 * (i % 8)} className="w-full">
+                <div
+                  onClick={() => setSelectedArticle(article)}
+                  className="relative aspect-[4/3] w-full overflow-hidden block group bg-neutral-900 cursor-pointer select-none border border-black/5 dark:border-white/5"
+                >
+                  {/* Article Thumbnail */}
+                  {article.coverImage ? (
+                    <Image
+                      src={article.coverImage}
+                      alt={article.title}
+                      fill
+                      className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                      sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
+                    />
+                  ) : (
+                    <div className="w-full h-full flex flex-col items-center justify-center p-4 text-center bg-black/[0.02] dark:bg-white/[0.02]">
+                      <span className="font-mono text-[9px] tracking-[0.25em] uppercase text-neutral-400 dark:text-white/30 mb-1">
+                        Computational Prototype
+                      </span>
+                      <span className="font-serif text-xs text-neutral-400 dark:text-white/50 line-clamp-2">
+                        {article.title}
+                      </span>
+                    </div>
+                  )}
+
+                  {/* Information Overlay (Visible on hover - matching WorkGallery) */}
+                  <div className="absolute inset-0 bg-black/80 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-3.5 sm:p-4 flex flex-col justify-between pointer-events-none">
+                    {/* Top Row: [01] + Title */}
+                    <div className="flex items-baseline gap-2 min-w-0">
+                      <span className="font-mono text-xs text-neutral-400 flex-shrink-0">
+                        [{formattedIndex}]
+                      </span>
+                      <h3 className="font-sans text-sm font-medium text-white tracking-tight truncate">
+                        {article.title}
+                      </h3>
+                    </div>
+
+                    {/* Bottom Row: Category + Date */}
+                    <div className="flex items-center justify-between gap-2 min-w-0 font-mono text-[11px] text-neutral-300 border-t border-white/15 pt-2">
+                      <span className="truncate uppercase">
+                        {category}
+                      </span>
+                      <span className="flex-shrink-0 text-neutral-400">
+                        {date}
+                      </span>
+                    </div>
+                  </div>
+                </div>
+              </Reveal>
+            );
+          })}
+        </div>
+
+        {filteredArticles.length === 0 && (
+          <div className="py-20 text-center font-mono text-xs text-neutral-500 uppercase tracking-widest">
+            No prototypes found in this category.
+          </div>
+        )}
+      </section>
+
+      {/* Modal View for Article Detail */}
       {selectedArticle && (
         <ArticleModal
           article={selectedArticle}

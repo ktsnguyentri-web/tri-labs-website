@@ -45,6 +45,8 @@ interface RawProject {
   span: string;
   img: string;
   order: number;
+  category?: string;
+  typology?: string;
   completionYear?: string;
   description?: string;
   architect?: string;
@@ -92,6 +94,8 @@ function toProject(raw: RawProject): Project {
     heroImage: raw.img || '',
     location: raw.location || '',
     completionYear: raw.completionYear,
+    category: raw.category,
+    typology: raw.typology,
     span: raw.span,
     order: raw.order,
     description: raw.description,
@@ -228,44 +232,34 @@ export async function getCareerExperiences(): Promise<CareerExperience[]> {
 export async function getEducation(): Promise<EducationEntry[]> {
   return [
     {
-      period: "2011 — 2013",
-      degree: "M.Arch II",
-      school: "Graduate School of Design, Harvard University",
-      note: "Thesis: Adaptive High-Rise Envelopes"
-    },
-    {
-      period: "2006 — 2011",
+      period: "2013 — 2018",
       degree: "Bachelor of Architecture",
-      school: "Southern California Institute of Architecture (SCI-Arc)",
-      note: "Honours Graduate"
-    }
+      school: "University of Architecture Ho Chi Minh City (UAH)",
+    },
   ];
 }
 
 export async function getToolkits(): Promise<ToolkitModule[]> {
   return [
     {
-      module: "Architectural & Spatial Design",
+      module: "Architecture",
       tools: [
-        { name: "Rhino / Grasshopper", proficiency: 95 },
-        { name: "Revit / BIM", proficiency: 90 },
-        { name: "AutoCAD", proficiency: 95 },
-        { name: "SketchUp", proficiency: 90 },
-        { name: "Adobe Creative Suite", proficiency: 95 },
-        { name: "Maya", proficiency: 85 }
-      ]
+        { name: "AutoCAD", proficiency: 95, category: "primary" },
+        { name: "Revit", proficiency: 92, category: "primary" },
+        { name: "Rhino", proficiency: 88, category: "primary" },
+        { name: "SketchUp", proficiency: 96, category: "primary" },
+        { name: "D5 Render", proficiency: 90, category: "primary" },
+        { name: "Adobe CC", proficiency: 92, category: "primary" },
+      ],
     },
     {
-      module: "Computational & Engineering Code",
+      module: "Digital / Web",
       tools: [
-        { name: "React / Next.js", proficiency: 90 },
-        { name: "Three.js / WebGL", proficiency: 85 },
-        { name: "TypeScript / JavaScript", proficiency: 90 },
-        { name: "Python / Data", proficiency: 80 },
-        { name: "Unreal Engine 5", proficiency: 85 },
-        { name: "Dynamo / Parametric", proficiency: 88 }
-      ]
-    }
+        { name: "Three.js", proficiency: 85, category: "primary" },
+        { name: "Next.js", proficiency: 90, category: "primary" },
+        { name: "WebGL", proficiency: 82, category: "primary" },
+      ],
+    },
   ];
 }
 

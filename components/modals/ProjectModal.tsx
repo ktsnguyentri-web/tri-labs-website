@@ -138,7 +138,7 @@ export function ProjectModal({
             <button
               type="button"
               onClick={() => setObjectFit((prev) => (prev === "cover" ? "contain" : "cover"))}
-              className="font-mono text-[11px] text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors select-none tracking-wider cursor-pointer bg-[#FAFAFA]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-sm px-2.5 py-1 rounded-md border border-neutral-200/50 dark:border-neutral-800/60"
+              className="font-mono text-[11px] text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-all select-none tracking-wider cursor-pointer bg-[#FAFAFA]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-sm px-3 py-1 rounded-full border border-neutral-200/50 dark:border-neutral-800/60 active:scale-95 shadow-sm"
               title={objectFit === "cover" ? "Chuyển sang vừa khung" : "Chuyển sang tràn viền"}
             >
               [{objectFit === "cover" ? "TRÀN VIỀN" : "VỪA KHUNG"}]
@@ -149,20 +149,20 @@ export function ProjectModal({
             type="button"
             onClick={handleClose}
             aria-label="Close modal"
-            className="inline-flex items-center gap-1.5 font-mono text-xs text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors cursor-pointer select-none bg-[#FAFAFA]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-sm px-2.5 py-1 rounded-md border border-neutral-200/50 dark:border-neutral-800/60"
+            className="inline-flex items-center gap-1.5 font-mono text-xs text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-all cursor-pointer select-none bg-[#FAFAFA]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-sm px-3 py-1 rounded-full border border-neutral-200/50 dark:border-neutral-800/60 active:scale-95 shadow-sm"
           >
             <span>Close</span>
-            <X className="w-4 h-4" />
+            <X className="w-3.5 h-3.5" />
           </button>
         </div>
 
         {/* Floating Top Left Controls when Gallery is Open */}
         {isGalleryOpen && (
-          <div className="absolute top-4 left-5 sm:left-6 z-40 flex items-center gap-3 bg-[#FAFAFA]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-sm px-2.5 py-1 rounded-md border border-neutral-200/50 dark:border-neutral-800/60">
+          <div className="absolute top-4 left-5 sm:left-6 z-40 flex items-center gap-3 bg-[#FAFAFA]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-sm px-3 py-1 rounded-full border border-neutral-200/50 dark:border-neutral-800/60 shadow-sm">
             <button
               type="button"
               onClick={() => setIsGalleryOpen(false)}
-              className="inline-flex items-center gap-1.5 font-mono text-xs text-neutral-800 dark:text-neutral-200 hover:text-black dark:hover:text-white transition-colors cursor-pointer select-none group"
+              className="inline-flex items-center gap-1.5 font-mono text-xs text-neutral-800 dark:text-neutral-200 hover:text-black dark:hover:text-white transition-colors cursor-pointer select-none group active:scale-95"
               aria-label="Back to Project Overview"
             >
               <span className="transition-transform group-hover:-translate-x-0.5">←</span>
@@ -215,7 +215,7 @@ export function ProjectModal({
                       type="button"
                       onClick={prevGalleryImage}
                       aria-label="Previous image"
-                      className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 p-2.5 sm:p-3 text-white/70 hover:text-white bg-black/40 hover:bg-black/75 backdrop-blur-md border border-white/10 hover:border-white/30 transition-all cursor-pointer"
+                      className="absolute left-3 sm:left-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full flex items-center justify-center text-white/70 hover:text-white bg-black/40 hover:bg-black/75 backdrop-blur-md border border-white/10 hover:border-white/30 transition-all duration-200 cursor-pointer active:scale-90"
                     >
                       <ChevronLeft className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={1.5} />
                     </button>
@@ -224,7 +224,7 @@ export function ProjectModal({
                       type="button"
                       onClick={nextGalleryImage}
                       aria-label="Next image"
-                      className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 p-2.5 sm:p-3 text-white/70 hover:text-white bg-black/40 hover:bg-black/75 backdrop-blur-md border border-white/10 hover:border-white/30 transition-all cursor-pointer"
+                      className="absolute right-3 sm:right-5 top-1/2 -translate-y-1/2 z-20 w-11 h-11 rounded-full flex items-center justify-center text-white/70 hover:text-white bg-black/40 hover:bg-black/75 backdrop-blur-md border border-white/10 hover:border-white/30 transition-all duration-200 cursor-pointer active:scale-90"
                     >
                       <ChevronRight className="w-5 h-5 sm:w-6 sm:h-6" strokeWidth={1.5} />
                     </button>
@@ -409,7 +409,7 @@ export function ProjectModal({
                   <button
                     type="button"
                     onClick={() => openGallery(0)}
-                    className="w-full py-3 px-4 border border-neutral-200 dark:border-neutral-800 hover:border-neutral-900 dark:hover:border-neutral-200 bg-neutral-100/50 dark:bg-neutral-900/50 hover:bg-neutral-100 dark:hover:bg-neutral-900 font-mono text-xs text-neutral-900 dark:text-neutral-100 transition-all flex items-center justify-between group cursor-pointer select-none"
+                    className="w-full py-3 px-5 rounded-full border border-neutral-200 dark:border-neutral-800 hover:border-neutral-900 dark:hover:border-neutral-200 bg-neutral-100/60 dark:bg-neutral-900/60 hover:bg-neutral-100 dark:hover:bg-neutral-900 font-mono text-xs text-neutral-900 dark:text-neutral-100 transition-all duration-200 flex items-center justify-between group cursor-pointer select-none active:scale-[0.98] shadow-sm hover:shadow"
                     aria-label="Open Project Gallery"
                   >
                     <span className="font-medium tracking-wide">VIEW GALLERY</span>

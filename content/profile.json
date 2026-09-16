@@ -1,11 +1,10 @@
 {
   "name": "Tri Nguyen Minh",
-  "title": "Architect & Design Technologist",
-  "tagline": "Exploring the evolving intersection of architectural craft, computational geometry, and creative engineering.",
+  "title": "Architect · Tinkerer",
+  "tagline": "I design buildings. I also build tools for designing them.",
   "bioParagraphs": [
-    "I am an Architect and Computational Design Technologist based in Vietnam. My practice merges rigorous spatial problem-solving with cutting-edge digital tooling, generative algorithms, and frontend engineering.",
-    "Over the past 8+ years, I have collaborated with leading architectural studios across Asia on high-rise residential towers, boutique hospitality resorts, cultural centers, and bespoke computational workflows.",
-    "Beyond traditional practice, I actively develop open-source spatial algorithms, WebGL design viewers, and BIM automation utilities through Tri-Labs."
+    "Architect based in Saigon with 8+ years of experience in residential architecture and façade design.",
+    "Along the way, I build small web and 3D tools around problems I encounter in practice—making design work clearer, faster, and more interactive."
   ],
   "status": {
     "availableForHire": true,
@@ -13,13 +12,25 @@
     "manualOverride": null
   },
   "contact": {
-    "email": "contact@tringuyen-design.com",
+    "email": "kts.nguyentri@gmail.com",
     "location": "Saigon, Vietnam (UTC+7)",
     "socials": [
-      { "label": "LinkedIn", "url": "https://linkedin.com" },
-      { "label": "Twitter / X", "url": "https://twitter.com" },
-      { "label": "GitHub", "url": "https://github.com" },
-      { "label": "Instagram", "url": "https://instagram.com" }
+      {
+        "label": "YouTube",
+        "url": "https://www.youtube.com/@Tr%C3%ADNguy%E1%BB%85n-r8w"
+      },
+      {
+        "label": "LinkedIn",
+        "url": "https://www.linkedin.com/in/tr%C3%AD-nguy%E1%BB%85n-minh-56b625193/"
+      },
+      {
+        "label": "GitHub",
+        "url": "https://github.com/ktsnminhtri-wq"
+      },
+      {
+        "label": "Facebook",
+        "url": "https://www.facebook.com/tri.daihiep/"
+      }
     ]
   }
 }

@@ -39,32 +39,33 @@ export function ProjectDetailLayout({ project }: ProjectDetailLayoutProps) {
       project.size.stories);
 
   return (
-    <div className="w-full px-4 sm:px-6 md:px-8 py-2 sm:py-4 flex justify-center">
-      {/* Framed Window with small rounded corners and thin border */}
-      <div className="w-full max-w-6xl h-[calc(100vh-110px)] min-h-[600px] max-h-[940px] p-6 sm:p-8 lg:p-10 bg-[#FAFAFA] dark:bg-[#0A0A0A] text-neutral-900 dark:text-neutral-100 rounded-xl sm:rounded-2xl border border-neutral-300/80 dark:border-neutral-800 shadow-2xl overflow-hidden flex flex-col lg:flex-row gap-10 lg:gap-14 relative">
-        {/* ── Left Column: Fixed height, independent scroll, stays fixed when scrolling right stage ── */}
-        <aside className="w-full lg:w-[320px] xl:w-[340px] flex-shrink-0 h-full flex flex-col justify-between overflow-y-auto no-scrollbar space-y-6 select-text pr-1">
-          <div className="space-y-6">
+    <div className="w-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-10 pt-6 sm:pt-8 pb-20 sm:pb-28">
+      {/* ── Two-Column Architectural Layout: Sticky Details + Natural Media Stream ── */}
+      <div className="w-full flex flex-col lg:flex-row gap-10 lg:gap-14 xl:gap-20">
+        
+        {/* ── Left Column: Sticky on Desktop, Natural Flow on Mobile ── */}
+        <aside className="w-full lg:w-[340px] xl:w-[380px] flex-shrink-0 lg:sticky lg:top-24 self-start space-y-8 select-text">
+          <div className="space-y-6 sm:space-y-8">
             {/* Back link */}
             <div>
               <Link
                 href="/works"
-                className="inline-flex items-center gap-1.5 font-mono text-xs text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors"
+                className="inline-flex items-center gap-2 font-mono text-xs text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors group"
               >
-                <span>←</span>
+                <span className="transition-transform group-hover:-translate-x-1">←</span>
                 <span>Index / Works</span>
               </Link>
             </div>
 
             {/* Project Title */}
             <div>
-              <h1 className="font-sans font-medium text-2xl sm:text-3xl lg:text-4xl tracking-tight text-neutral-900 dark:text-neutral-100 leading-tight">
+              <h1 className="font-sans font-medium text-3xl sm:text-4xl lg:text-5xl tracking-tight text-neutral-900 dark:text-neutral-100 leading-[1.12]">
                 {project.title}
               </h1>
             </div>
 
             {/* Narrative Copy */}
-            <div className="border-t border-neutral-200 dark:border-neutral-800 pt-5">
+            <div className="border-t border-neutral-200 dark:border-neutral-800 pt-6">
               <p className="font-sans text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal">
                 {project.description ||
                   "Exploring the intersection of architectural scale and digital fidelity. This project represents a comprehensive investigation into material, light, and geometry to establish a new paradigm in spatial experience."}
@@ -72,7 +73,7 @@ export function ProjectDetailLayout({ project }: ProjectDetailLayoutProps) {
             </div>
 
             {/* Section Heading: INFORMATION */}
-            <div className="border-t border-neutral-200 dark:border-neutral-800 pt-5 space-y-3">
+            <div className="border-t border-neutral-200 dark:border-neutral-800 pt-6 space-y-3.5">
               <h2 className="font-mono text-xs text-neutral-400 dark:text-neutral-500 tracking-wider mb-2 uppercase">
                 INFORMATION
               </h2>
@@ -157,7 +158,7 @@ export function ProjectDetailLayout({ project }: ProjectDetailLayoutProps) {
 
             {/* Section Heading: SIZE */}
             {hasSizeInfo && (
-              <div className="border-t border-neutral-200 dark:border-neutral-800 pt-5 space-y-3">
+              <div className="border-t border-neutral-200 dark:border-neutral-800 pt-6 space-y-3.5">
                 <h2 className="font-mono text-xs text-neutral-400 dark:text-neutral-500 tracking-wider mb-2 uppercase">
                   SIZE
                 </h2>
@@ -209,12 +210,12 @@ export function ProjectDetailLayout({ project }: ProjectDetailLayoutProps) {
             )}
           </div>
 
-          {/* ── Integrated Gallery Button at the bottom of the left column ── */}
-          <div className="pt-6 border-t border-neutral-200 dark:border-neutral-800 mt-auto flex-shrink-0">
+          {/* ── View Fullscreen Gallery Button ── */}
+          <div className="pt-6 border-t border-neutral-200 dark:border-neutral-800">
             <button
               type="button"
               onClick={() => openGalleryAt(0)}
-              className="w-full py-3 px-4 border border-neutral-200 dark:border-neutral-800 hover:border-neutral-900 dark:hover:border-neutral-200 bg-neutral-100/50 dark:bg-neutral-900/50 hover:bg-neutral-100 dark:hover:bg-neutral-900 font-mono text-xs text-neutral-900 dark:text-neutral-100 transition-all flex items-center justify-between group cursor-pointer select-none"
+              className="w-full py-3.5 px-6 rounded-full border border-neutral-200 dark:border-neutral-800 hover:border-neutral-900 dark:hover:border-neutral-200 bg-neutral-100/70 dark:bg-neutral-900/70 hover:bg-neutral-100 dark:hover:bg-neutral-900 font-mono text-xs text-neutral-900 dark:text-neutral-100 transition-all duration-200 flex items-center justify-between group cursor-pointer select-none active:scale-[0.98] shadow-sm hover:shadow"
               aria-label="Open Project Gallery"
             >
               <span className="font-medium tracking-wide">VIEW GALLERY</span>
@@ -225,15 +226,17 @@ export function ProjectDetailLayout({ project }: ProjectDetailLayoutProps) {
           </div>
         </aside>
 
-        {/* ── Right Column: Media Stage (The ONLY scrolling container) ── */}
-        <div className="flex-1 w-full h-full overflow-y-auto space-y-8 pr-2 select-none">
-          {/* 1. 3D Viewport */}
-          <ProjectStageViewport
-            project={project}
-            onOpenGallery={() => openGalleryAt(0)}
-          />
+        {/* ── Right Column: Media Stream (Flows naturally with window scroll) ── */}
+        <div className="flex-1 w-full min-w-0 space-y-8 sm:space-y-12 select-none">
+          {/* 1. 3D / 2D Stage Viewport */}
+          <div className="w-full overflow-hidden">
+            <ProjectStageViewport
+              project={project}
+              onOpenGallery={() => openGalleryAt(0)}
+            />
+          </div>
 
-          {/* 2. Gallery Images — Clickable to open modal gallery */}
+          {/* 2. Gallery Images — Clickable to open high-res lightbox */}
           {remainingImages.map((imgUrl, idx) => {
             const globalIndex = allImages.indexOf(imgUrl);
             return (
@@ -246,11 +249,11 @@ export function ProjectDetailLayout({ project }: ProjectDetailLayoutProps) {
                   src={imgUrl}
                   alt={`${project.title} - View ${idx + 1}`}
                   fill
-                  sizes="(max-width: 1024px) 100vw, 800px"
-                  className="object-cover rounded-none group-hover:scale-[1.01] transition-transform duration-500"
+                  sizes="(max-width: 1024px) 100vw, (max-width: 1440px) 65vw, 900px"
+                  className="object-cover rounded-none group-hover:scale-[1.015] transition-transform duration-700 ease-out"
                 />
                 <div className="absolute inset-0 bg-black/0 group-hover:bg-black/15 transition-colors flex items-center justify-center pointer-events-none">
-                  <span className="font-mono text-[10px] text-white bg-black/75 px-2.5 py-1 opacity-0 group-hover:opacity-100 transition-opacity tracking-wider">
+                  <span className="font-mono text-[10px] text-white bg-black/75 backdrop-blur-md px-3 py-1.5 rounded-full opacity-0 group-hover:opacity-100 transition-all tracking-wider shadow-md">
                     EXPAND GALLERY ↗
                   </span>
                 </div>

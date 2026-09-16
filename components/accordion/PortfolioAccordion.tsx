@@ -11,7 +11,9 @@ import type {
   Project, 
   ResearchArticle, 
   ToolkitModule, 
-  PersonalProfile 
+  PersonalProfile,
+  CareerExperience,
+  EducationEntry,
 } from "@/types/cms";
 
 interface PortfolioAccordionProps {
@@ -20,6 +22,8 @@ interface PortfolioAccordionProps {
   writingArticles: ResearchArticle[];
   toolkits: ToolkitModule[];
   profile: PersonalProfile;
+  experiences?: CareerExperience[];
+  education?: EducationEntry[];
 }
 
 export function PortfolioAccordion({
@@ -28,6 +32,8 @@ export function PortfolioAccordion({
   writingArticles,
   toolkits,
   profile,
+  experiences,
+  education,
 }: PortfolioAccordionProps) {
   // Default open first section (01. Works)
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
@@ -115,6 +121,8 @@ export function PortfolioAccordion({
         <AboutAccordionContent
           profile={profile}
           toolkits={toolkits}
+          experiences={experiences}
+          education={education}
         />
       </AccordionItem>
     </div>

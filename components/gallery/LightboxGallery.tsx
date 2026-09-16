@@ -158,10 +158,10 @@ export function LightboxGallery({ images, projectName }: LightboxGalleryProps) {
             <div className="absolute top-0 left-0 w-full h-24 flex items-center justify-end px-6 md:px-10 z-10 bg-gradient-to-b from-black/50 to-transparent pointer-events-none">
               <button 
                 onClick={closeLightbox}
-                className="text-white/60 hover:text-white transition-colors p-2 pointer-events-auto mix-blend-difference"
+                className="text-white/70 hover:text-white transition-all p-2.5 rounded-full hover:bg-white/10 pointer-events-auto mix-blend-difference active:scale-90 cursor-pointer"
                 aria-label="Close Gallery"
               >
-                <X size={36} strokeWidth={1} />
+                <X size={28} strokeWidth={1.5} />
               </button>
             </div>
 
@@ -199,25 +199,27 @@ export function LightboxGallery({ images, projectName }: LightboxGalleryProps) {
 
             {/* Bottom Bar: Navigation */}
             <div className="absolute bottom-0 left-0 w-full h-24 flex items-center justify-center z-10 bg-gradient-to-t from-black/50 to-transparent pointer-events-none">
-              <div className="flex items-center gap-6 text-white font-mono text-[13px] tracking-widest pointer-events-auto mix-blend-difference">
+              <div className="flex items-center gap-4 text-white font-mono text-[13px] tracking-widest pointer-events-auto mix-blend-difference">
                 <button 
                   onClick={goToPrev}
-                  className={`p-2 transition-opacity ${currentIndex === 0 ? 'opacity-20 cursor-not-allowed' : 'opacity-60 hover:opacity-100'}`}
+                  className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${currentIndex === 0 ? 'opacity-20 cursor-not-allowed' : 'opacity-70 hover:opacity-100 hover:bg-white/10 active:scale-90 cursor-pointer'}`}
                   disabled={currentIndex === 0}
+                  aria-label="Previous image"
                 >
-                  <ChevronLeft size={24} strokeWidth={1} />
+                  <ChevronLeft size={22} strokeWidth={1.5} />
                 </button>
                 
-                <span className="select-none min-w-[60px] text-center opacity-80">
+                <span className="select-none min-w-[70px] text-center opacity-85 px-3 py-1 rounded-full bg-white/10 backdrop-blur-md text-xs tracking-wider">
                   {currentIndex + 1} / {images.length}
                 </span>
 
                 <button 
                   onClick={goToNext}
-                  className={`p-2 transition-opacity ${currentIndex === images.length - 1 ? 'opacity-20 cursor-not-allowed' : 'opacity-60 hover:opacity-100'}`}
+                  className={`w-10 h-10 rounded-full flex items-center justify-center transition-all ${currentIndex === images.length - 1 ? 'opacity-20 cursor-not-allowed' : 'opacity-70 hover:opacity-100 hover:bg-white/10 active:scale-90 cursor-pointer'}`}
                   disabled={currentIndex === images.length - 1}
+                  aria-label="Next image"
                 >
-                  <ChevronRight size={24} strokeWidth={1} />
+                  <ChevronRight size={22} strokeWidth={1.5} />
                 </button>
               </div>
             </div>

@@ -6,111 +6,100 @@ import type { Project } from "@/types/cms";
 import { Reveal } from "@/components/animations/Reveal";
 import * as React from "react";
 
-const FILTERS = [
-  "All",
-  "Concept Design",
-  "Schematic Design",
-  "Design Development",
-  "Documentation",
-  "BIM",
-  "Visualization",
-  "Computational Design",
-  "Independent Work"
-];
-
 export function WorkGallery({ works }: { works: Project[] }) {
   const [activeFilter, setActiveFilter] = React.useState<string>("All");
 
+  const counts = React.useMemo(() => {
+    const all = works.length;
+    const arch = works.filter((w) => w.category === "Architecture").length;
+    const comp = works.filter((w) => w.category === "Computation").length;
+    return { all, arch, comp };
+  }, [works]);
+
+  const categories = [
+    { id: "All", label: `All [${counts.all}]` },
+    { id: "Architecture", label: `Architecture [${String(counts.arch).padStart(2, "0")}]` },
+    { id: "Computation", label: `Computation [${String(counts.comp).padStart(2, "0")}]` },
+  ];
+
   const filteredWorks = React.useMemo(() => {
     if (activeFilter === "All") return works;
-    
-    return works.filter(work => {
-      const scopes = work.scope ? work.scope.split(",").map(s => s.trim()) : [];
-      if (activeFilter === "Independent Work") {
-         // Either explicitly tagged or has an author instead of an architect
-         return scopes.includes("Independent Work") || !!work.author || !work.architect;
-      }
-      return scopes.includes(activeFilter);
-    });
+    return works.filter((work) => work.category === activeFilter);
   }, [works, activeFilter]);
 
   return (
-    <div className="w-full max-w-[1440px] mx-auto pb-32">
-      {/* Scope Filter Bar */}
-      <div className="px-6 md:px-10 mt-6 mb-12">
-        <Reveal width="100%">
-          <div className="flex flex-col gap-5 border-t border-b border-white/10 py-6">
-            <div className="flex flex-wrap gap-x-6 gap-y-3 items-center">
-              {FILTERS.map(filter => {
-                const isSelected = activeFilter === filter;
-                return (
-                  <button
-                    key={filter}
-                    onClick={() => setActiveFilter(filter)}
-                    className={`text-[11px] font-mono tracking-[0.15em] uppercase transition-colors duration-300 ${
-                      isSelected 
-                        ? "text-[#61F9E9]" 
-                        : "text-white/40 hover:text-white"
-                    }`}
-                  >
-                    {filter}
-                  </button>
-                );
-              })}
-            </div>
-          </div>
-        </Reveal>
+    <div className="w-full max-w-[1440px] mx-auto pb-16 sm:pb-20">
+      {/* ── 2. Streamlined Monochrome Filter Bar (Tighter Spacing) ── */}
+      <div className="px-4 sm:px-6 md:px-10">
+        <div className="flex flex-wrap items-center gap-5 sm:gap-7 border-b border-neutral-200 dark:border-neutral-800 pb-3 mb-3.5 sm:mb-4">
+          {categories.map((cat) => {
+            const isSelected = activeFilter === cat.id;
+            return (
+              <button
+                key={cat.id}
+                onClick={() => setActiveFilter(cat.id)}
+                className={`cursor-pointer transition-colors ${
+                  isSelected
+                    ? "font-mono text-xs text-neutral-900 dark:text-neutral-100 underline underline-offset-8"
+                    : "font-mono text-xs text-neutral-500 hover:text-neutral-700 dark:hover:text-neutral-300"
+                }`}
+              >
+                {cat.label}
+              </button>
+            );
+          })}
+        </div>
       </div>
 
-      <section className="px-6 md:px-10">
-        {/* Grid layout */}
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+      {/* ── 3. Dense Grid: Images Close Together with Hover Info ── */}
+      <section className="px-4 sm:px-6 md:px-10">
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-1 sm:gap-1.5 md:gap-2">
           {filteredWorks.map((work, i) => {
             const href = `/work/${work.slug}`;
-            const isIndependent = !!work.author || !work.architect;
-            
+            const itemIndex = work.order !== undefined ? work.order + 1 : i + 1;
+            const formattedIndex = String(itemIndex).padStart(2, "0");
+            const typology = work.typology || work.category || "Architecture";
+            const year = work.completionYear || "2024";
+
             return (
-              <Reveal 
-                key={work.slug} 
-                delay={0.05 * (i % 8)} 
-                className="aspect-[4/3] relative overflow-hidden group bg-[#111]"
+              <Reveal
+                key={work.slug}
+                delay={0.02 * (i % 8)}
+                className="w-full"
               >
                 <Link
                   href={href}
-                  className="cursor-pointer relative w-full h-full block"
+                  className="relative aspect-[4/3] w-full overflow-hidden block group bg-neutral-900 cursor-pointer select-none border border-black/5 dark:border-white/5"
                 >
+                  {/* Project Image */}
                   <Image
                     src={work.heroImage}
                     alt={work.title}
                     fill
-                    className="object-cover transition-transform duration-1000 ease-out group-hover:scale-105"
-                    sizes="(max-width: 768px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                    className="object-cover transition-transform duration-700 ease-out group-hover:scale-105"
+                    sizes="(max-width: 640px) 50vw, (max-width: 1024px) 33vw, 25vw"
                   />
-                  
-                  {/* Editorial Hover Overlay */}
-                  <div className="absolute inset-0 bg-black/90 opacity-0 group-hover:opacity-100 transition-all duration-300 flex flex-col justify-between p-5 md:p-6 backdrop-blur-[2px]">
-                    {/* Top section: Title & Basic Info */}
-                    <div className="flex flex-col">
-                      <h4 className="text-white text-[13px] md:text-[14px] font-semibold tracking-wider uppercase leading-snug">
+
+                  {/* Information Overlay (Visible only on hover) */}
+                  <div className="absolute inset-0 bg-black/80 backdrop-blur-[2px] opacity-0 group-hover:opacity-100 transition-opacity duration-300 p-3.5 sm:p-4 flex flex-col justify-between pointer-events-none">
+                    {/* Top Row: [01] + Title */}
+                    <div className="flex items-baseline gap-2 min-w-0">
+                      <span className="font-mono text-xs text-neutral-400 flex-shrink-0">
+                        [{formattedIndex}]
+                      </span>
+                      <h3 className="font-sans text-sm font-medium text-white tracking-tight truncate">
                         {work.title}
-                      </h4>
-                      <p className="text-white/40 text-[9px] font-mono uppercase tracking-widest mt-1 truncate" title={isIndependent ? "Independent Work" : `${work.category || "Architecture"} // ${work.location} // ${work.status || work.completionYear}`}>
-                        {isIndependent 
-                          ? "Independent Work" 
-                          : `${work.category || "Architecture"} // ${work.location} // ${work.status || work.completionYear}`}
-                      </p>
+                      </h3>
                     </div>
 
-                    {/* Bottom section: Roles & Scopes Metadata */}
-                    <div className="flex flex-col gap-2 font-mono text-[9px] text-white/70 tracking-wider uppercase border-t border-white/10 pt-3">
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="text-white/40 shrink-0">Office</span>
-                        <span className="text-right text-white truncate max-w-[70%]">{isIndependent ? "Independent Work" : work.architect}</span>
-                      </div>
-                      <div className="flex justify-between items-start gap-2">
-                        <span className="text-white/40 shrink-0">Scope</span>
-                        <span className="text-right text-white truncate max-w-[70%]" title={work.scope}>{work.scope}</span>
-                      </div>
+                    {/* Bottom Row: Typology / Location + Year */}
+                    <div className="flex items-center justify-between gap-2 min-w-0 font-mono text-[11px] text-neutral-300 border-t border-white/15 pt-2">
+                      <span className="truncate">
+                        {typology} / {work.location}
+                      </span>
+                      <span className="flex-shrink-0 text-neutral-400">
+                        {year}
+                      </span>
                     </div>
                   </div>
                 </Link>
@@ -118,10 +107,10 @@ export function WorkGallery({ works }: { works: Project[] }) {
             );
           })}
         </div>
-        
+
         {filteredWorks.length === 0 && (
-          <div className="py-20 text-center font-mono text-[11px] text-white/30 uppercase tracking-widest">
-             No works found for this scope.
+          <div className="py-20 text-center font-mono text-xs text-neutral-500 uppercase tracking-widest">
+            No projects found in this category.
           </div>
         )}
       </section>

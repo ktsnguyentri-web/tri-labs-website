@@ -19,7 +19,8 @@ export interface Project {
   location: string;
   /** Year of completion, e.g. "2023". Optional until CMS provides it. */
   completionYear?: string;
-  category?: 'Architecture' | 'Interior' | 'Design';
+  category?: 'Architecture' | 'Computation' | 'Interior' | 'Design' | string;
+  typology?: string;
   /** Tailwind CSS grid-span utility classes for bento-box layout */
   span: string;
   /** Sort order (lower = first) */

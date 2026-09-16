@@ -8,7 +8,7 @@ interface ContactProps {
   email?: string;
 }
 
-export function Contact({ theme = "dark", email = "contact@tringuyen-design.com" }: ContactProps) {
+export function Contact({ theme = "dark", email = "kts.nguyentri@gmail.com" }: ContactProps) {
   const [isChatOpen, setIsChatOpen] = useState(false);
   const currentYear = new Date().getFullYear();
   const contactRef = useRef<HTMLElement>(null);
@@ -36,9 +36,10 @@ export function Contact({ theme = "dark", email = "contact@tringuyen-design.com"
               type="button"
               onClick={() => setIsChatOpen((prev) => !prev)}
               aria-expanded={isChatOpen}
-              className="font-sans text-sm font-medium text-neutral-900 dark:text-neutral-100 hover:underline cursor-pointer select-none"
+              className="group inline-flex items-center gap-2 px-3.5 py-1.5 rounded-full text-xs font-sans font-medium text-neutral-900 dark:text-neutral-100 bg-neutral-100/90 dark:bg-neutral-800/80 hover:bg-neutral-200 dark:hover:bg-neutral-700/80 border border-neutral-200/80 dark:border-neutral-700/60 shadow-sm hover:shadow transition-all duration-200 cursor-pointer select-none active:scale-95"
             >
-              Let’s chat
+              <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+              <span>Let’s chat</span>
             </button>
 
             {/* Anchored Popover directly above the button */}
@@ -55,7 +56,7 @@ export function Contact({ theme = "dark", email = "contact@tringuyen-design.com"
               type="button"
               onClick={() => window.scrollTo({ top: 0, behavior: "smooth" })}
               aria-label="Back to top"
-              className="hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors cursor-pointer"
+              className="w-6 h-6 rounded-full border border-neutral-200 dark:border-neutral-800 flex items-center justify-center hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-neutral-900 dark:hover:text-neutral-100 transition-all duration-200 cursor-pointer active:scale-90"
             >
               ↑
             </button>
