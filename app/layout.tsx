@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Newsreader, JetBrains_Mono } from "next/font/google";
 import "@/styles/globals.css";
-import { IntroAnimationProvider } from "@/lib/intro-animation-context";
+import { PreloaderProvider } from "@/lib/preloader-context";
+import { Preloader } from "@/components/preloader/Preloader";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -57,17 +58,22 @@ export default function RootLayout({
                 } else {
                   document.documentElement.classList.add('dark');
                 }
+                var hasLoaded = sessionStorage.getItem('hasLoadedBefore');
+                if (hasLoaded !== 'true') {
+                  document.documentElement.classList.add('preloader-active');
+                }
               } catch (e) {}
             })()`,
           }}
         />
       </head>
       <body className="min-h-full flex flex-col font-sans selection:bg-accent selection:text-black bg-[#FAFAFA] dark:bg-[#0A0A0A] text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
-        <IntroAnimationProvider>
+        <PreloaderProvider>
+          <Preloader />
           <main className="flex-grow">
             {children}
           </main>
-        </IntroAnimationProvider>
+        </PreloaderProvider>
       </body>
     </html>
   );

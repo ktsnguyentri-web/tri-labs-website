@@ -5,12 +5,15 @@ import Image from "next/image";
 import { motion } from "framer-motion";
 import type { PersonalProfile } from "@/types/cms";
 import { LiveStatusPill } from "@/components/hero/LiveStatusPill";
+import { usePreloader } from "@/lib/preloader-context";
 
 interface HeroPersonalProps {
   profile: PersonalProfile;
 }
 
 export function HeroPersonal({ profile }: HeroPersonalProps) {
+  const { isDocked, hasLoadedBefore } = usePreloader();
+
   return (
     <section className="w-full pt-16 sm:pt-20 md:pt-22 pb-4 sm:pb-5">
       <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8">
@@ -19,9 +22,13 @@ export function HeroPersonal({ profile }: HeroPersonalProps) {
           <div className="flex-1 flex flex-col items-start gap-4">
             {/* 1. Live Status Pill */}
             <motion.div
-              initial={{ opacity: 0, y: 8 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.5, ease: "easeOut" }}
+              initial={hasLoadedBefore ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: isDocked ? 1 : 0, y: isDocked ? 0 : 10 }}
+              transition={{
+                duration: 0.5,
+                delay: hasLoadedBefore ? 0 : 0.1,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               className="flex items-center"
             >
               <LiveStatusPill manualStatus={profile?.status?.manualOverride} />
@@ -29,9 +36,13 @@ export function HeroPersonal({ profile }: HeroPersonalProps) {
 
             {/* 2. Name & Title */}
             <motion.div
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.1, ease: [0.22, 1, 0.36, 1] }}
+              initial={hasLoadedBefore ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: isDocked ? 1 : 0, y: isDocked ? 0 : 10 }}
+              transition={{
+                duration: 0.5,
+                delay: hasLoadedBefore ? 0 : 0.18,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               className="flex flex-col gap-1.5"
             >
               <h1 className="font-sans font-medium text-3xl sm:text-4xl tracking-tight text-neutral-900 dark:text-neutral-100">
@@ -44,9 +55,13 @@ export function HeroPersonal({ profile }: HeroPersonalProps) {
 
             {/* 3. Personal Motto */}
             <motion.p
-              initial={{ opacity: 0, y: 10 }}
-              animate={{ opacity: 1, y: 0 }}
-              transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+              initial={hasLoadedBefore ? false : { opacity: 0, y: 10 }}
+              animate={{ opacity: isDocked ? 1 : 0, y: isDocked ? 0 : 10 }}
+              transition={{
+                duration: 0.5,
+                delay: hasLoadedBefore ? 0 : 0.26,
+                ease: [0.22, 1, 0.36, 1],
+              }}
               className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 font-sans leading-snug mt-1.5 max-w-xl"
             >
               &ldquo;Do what you love. Love what you do.&rdquo;
@@ -55,9 +70,13 @@ export function HeroPersonal({ profile }: HeroPersonalProps) {
 
           {/* ── Right Column: Circular Monochrome Avatar ─────────────── */}
           <motion.div
-            initial={{ opacity: 0, scale: 0.9 }}
-            animate={{ opacity: 1, scale: 1 }}
-            transition={{ duration: 0.6, delay: 0.15, ease: [0.22, 1, 0.36, 1] }}
+            initial={hasLoadedBefore ? false : { opacity: 0, y: 10 }}
+            animate={{ opacity: isDocked ? 1 : 0, y: isDocked ? 0 : 10 }}
+            transition={{
+              duration: 0.5,
+              delay: hasLoadedBefore ? 0 : 0.22,
+              ease: [0.22, 1, 0.36, 1],
+            }}
             className="flex-shrink-0 self-start sm:self-center"
           >
             <div className="relative w-24 h-24 sm:w-28 sm:h-28 rounded-full overflow-hidden border border-neutral-200 dark:border-neutral-800">

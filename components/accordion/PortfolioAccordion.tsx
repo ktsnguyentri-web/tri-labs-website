@@ -16,6 +16,9 @@ import type {
   EducationEntry,
 } from "@/types/cms";
 
+import { motion } from "framer-motion";
+import { usePreloader } from "@/lib/preloader-context";
+
 interface PortfolioAccordionProps {
   projects: Project[];
   labArticles: ResearchArticle[];
@@ -35,6 +38,8 @@ export function PortfolioAccordion({
   experiences,
   education,
 }: PortfolioAccordionProps) {
+  const { isDocked, hasLoadedBefore } = usePreloader();
+
   // Default open first section (01. Works)
   const [openSections, setOpenSections] = useState<Record<string, boolean>>({
     works: true,
@@ -52,79 +57,114 @@ export function PortfolioAccordion({
 
   return (
     <div className="w-full flex flex-col">
-      {/* Top Divider line (Constrained to inner grid) */}
-      <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 w-full">
-        <div className="border-b border-neutral-200 dark:border-neutral-800 w-full" />
-      </div>
-
       {/* ── 01. Works ────────────────────────────────────────────── */}
-      <AccordionItem
-        id="works"
-        number="01"
-        title="Works"
-        href="/works"
-        isOpen={!!openSections.works}
-        onToggle={() => toggleSection("works")}
+      <motion.div
+        initial={hasLoadedBefore ? false : { opacity: 0, y: 10 }}
+        animate={{ opacity: isDocked ? 1 : 0, y: isDocked ? 0 : 10 }}
+        transition={{
+          duration: 0.5,
+          delay: hasLoadedBefore ? 0 : 0.32,
+          ease: [0.22, 1, 0.36, 1],
+        }}
       >
-        <HorizontalCarousel totalItems={projects.length}>
-          {projects.map((project, idx) => (
-            <ProjectCard
-              key={project.slug || project.title}
-              project={project}
-              index={idx}
-            />
-          ))}
-        </HorizontalCarousel>
-      </AccordionItem>
+        <AccordionItem
+          id="works"
+          number="01"
+          title="Works"
+          href="/works"
+          isOpen={!!openSections.works}
+          onToggle={() => toggleSection("works")}
+        >
+          <HorizontalCarousel totalItems={projects.length}>
+            {projects.map((project, idx) => (
+              <ProjectCard
+                key={project.slug || project.title}
+                project={project}
+                index={idx}
+              />
+            ))}
+          </HorizontalCarousel>
+        </AccordionItem>
+      </motion.div>
 
       {/* ── 02. Labs ─────────────────────────────────────────────── */}
-      <AccordionItem
-        id="labs"
-        number="02"
-        title="Labs"
-        href="/labs"
-        isOpen={!!openSections.labs}
-        onToggle={() => toggleSection("labs")}
+      <motion.div
+        initial={hasLoadedBefore ? false : { opacity: 0, y: 10 }}
+        animate={{ opacity: isDocked ? 1 : 0, y: isDocked ? 0 : 10 }}
+        transition={{
+          duration: 0.5,
+          delay: hasLoadedBefore ? 0 : 0.38,
+          ease: [0.22, 1, 0.36, 1],
+        }}
       >
-        <HorizontalCarousel totalItems={labArticles.length}>
-          {labArticles.map((article, idx) => (
-            <LabCard
-              key={article.slug}
-              article={article}
-              index={idx}
-            />
-          ))}
-        </HorizontalCarousel>
-      </AccordionItem>
+        <AccordionItem
+          id="labs"
+          number="02"
+          title="Labs"
+          href="/labs"
+          isOpen={!!openSections.labs}
+          onToggle={() => toggleSection("labs")}
+        >
+          <HorizontalCarousel totalItems={labArticles.length}>
+            {labArticles.map((article, idx) => (
+              <LabCard
+                key={article.slug}
+                article={article}
+                index={idx}
+              />
+            ))}
+          </HorizontalCarousel>
+        </AccordionItem>
+      </motion.div>
 
       {/* ── 03. Writing ──────────────────────────────────────────── */}
-      <AccordionItem
-        id="writing"
-        number="03"
-        title="Writing"
-        href="/writing"
-        isOpen={!!openSections.writing}
-        onToggle={() => toggleSection("writing")}
+      <motion.div
+        initial={hasLoadedBefore ? false : { opacity: 0, y: 10 }}
+        animate={{ opacity: isDocked ? 1 : 0, y: isDocked ? 0 : 10 }}
+        transition={{
+          duration: 0.5,
+          delay: hasLoadedBefore ? 0 : 0.44,
+          ease: [0.22, 1, 0.36, 1],
+        }}
       >
-        <WritingAccordionContent articles={writingArticles} />
-      </AccordionItem>
+        <AccordionItem
+          id="writing"
+          number="03"
+          title="Writing"
+          href="/writing"
+          isOpen={!!openSections.writing}
+          onToggle={() => toggleSection("writing")}
+        >
+          <WritingAccordionContent articles={writingArticles} />
+        </AccordionItem>
+      </motion.div>
 
       {/* ── 04. About ────────────────────────────────────────────── */}
-      <AccordionItem
-        id="about"
-        number="04"
-        title="About"
-        isOpen={!!openSections.about}
-        onToggle={() => toggleSection("about")}
-        hideBottomDivider={true}
+      <motion.div
+        initial={hasLoadedBefore ? false : { opacity: 0, y: 10 }}
+        animate={{ opacity: isDocked ? 1 : 0, y: isDocked ? 0 : 10 }}
+        transition={{
+          duration: 0.5,
+          delay: hasLoadedBefore ? 0 : 0.50,
+          ease: [0.22, 1, 0.36, 1],
+        }}
       >
-        <AboutAccordionContent
-          profile={profile}
-          toolkits={toolkits}
-          experiences={experiences}
-          education={education}
-        />
-      </AccordionItem>
+        <AccordionItem
+          id="about"
+          number="04"
+          title="About"
+          isOpen={!!openSections.about}
+          onToggle={() => toggleSection("about")}
+          hideBottomDivider={true}
+        >
+          <AboutAccordionContent
+            profile={profile}
+            toolkits={toolkits}
+            experiences={experiences}
+            education={education}
+          />
+        </AccordionItem>
+      </motion.div>
     </div>
   );
 }

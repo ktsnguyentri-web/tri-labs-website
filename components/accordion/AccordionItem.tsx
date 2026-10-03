@@ -55,13 +55,6 @@ export function AccordionItem({
             </div>
           </div>
         </Link>
-
-        {/* ── Bottom Divider Line ─────────────────────────────────── */}
-        {!hideBottomDivider && (
-          <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 w-full">
-            <div className="border-b border-neutral-200 dark:border-neutral-800 w-full" />
-          </div>
-        )}
       </div>
     );
   }
@@ -138,13 +131,6 @@ export function AccordionItem({
           </motion.div>
         )}
       </AnimatePresence>
-
-      {/* ── Bottom Divider Line (Constrained to inner grid) ──────── */}
-      {!hideBottomDivider && (
-        <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 w-full">
-          <div className="border-b border-neutral-200 dark:border-neutral-800 w-full" />
-        </div>
-      )}
     </div>
   );
 }

@@ -3,6 +3,8 @@
 import React from "react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { motion } from "framer-motion";
+import { usePreloader } from "@/lib/preloader-context";
 
 interface LogoProps {
   className?: string;
@@ -53,6 +55,7 @@ export function Logo({ className, pathname: propPathname, onHomeClick }: LogoPro
   const hookPathname = usePathname();
   const currentPath = propPathname !== undefined ? propPathname : hookPathname;
   const breadcrumbs = getBreadcrumbs(currentPath);
+  const { isDocked } = usePreloader();
 
   return (
     <div 
@@ -61,33 +64,59 @@ export function Logo({ className, pathname: propPathname, onHomeClick }: LogoPro
       <Link
         href="/"
         onClick={onHomeClick}
-        className="font-semibold text-neutral-900 dark:text-white hover:opacity-70 transition-opacity whitespace-nowrap"
+        className="font-semibold text-neutral-900 dark:text-white hover:opacity-70 transition-opacity whitespace-nowrap inline-flex items-center"
       >
-        tri-labs
+        {isDocked ? (
+          <motion.span
+            layoutId="brand-logo"
+            transition={{
+              type: "spring",
+              stiffness: 260,
+              damping: 28,
+            }}
+            className="inline-block"
+          >
+            tri-labs
+          </motion.span>
+        ) : (
+          <span className="opacity-0 inline-block select-none pointer-events-none">
+            tri-labs
+          </span>
+        )}
       </Link>
 
-      {breadcrumbs.map((crumb, idx) => {
-        const isLast = idx === breadcrumbs.length - 1;
-        return (
-          <React.Fragment key={idx}>
-            <span className="text-neutral-400 dark:text-neutral-600 mx-1.5 font-normal flex-shrink-0">
-              /
-            </span>
-            {crumb.href && !isLast ? (
-              <Link
-                href={crumb.href}
-                className="font-normal text-neutral-900 dark:text-neutral-100 hover:opacity-70 transition-opacity whitespace-nowrap"
-              >
-                {crumb.label}
-              </Link>
-            ) : (
-              <span className="text-neutral-500 dark:text-neutral-400 font-normal truncate max-w-[130px] sm:max-w-[200px] md:max-w-[280px]">
-                {crumb.label}
-              </span>
-            )}
-          </React.Fragment>
-        );
-      })}
+      {breadcrumbs.length > 0 && (
+        <motion.div
+          initial={false}
+          animate={{ opacity: isDocked ? 1 : 0 }}
+          transition={{ duration: 0.3, delay: 0.15 }}
+          className="flex items-center"
+        >
+          {breadcrumbs.map((crumb, idx) => {
+            const isLast = idx === breadcrumbs.length - 1;
+            return (
+              <React.Fragment key={idx}>
+                <span className="text-neutral-400 dark:text-neutral-600 mx-1.5 font-normal flex-shrink-0">
+                  /
+                </span>
+                {crumb.href && !isLast ? (
+                  <Link
+                    href={crumb.href}
+                    className="font-normal text-neutral-900 dark:text-neutral-100 hover:opacity-70 transition-opacity whitespace-nowrap"
+                  >
+                    {crumb.label}
+                  </Link>
+                ) : (
+                  <span className="text-neutral-500 dark:text-neutral-400 font-normal truncate max-w-[130px] sm:max-w-[200px] md:max-w-[280px]">
+                    {crumb.label}
+                  </span>
+                )}
+              </React.Fragment>
+            );
+          })}
+        </motion.div>
+      )}
     </div>
   );
 }
+

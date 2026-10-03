@@ -16,30 +16,7 @@ import { Logo } from "./Logo";
  * - No blur or transparency on Navbar background (Rule 1).
  */
 
-const logoVariants = {
-  initial: { y: -100, opacity: 0 },
-  animate: {
-    y: 0,
-    opacity: 1,
-    transition: { type: 'spring', damping: 12, stiffness: 50, delay: 0.8 }
-  },
-  static: { y: 0, opacity: 1 }
-} as const;
-
-const menuContainerVariants = {
-  initial: { opacity: 0 },
-  animate: {
-    opacity: 1,
-    transition: { staggerChildren: 0.1, delayChildren: 1.2 }
-  },
-  static: { opacity: 1 }
-} as const;
-
-const menuItemVariants = {
-  initial: { x: 50, opacity: 0 },
-  animate: { x: 0, opacity: 1 },
-  static: { x: 0, opacity: 1 }
-} as const;
+import { usePreloader } from "@/lib/preloader-context";
 
 const navVariants = {
   visible: { y: 0 },
@@ -48,12 +25,10 @@ const navVariants = {
 
 export function Navbar() {
   const pathname = usePathname();
-  const isHomePage = pathname === "/";
+  const { isDocked, hasLoadedBefore } = usePreloader();
 
   const [isMenuOpen, setIsMenuOpen] = useState(false);
-  const [shouldAnimate, setShouldAnimate] = useState(false);
   const [hasMounted, setHasMounted] = useState(false);
-  const [isIntroFinished, setIsIntroFinished] = useState(false);
   const [hidden, setHidden] = useState(false);
   const [isDarkMode, setIsDarkMode] = useState(true);
 
@@ -63,21 +38,7 @@ export function Navbar() {
     setHasMounted(true);
     const isDark = document.documentElement.classList.contains("dark");
     setIsDarkMode(isDark);
-
-    const played = sessionStorage.getItem('intro_played');
-
-    if (isHomePage && played === null) {
-      setShouldAnimate(true);
-      sessionStorage.setItem('intro_played', 'true');
-
-      // Delay scroll behavior until intro finishes (approx 2.5s total)
-      const timer = setTimeout(() => setIsIntroFinished(true), 2500);
-      return () => clearTimeout(timer);
-    } else {
-      setShouldAnimate(false);
-      setIsIntroFinished(true);
-    }
-  }, [isHomePage]);
+  }, []);
 
   const toggleTheme = () => {
     const nextDark = !isDarkMode;
@@ -109,8 +70,8 @@ export function Navbar() {
   useMotionValueEvent(scrollY, "change", (latest) => {
     const previous = scrollY.getPrevious() ?? 0;
 
-    // Only allow hiding if intro is done and not at top
-    if (!isIntroFinished) return;
+    // Only allow hiding if preloader is done and not at top
+    if (!isDocked) return;
 
     if (latest > previous && latest > 100) {
       setHidden(true);
@@ -148,23 +109,22 @@ export function Navbar() {
 
           {/* 1. Left Section: Logo strictly aligned with editorial column */}
           <div className="flex-1 flex justify-start items-center">
-            <motion.div
-              variants={logoVariants}
-              initial={shouldAnimate ? "initial" : "static"}
-              animate={shouldAnimate ? "animate" : "static"}
-            >
-              <Logo
-                pathname={pathname}
-                onHomeClick={() => setIsMenuOpen(false)}
-              />
-            </motion.div>
+            <Logo
+              pathname={pathname}
+              onHomeClick={() => setIsMenuOpen(false)}
+            />
           </div>
 
           {/* 2. Center Section: Left empty for clean architectural breathing room */}
           <div className="hidden md:flex flex-1" />
 
           {/* 3. Right Section: Theme Toggle + Mobile Toggle strictly aligned with right bounding edge */}
-          <div className="flex-1 flex justify-end items-center gap-3">
+          <motion.div
+            initial={false}
+            animate={{ opacity: isDocked ? 1 : 0 }}
+            transition={{ duration: 0.4, delay: 0.1 }}
+            className="flex-1 flex justify-end items-center gap-3"
+          >
             <button
               onClick={toggleTheme}
               className="w-7 h-7 border border-neutral-200 dark:border-neutral-800 hover:border-neutral-400 dark:hover:border-neutral-600 rounded-full flex items-center justify-center text-neutral-700 dark:text-neutral-300 hover:text-neutral-900 dark:hover:text-white transition-all duration-200 bg-black/[0.02] dark:bg-white/[0.03] hover:bg-neutral-100 dark:hover:bg-neutral-800/80 cursor-pointer active:scale-90"
@@ -184,7 +144,7 @@ export function Navbar() {
                 {isMenuOpen ? <X className="w-5 h-5" strokeWidth={1.5} /> : <Menu className="w-5 h-5" strokeWidth={1.5} />}
               </button>
             </div>
-          </div>
+          </motion.div>
         </div>
       </motion.nav>
 
