@@ -13,9 +13,13 @@ const contentDir = path.join(rootDir, 'content');
 const userProjectsDir = path.join(rootDir, 'projects');
 const legacyProjectsDir = path.join(contentDir, 'projects');
 const publicProjectsDir = path.join(rootDir, 'public/images/projects');
+const userWritingDir = path.join(rootDir, 'writing');
+const legacyResearchDir = path.join(contentDir, 'research');
+const publicWritingDir = path.join(rootDir, 'public/images/writing');
+const userToolsDir = path.join(rootDir, 'tools');
+const legacyToolsDir = path.join(contentDir, 'tools');
+const publicToolsDir = path.join(rootDir, 'public/images/tools');
 const logsDir = path.join(contentDir, 'logs');
-const researchDir = path.join(contentDir, 'research');
-const toolsDir = path.join(contentDir, 'tools');
 
 function slugify(text) {
   return text
@@ -273,50 +277,155 @@ async function build() {
     };
   }
 
-  const researchFiles = fs.existsSync(researchDir)
-    ? fs.readdirSync(researchDir).filter(f => f.endsWith('.md'))
-    : [];
-  const parsedResearch = await Promise.all(researchFiles.map(async (fileName) => {
-    const fullPath = path.join(researchDir, fileName);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const matterResult = matter(fileContents);
-    const processedContent = await remark().use(html).process(matterResult.content);
-    const contentHtml = processedContent.toString();
+  const parsedWriting = await loadArticlesFromDir({
+    userDir: userWritingDir,
+    legacyDir: legacyResearchDir,
+    publicDir: publicWritingDir,
+    defaultCategory: 'Research',
+    urlPrefix: '/images/writing',
+  });
 
-    // Extract first image from markdown body
-    const imgRegex = /!\[.*?\]\((.*?)\)/;
-    const match = matterResult.content.match(imgRegex);
-    const firstImage = match ? match[1] : null;
-    const img = firstImage || matterResult.data.img || '';
+  const parsedTools = await loadArticlesFromDir({
+    userDir: userToolsDir,
+    legacyDir: legacyToolsDir,
+    publicDir: publicToolsDir,
+    defaultCategory: 'Tool',
+    urlPrefix: '/images/tools',
+  });
 
-    return { ...matterResult.data, img, contentHtml, category: matterResult.data.category || 'Research' };
-  }));
-
-  const toolFiles = fs.existsSync(toolsDir)
-    ? fs.readdirSync(toolsDir).filter(f => f.endsWith('.md'))
-    : [];
-  const parsedTools = await Promise.all(toolFiles.map(async (fileName) => {
-    const fullPath = path.join(toolsDir, fileName);
-    const fileContents = fs.readFileSync(fullPath, 'utf8');
-    const matterResult = matter(fileContents);
-    const processedContent = await remark().use(html).process(matterResult.content);
-    const contentHtml = processedContent.toString();
-
-    // Extract first image from markdown body
-    const imgRegex = /!\[.*?\]\((.*?)\)/;
-    const match = matterResult.content.match(imgRegex);
-    const firstImage = match ? match[1] : null;
-    const img = firstImage || matterResult.data.img || '';
-
-    return { ...matterResult.data, img, contentHtml, category: matterResult.data.category || 'Tool' };
-  }));
-
-  const research = [...parsedResearch, ...parsedTools]
-    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime());
+  const research = [...parsedWriting, ...parsedTools].sort((a, b) => {
+    const timeA = a.date ? new Date(a.date).getTime() : 0;
+    const timeB = b.date ? new Date(b.date).getTime() : 0;
+    return timeB - timeA;
+  });
 
   const outputPath = path.join(__dirname, '../lib/cms-data.json');
   fs.writeFileSync(outputPath, JSON.stringify({ projects, logData, research }, null, 2));
   console.log(`CMS data built to lib/cms-data.json: ${projects.length} projects, ${research.length} articles`);
+}
+
+async function loadArticlesFromDir({ userDir, legacyDir, publicDir, defaultCategory, urlPrefix }) {
+  const articles = [];
+  const processedSlugs = new Set();
+
+  async function processEntry(dirPath, entryName) {
+    if (entryName.startsWith('_') || entryName.startsWith('.')) return null;
+
+    const fullPath = path.join(dirPath, entryName);
+    const stat = fs.statSync(fullPath);
+
+    let fileContent = '';
+    let slug = '';
+    let localImages = [];
+    let entryFolder = null;
+
+    if (stat.isDirectory()) {
+      entryFolder = fullPath;
+      const files = fs.readdirSync(fullPath);
+      const textFile = files.find(f => f.endsWith('.md') || f.endsWith('.txt'));
+      if (!textFile) return null;
+
+      fileContent = fs.readFileSync(path.join(fullPath, textFile), 'utf8');
+      slug = entryName;
+      localImages = files.filter(f => /\.(jpe?g|png|webp|avif|gif|svg)$/i.test(f));
+    } else if (entryName.endsWith('.md') || entryName.endsWith('.txt')) {
+      fileContent = fs.readFileSync(fullPath, 'utf8');
+      slug = entryName.replace(/\.(md|txt)$/, '');
+    } else {
+      return null;
+    }
+
+    const matterResult = matter(fileContent);
+    const data = matterResult.data || {};
+    let content = matterResult.content || '';
+
+    if (data.slug) {
+      slug = data.slug;
+    } else if (!slug) {
+      slug = slugify(data.title || entryName);
+    }
+
+    if (processedSlugs.has(slug)) return null;
+    processedSlugs.add(slug);
+
+    // If there is a subfolder with local images, copy them to publicDir/[slug]
+    let coverImagePath = '';
+    if (entryFolder && localImages.length > 0) {
+      const targetDir = path.join(publicDir, slug);
+      if (!fs.existsSync(targetDir)) {
+        fs.mkdirSync(targetDir, { recursive: true });
+      }
+
+      for (const img of localImages) {
+        const cleanFileName = img.replace(/\s+/g, '-');
+        const srcPath = path.join(entryFolder, img);
+        const destPath = path.join(targetDir, cleanFileName);
+        fs.copyFileSync(srcPath, destPath);
+
+        const webPath = `${urlPrefix}/${slug}/${cleanFileName}`;
+        if (!coverImagePath && /^(cover|bia|front|hero|main)/i.test(cleanFileName)) {
+          coverImagePath = webPath;
+        }
+
+        // Remap any relative markdown image references
+        const escapedImg = img.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+        content = content.replace(new RegExp(`(!\\[.*?\\]\\()(\\./)?${escapedImg}(\\))`, 'g'), `$1${webPath}$3`);
+      }
+
+      if (!coverImagePath && localImages.length > 0) {
+        coverImagePath = `${urlPrefix}/${slug}/${localImages[0].replace(/\s+/g, '-')}`;
+      }
+    }
+
+    // Resolve cover image
+    let img = data.img || '';
+    if (coverImagePath && (!img || (!img.startsWith('/') && !img.startsWith('http')))) {
+      img = coverImagePath;
+    } else if (img && !img.startsWith('/') && !img.startsWith('http') && entryFolder) {
+      img = `${urlPrefix}/${slug}/${img.replace(/\s+/g, '-')}`;
+    }
+
+    const processedContent = await remark().use(html).process(content);
+    const contentHtml = processedContent.toString();
+
+    // If still no cover image, try extracting first image from markdown body
+    if (!img) {
+      const imgRegex = /!\[.*?\]\((.*?)\)/;
+      const match = content.match(imgRegex);
+      if (match) img = match[1];
+    }
+
+    return {
+      title: data.title || entryName,
+      slug,
+      date: data.date || '',
+      excerpt: data.excerpt || '',
+      img: img || '',
+      featured: data.featured ?? true,
+      category: data.category || defaultCategory,
+      contentHtml,
+    };
+  }
+
+  // 1. Scan user root directory if exists
+  if (fs.existsSync(userDir)) {
+    const entries = fs.readdirSync(userDir);
+    for (const entry of entries) {
+      const item = await processEntry(userDir, entry);
+      if (item) articles.push(item);
+    }
+  }
+
+  // 2. Scan legacy directory if exists and slug hasn't been added
+  if (fs.existsSync(legacyDir)) {
+    const entries = fs.readdirSync(legacyDir);
+    for (const entry of entries) {
+      const item = await processEntry(legacyDir, entry);
+      if (item) articles.push(item);
+    }
+  }
+
+  return articles;
 }
 
 build().catch(console.error);

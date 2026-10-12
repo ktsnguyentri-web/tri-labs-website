@@ -1,0 +1,70 @@
+================================================================================
+          HƯỚNG DẪN THÊM VÀ CẬP NHẬT BÀI VIẾT (WRITING / RESEARCH)
+================================================================================
+
+Thư mục `writing/` này là nơi bạn quản lý toàn bộ các bài viết (Essays, Notes & Research)
+hiển thị trên trang chủ (mục 03. Writing) và trang lưu trữ (/writing).
+
+Bạn có thể thêm bài viết mới theo 1 trong 2 cách cực kỳ đơn giản sau:
+
+--------------------------------------------------------------------------------
+CÁCH 1: TẠO THƯ MỤC RIÊNG (KHUYÊN DÙNG KHI CÓ ẢNH BÌA HOẶC NHIỀU ẢNH MINH HỌA)
+--------------------------------------------------------------------------------
+1. Tạo một thư mục mới bên trong `writing/`, đặt tên dạng slug tiếng Anh không dấu.
+   Ví dụ:
+   `writing/tri-tue-nhan-tao-trong-kien-truc/`
+
+2. Bên trong thư mục đó, đặt:
+   - File bài viết: `bai-viet.md` (hoặc `bai-viet.txt`, `index.md`)
+   - File ảnh bìa: `cover.jpg` (hoặc `cover.png`, `cover.webp`)
+   - Bất kỳ ảnh minh họa nào khác bạn muốn chèn vào bài viết.
+
+3. Hệ thống sẽ tự động sao chép các ảnh vào website và ánh xạ link ảnh cho bạn!
+
+--------------------------------------------------------------------------------
+CÁCH 2: TẠO TRỰC TIẾP 1 FILE .MD TRONG THƯ MỤC WRITING/
+--------------------------------------------------------------------------------
+1. Tạo trực tiếp file `.md` trong thư mục `writing/`.
+   Ví dụ:
+   `writing/nghien-cuu-vat-lieu-moi.md`
+
+2. Mở file và soạn thảo theo cấu trúc bên dưới.
+
+--------------------------------------------------------------------------------
+CẤU TRÚC NỘI DUNG MẪU CỦA FILE BÀI VIẾT:
+--------------------------------------------------------------------------------
+---
+title: "Tiêu đề bài viết của bạn tại đây"
+date: "October 12, 2026"
+excerpt: "Đoạn tóm tắt ngắn gọn 1-2 câu về nội dung chính của bài viết, sẽ hiển thị ở danh sách ngoài trang chủ."
+img: "cover.jpg"
+featured: true
+---
+
+## Mở đầu
+
+Đoạn văn mở đầu bài viết của bạn ở đây...
+
+## Nội dung phân tích
+
+Nội dung chi tiết viết bằng cú pháp Markdown tiêu chuẩn:
+- Dấu gạch đầu dòng mục 1
+- Dấu gạch đầu dòng mục 2
+
+Để chèn ảnh vào bài viết:
+![Tên ảnh minh họa](anh-minh-hoa.jpg)
+
+Hoặc dùng link ảnh online:
+![Ảnh online](https://images.unsplash.com/...)
+
+## Kết luận
+
+Đoạn tổng kết bài viết...
+
+--------------------------------------------------------------------------------
+LƯU Ý:
+--------------------------------------------------------------------------------
+- Thư mục `_mau_bai_viet/` là thư mục mẫu. Các thư mục hoặc file bắt đầu bằng dấu gạch dưới `_`
+  sẽ KHÔNG bị hiển thị lên website, bạn có thể copy từ đó ra để dùng bất cứ lúc nào.
+- Sau khi thêm hoặc sửa bài viết, bạn chỉ cần gõ yêu cầu vào khung chat (hoặc chạy lệnh
+  `npm run build:cms`) là hệ thống sẽ tự động cập nhật lên web.

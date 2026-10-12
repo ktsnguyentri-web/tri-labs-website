@@ -1,0 +1,73 @@
+================================================================================
+          HƯỚNG DẪN THÊM VÀ CẬP NHẬT CÔNG CỤ / NGIÊN CỨU (LABS & TOOLS)
+================================================================================
+
+Thư mục `tools/` này là nơi bạn quản lý toàn bộ các công cụ, sản phẩm thử nghiệm,
+nghiên cứu tính toán (Prototypes, Computational Tools & Scripts) hiển thị trên:
+- Trang chủ (mục 02. Labs)
+- Trang lưu trữ (/tool hoặc /labs)
+
+Bạn có thể thêm tool mới theo 1 trong 2 cách cực kỳ đơn giản sau:
+
+--------------------------------------------------------------------------------
+CÁCH 1: TẠO THƯ MỤC RIÊNG CHO TOOL (KHUYÊN DÙNG KHI CÓ ẢNH CHỤP GIAO DIỆN / DEMO)
+--------------------------------------------------------------------------------
+1. Tạo một thư mục mới bên trong `tools/`, đặt tên dạng slug tiếng Anh không dấu.
+   Ví dụ:
+   `tools/facade-optimizer/`
+   `tools/bim-space-calculator/`
+
+2. Bên trong thư mục đó, đặt:
+   - File mô tả tool: `tool.md` (hoặc `tool.txt`, `index.md`)
+   - File ảnh bìa / demo: `cover.png` (hoặc `cover.jpg`, `cover.webp`)
+   - Các ảnh chụp giao diện, sơ đồ thuật toán, GIF động (nếu có).
+
+3. Hệ thống sẽ tự động sao chép các ảnh vào website và liên kết vào bài viết cho bạn!
+
+--------------------------------------------------------------------------------
+CÁCH 2: TẠO TRỰC TIẾP 1 FILE .MD TRONG THƯ MỤC TOOLS/
+--------------------------------------------------------------------------------
+1. Tạo trực tiếp file `.md` trong thư mục `tools/`.
+   Ví dụ:
+   `tools/parametric-solar-solver.md`
+
+2. Mở file và soạn thảo theo cấu trúc bên dưới.
+
+--------------------------------------------------------------------------------
+CẤU TRÚC NỘI DUNG MẪU CỦA FILE TOOL:
+--------------------------------------------------------------------------------
+---
+title: "TRACE — Digital Tracing Paper for Architects"
+date: "June 28, 2026"
+excerpt: "A sketch tool for architects designed to replace traditional tracing paper in the digital age, enabling quick scale-aware conceptual studies."
+img: "cover.png"
+featured: true
+slug: "trace"
+category: "Tool"
+---
+
+## Tổng quan
+Mô tả tóm tắt mục đích công cụ, ai là người dùng và tại sao nó được tạo ra...
+
+## Vấn đề
+Nêu những điểm hạn chế của quy trình làm việc hiện tại hoặc phần mềm hiện có...
+
+## Giải pháp & Tính năng cốt lõi
+- **Tính năng 1**: Mô tả chi tiết tính năng...
+- **Tính năng 2**: Mô tả chi tiết tính năng...
+- **Tính năng 3**: Mô tả chi tiết tính năng...
+
+## Nền tảng công nghệ
+- Ngôn ngữ & Framework: Python, WebGL, Next.js, Rhino/Grasshopper...
+
+## Liên kết thử nghiệm (Demo)
+- Live Demo: [Trải nghiệm trực tuyến](https://...)
+- Mã nguồn / Tài liệu: [GitHub Repository](https://...)
+
+--------------------------------------------------------------------------------
+LƯU Ý:
+--------------------------------------------------------------------------------
+- Thư mục `_mau_tool/` là thư mục mẫu. Các thư mục hoặc file bắt đầu bằng dấu gạch dưới `_`
+  sẽ KHÔNG bị hiển thị lên website, bạn có thể sao chép ra bất cứ lúc nào để dùng.
+- Sau khi thêm hoặc sửa tool, bạn chỉ cần gõ yêu cầu vào khung chat (hoặc chạy lệnh
+  `npm run build:cms`) là hệ thống sẽ tự động đồng bộ lên trang web.
