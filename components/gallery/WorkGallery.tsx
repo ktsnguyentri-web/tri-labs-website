@@ -109,8 +109,15 @@ export function WorkGallery({ works }: { works: Project[] }) {
         </div>
 
         {filteredWorks.length === 0 && (
-          <div className="py-20 text-center font-mono text-xs text-neutral-500 uppercase tracking-widest">
-            No projects found in this category.
+          <div className="py-24 text-center">
+            <p className="font-mono text-xs text-neutral-400 dark:text-neutral-500 tracking-wider">
+              {works.length === 0 ? "[ NO PROJECTS CURRENTLY CATALOGED ]" : "[ NO PROJECTS FOUND IN THIS CATEGORY ]"}
+            </p>
+            {works.length === 0 && (
+              <p className="font-sans text-xs text-neutral-400 dark:text-neutral-500 mt-2">
+                Projects will automatically appear here once added to the projects/ directory.
+              </p>
+            )}
           </div>
         )}
       </section>

@@ -41,8 +41,9 @@ export type ResearchData = ResearchArticle;
 
 interface RawProject {
   title: string;
+  slug?: string;
   location: string;
-  span: string;
+  span?: string;
   img: string;
   order: number;
   category?: string;
@@ -86,7 +87,7 @@ function toProject(raw: RawProject): Project {
   const drawingGallery = raw.drawingGallery || [];
   
   return {
-    slug: raw.title
+    slug: raw.slug || raw.title
       .toLowerCase()
       .replace(/\s+/g, '-')
       .replace(/[^a-z0-9-]/g, ''),
@@ -96,7 +97,7 @@ function toProject(raw: RawProject): Project {
     completionYear: raw.completionYear,
     category: raw.category,
     typology: raw.typology,
-    span: raw.span,
+    span: raw.span || 'md:col-span-1 md:row-span-1',
     order: raw.order,
     description: raw.description,
     architect: raw.architect,

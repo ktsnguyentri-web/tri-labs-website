@@ -27,7 +27,7 @@ export default async function WorkPage() {
                 01 / WORK
               </h1>
               <div className="font-mono text-xs text-neutral-500 tracking-wider mt-2">
-                [ ARCHIVE — 10 SELECTED PROJECTS ]
+                [ ARCHIVE — {projects.length > 0 ? `${projects.length} SELECTED ${projects.length === 1 ? 'PROJECT' : 'PROJECTS'}` : 'UPDATING ARCHIVE'} ]
               </div>
             </div>
 

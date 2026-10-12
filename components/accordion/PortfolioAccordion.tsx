@@ -75,15 +75,26 @@ export function PortfolioAccordion({
           isOpen={!!openSections.works}
           onToggle={() => toggleSection("works")}
         >
-          <HorizontalCarousel totalItems={projects.length}>
-            {projects.map((project, idx) => (
-              <ProjectCard
-                key={project.slug || project.title}
-                project={project}
-                index={idx}
-              />
-            ))}
-          </HorizontalCarousel>
+          {projects.length > 0 ? (
+            <HorizontalCarousel totalItems={projects.length}>
+              {projects.map((project, idx) => (
+                <ProjectCard
+                  key={project.slug || project.title}
+                  project={project}
+                  index={idx}
+                />
+              ))}
+            </HorizontalCarousel>
+          ) : (
+            <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 py-8 text-center">
+              <p className="font-mono text-xs text-neutral-400 dark:text-neutral-500 tracking-wider">
+                [ UPDATING PROJECTS ]
+              </p>
+              <p className="font-sans text-xs text-neutral-400 dark:text-neutral-500 mt-1">
+                Projects will automatically appear here once added to the projects/ directory.
+              </p>
+            </div>
+          )}
         </AccordionItem>
       </motion.div>
 

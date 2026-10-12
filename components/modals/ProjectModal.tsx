@@ -8,6 +8,38 @@ import { motion, AnimatePresence } from "framer-motion";
 import type { ModalProject, Project } from "@/types/cms";
 import { ProjectStageViewport } from "@/components/project/ProjectStageViewport";
 
+function formatEnglishValue(val?: string) {
+  if (!val) return "";
+  const trimmed = val.trim();
+  const lower = trimmed.toLowerCase();
+
+  if (lower === "in progress" || lower === "đang triển khai" || lower === "dang trien khai") {
+    return "In Progress";
+  }
+  if (lower === "hoàn thành" || lower === "hoan thanh" || lower === "completed") {
+    return "Completed";
+  }
+  if (lower === "lead architect" || lower === "kiến trúc sư chủ trì" || lower === "kts chủ trì") {
+    return "Lead Architect";
+  }
+  if (lower === "hospitality" || lower === "khách sạn & nghỉ dưỡng") {
+    return "Hospitality";
+  }
+  if (lower === "residential" || lower === "nhà ở" || lower === "khu cư trú") {
+    return "Residential";
+  }
+  if (lower === "architecture" || lower === "kiến trúc") {
+    return "Architecture";
+  }
+  if (lower === "computation" || lower === "tính toán") {
+    return "Computation";
+  }
+  if (lower.includes("architectural concept & schematic design") || lower.includes("thiết kế ý tưởng & thiết kế cơ sở")) {
+    return "Architectural Concept & Schematic Design";
+  }
+  return trimmed;
+}
+
 interface ProjectModalProps {
   project: ModalProject | Project;
   onClose?: () => void;
@@ -24,6 +56,7 @@ export function ProjectModal({
   const router = useRouter();
   const [isGalleryOpen, setIsGalleryOpen] = useState(initialGalleryOpen);
   const [activeGalleryIndex, setActiveGalleryIndex] = useState(initialIndex);
+  const [isDescriptionOpen, setIsDescriptionOpen] = useState(false);
 
   const [objectFit, setObjectFit] = useState<"cover" | "contain">("cover");
 
@@ -139,9 +172,9 @@ export function ProjectModal({
               type="button"
               onClick={() => setObjectFit((prev) => (prev === "cover" ? "contain" : "cover"))}
               className="font-mono text-[11px] text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-all select-none tracking-wider cursor-pointer bg-[#FAFAFA]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-sm px-3 py-1 rounded-full border border-neutral-200/50 dark:border-neutral-800/60 active:scale-95 shadow-sm"
-              title={objectFit === "cover" ? "Chuyển sang vừa khung" : "Chuyển sang tràn viền"}
+              title={objectFit === "cover" ? "Switch to contain" : "Switch to cover"}
             >
-              [{objectFit === "cover" ? "TRÀN VIỀN" : "VỪA KHUNG"}]
+              [{objectFit === "cover" ? "FIT" : "COVER"}]
             </button>
           )}
 
@@ -258,30 +291,11 @@ export function ProjectModal({
                     </h1>
                   </div>
 
-                  {/* Narrative Copy */}
-                  <div className="border-t border-neutral-200 dark:border-neutral-800 pt-5">
-                    <p className="font-sans text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal">
-                      {project.description ||
-                        "Exploring the intersection of architectural scale and digital fidelity. This project represents a comprehensive investigation into material, light, and geometry to establish a new paradigm in spatial experience."}
-                    </p>
-                  </div>
-
-                  {/* Section Heading: INFORMATION */}
+                  {/* ── Section Heading: INFORMATION (Displayed on Top) ── */}
                   <div className="border-t border-neutral-200 dark:border-neutral-800 pt-5 space-y-3">
                     <h2 className="font-mono text-xs text-neutral-400 dark:text-neutral-500 tracking-wider mb-2 uppercase">
                       INFORMATION
                     </h2>
-
-                    {project.category && (
-                      <div className="flex justify-between items-baseline gap-4">
-                        <span className="font-sans text-xs text-neutral-500 dark:text-neutral-400 font-normal">
-                          Typology:
-                        </span>
-                        <span className="font-sans text-sm text-neutral-900 dark:text-neutral-200 text-right">
-                          {project.category}
-                        </span>
-                      </div>
-                    )}
 
                     {project.location && (
                       <div className="flex justify-between items-baseline gap-4">
@@ -294,24 +308,46 @@ export function ProjectModal({
                       </div>
                     )}
 
+                    {(project.size?.grossArea || (project as any).grossArea) && (
+                      <div className="flex justify-between items-baseline gap-4">
+                        <span className="font-sans text-xs text-neutral-500 dark:text-neutral-400 font-normal">
+                          Gross Floor Area:
+                        </span>
+                        <span className="font-mono text-xs text-neutral-900 dark:text-neutral-200 text-right">
+                          {project.size?.grossArea || (project as any).grossArea}
+                        </span>
+                      </div>
+                    )}
+
+                    {project.scope && (
+                      <div className="flex justify-between items-baseline gap-4">
+                        <span className="font-sans text-xs text-neutral-500 dark:text-neutral-400 font-normal">
+                          Scope:
+                        </span>
+                        <span className="font-sans text-sm text-neutral-900 dark:text-neutral-200 text-right">
+                          {formatEnglishValue(project.scope)}
+                        </span>
+                      </div>
+                    )}
+
                     {project.status && (
                       <div className="flex justify-between items-baseline gap-4">
                         <span className="font-sans text-xs text-neutral-500 dark:text-neutral-400 font-normal">
                           Status:
                         </span>
                         <span className="font-sans text-sm text-neutral-900 dark:text-neutral-200 text-right">
-                          {project.status}
+                          {formatEnglishValue(project.status)}
                         </span>
                       </div>
                     )}
 
-                    {project.completionYear && (
+                    {(project.category || (project as any).typology) && (
                       <div className="flex justify-between items-baseline gap-4">
                         <span className="font-sans text-xs text-neutral-500 dark:text-neutral-400 font-normal">
-                          Year:
+                          Typology:
                         </span>
-                        <span className="font-mono text-xs text-neutral-500 text-right">
-                          {project.completionYear}
+                        <span className="font-sans text-sm text-neutral-900 dark:text-neutral-200 text-right">
+                          {formatEnglishValue((project as any).typology || project.category)}
                         </span>
                       </div>
                     )}
@@ -333,75 +369,94 @@ export function ProjectModal({
                           Role:
                         </span>
                         <span className="font-sans text-sm text-neutral-900 dark:text-neutral-200 text-right">
-                          {project.role}
+                          {formatEnglishValue(project.role)}
                         </span>
                       </div>
                     )}
 
-                    {project.scope && (
+                    {project.completionYear && (
                       <div className="flex justify-between items-baseline gap-4">
                         <span className="font-sans text-xs text-neutral-500 dark:text-neutral-400 font-normal">
-                          Scope:
+                          Year:
                         </span>
-                        <span className="font-sans text-sm text-neutral-900 dark:text-neutral-200 text-right">
-                          {project.scope}
+                        <span className="font-mono text-xs text-neutral-900 dark:text-neutral-200 text-right">
+                          {project.completionYear}
+                        </span>
+                      </div>
+                    )}
+
+                    {project.size?.siteArea && (
+                      <div className="flex justify-between items-baseline gap-4">
+                        <span className="font-sans text-xs text-neutral-500 dark:text-neutral-400 font-normal">
+                          Site Area:
+                        </span>
+                        <span className="font-mono text-xs text-neutral-900 dark:text-neutral-200 text-right">
+                          {project.size.siteArea}
+                        </span>
+                      </div>
+                    )}
+
+                    {project.size?.buildingHeight && (
+                      <div className="flex justify-between items-baseline gap-4">
+                        <span className="font-sans text-xs text-neutral-500 dark:text-neutral-400 font-normal">
+                          Height:
+                        </span>
+                        <span className="font-mono text-xs text-neutral-900 dark:text-neutral-200 text-right">
+                          {project.size.buildingHeight}
+                        </span>
+                      </div>
+                    )}
+
+                    {project.size?.stories && (
+                      <div className="flex justify-between items-baseline gap-4">
+                        <span className="font-sans text-xs text-neutral-500 dark:text-neutral-400 font-normal">
+                          Stories:
+                        </span>
+                        <span className="font-mono text-xs text-neutral-900 dark:text-neutral-200 text-right">
+                          {project.size.stories}
                         </span>
                       </div>
                     )}
                   </div>
 
-                  {/* Section Heading: SIZE */}
-                  {hasSizeInfo && (
-                    <div className="border-t border-neutral-200 dark:border-neutral-800 pt-5 space-y-3">
-                      <h2 className="font-mono text-xs text-neutral-400 dark:text-neutral-500 tracking-wider mb-2 uppercase">
-                        SIZE
-                      </h2>
+                  {/* ── Section: DESCRIPTION (Collapsible with +) ── */}
+                  <div className="border-t border-neutral-200 dark:border-neutral-800 pt-5">
+                    <button
+                      type="button"
+                      onClick={() => setIsDescriptionOpen((prev) => !prev)}
+                      className="w-full flex items-center justify-between text-left py-2 text-xs font-mono tracking-wider text-neutral-600 dark:text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-colors uppercase group cursor-pointer select-none"
+                      aria-expanded={isDescriptionOpen}
+                    >
+                      <span className="flex items-center gap-2.5">
+                        <span className="inline-flex items-center justify-center w-4 h-4 rounded-full border border-neutral-300 dark:border-neutral-700 font-mono text-[11px] leading-none text-neutral-700 dark:text-neutral-300 group-hover:border-neutral-900 dark:group-hover:border-neutral-100 group-hover:text-neutral-900 dark:group-hover:text-neutral-100 transition-colors">
+                          {isDescriptionOpen ? "−" : "+"}
+                        </span>
+                        <span className="font-medium text-neutral-800 dark:text-neutral-200 group-hover:text-neutral-950 dark:group-hover:text-white transition-colors">
+                          DESCRIPTION
+                        </span>
+                      </span>
+                      <span className="text-[10px] text-neutral-400 group-hover:text-neutral-600 dark:group-hover:text-neutral-300 font-mono transition-colors">
+                        {isDescriptionOpen ? "[ COLLAPSE ]" : "[ READ ]"}
+                      </span>
+                    </button>
 
-                      {project.size?.siteArea && (
-                        <div className="flex justify-between items-baseline gap-4">
-                          <span className="font-sans text-xs text-neutral-500 dark:text-neutral-400 font-normal">
-                            Site Area:
-                          </span>
-                          <span className="font-mono text-xs text-neutral-500 text-right">
-                            {project.size.siteArea}
-                          </span>
-                        </div>
+                    <AnimatePresence initial={false}>
+                      {isDescriptionOpen && (
+                        <motion.div
+                          initial={{ height: 0, opacity: 0 }}
+                          animate={{ height: "auto", opacity: 1 }}
+                          exit={{ height: 0, opacity: 0 }}
+                          transition={{ duration: 0.28, ease: [0.22, 1, 0.36, 1] }}
+                          className="overflow-hidden"
+                        >
+                          <div className="pt-3 pb-1 space-y-3 font-sans text-sm sm:text-base text-neutral-600 dark:text-neutral-400 leading-relaxed font-normal whitespace-pre-line">
+                            {project.description ||
+                              "Exploring the intersection of architectural scale and digital fidelity. This project represents a comprehensive investigation into material, light, and geometry to establish a new paradigm in spatial experience."}
+                          </div>
+                        </motion.div>
                       )}
-
-                      {project.size?.grossArea && (
-                        <div className="flex justify-between items-baseline gap-4">
-                          <span className="font-sans text-xs text-neutral-500 dark:text-neutral-400 font-normal">
-                            Gross Area:
-                          </span>
-                          <span className="font-mono text-xs text-neutral-500 text-right">
-                            {project.size.grossArea}
-                          </span>
-                        </div>
-                      )}
-
-                      {project.size?.buildingHeight && (
-                        <div className="flex justify-between items-baseline gap-4">
-                          <span className="font-sans text-xs text-neutral-500 dark:text-neutral-400 font-normal">
-                            Height:
-                          </span>
-                          <span className="font-mono text-xs text-neutral-500 text-right">
-                            {project.size.buildingHeight}
-                          </span>
-                        </div>
-                      )}
-
-                      {project.size?.stories && (
-                        <div className="flex justify-between items-baseline gap-4">
-                          <span className="font-sans text-xs text-neutral-500 dark:text-neutral-400 font-normal">
-                            Stories:
-                          </span>
-                          <span className="font-mono text-xs text-neutral-500 text-right">
-                            {project.size.stories}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-                  )}
+                    </AnimatePresence>
+                  </div>
                 </div>
 
                 {/* ── Integrated Gallery Button at the bottom of the left column ── */}

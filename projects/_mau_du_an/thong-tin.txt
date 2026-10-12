@@ -1,0 +1,13 @@
+Tên dự án: Tên Dự Án Của Bạn
+Địa điểm: Sài Gòn, Việt Nam
+Năm: 2024
+Vai trò: Lead Architect
+Kiến trúc sư / Văn phòng: Studio Duo
+Thể loại: Architecture
+Loại hình: Residential
+Tình trạng: Hoàn thành
+Quy mô: 350 m2
+Thứ tự hiển thị: 1
+
+Mô tả:
+Viết đoạn mô tả ngắn gọn hoặc chi tiết về ý tưởng kiến trúc, giải pháp vật liệu, bối cảnh công trình tại đây...

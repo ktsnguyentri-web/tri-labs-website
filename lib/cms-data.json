@@ -2,120 +2,66 @@
   "projects": [
     {
       "title": "Chavana Boutique Hotel",
+      "slug": "chavana-boutique-hotel",
       "location": "Da Nang, Vietnam",
       "architect": "Studio Duo",
-      "status": "Under construction",
-      "scope": "Concept Design & Construction document",
+      "office": "Studio Duo",
+      "status": "Completed",
+      "scope": "",
       "role": "Lead Architect",
       "category": "Architecture",
       "typology": "Hospitality",
-      "completionYear": "2024",
-      "span": "md:col-span-2 md:row-span-2",
-      "img": "/images/projects/chavana/front.jpg",
-      "order": 0,
+      "completionYear": "2021",
+      "grossArea": "12000 sqm",
+      "span": "md:col-span-1 md:row-span-1",
+      "description": "Chavana Boutique Hotel is thoughtfully designed to provide a serene retreat amidst the vibrancy of city life. The architectural philosophy emphasizes seamless transitions between indoor and outdoor spaces, allowing guests to embrace nature's tranquility while enjoying luxurious modern comforts. The design incorporates large, open spaces with expansive glass walls, bringing the lush greenery of the surroundings indoors, making the environment feel both inviting and calming. This tranquil setting offers a perfect balance of contemporary design and natural beauty, creating a sanctuary where guests can relax and rejuvenate.",
+      "descriptionVi": "Chavana Boutique Hotel được thiết kế tinh tế nhằm mang đến một chốn dừng chân thanh bình giữa nhịp sống đô thị sôi động. Triết lý kiến trúc nhấn mạnh sự kết nối liền mạch giữa không gian trong nhà và ngoài trời, cho phép du khách hòa mình vào thiên nhiên tĩnh lặng trong khi tận hưởng tiện nghi sang trọng và hiện đại. Không gian mở rộng rãi với các diện vách kính thoáng đãng mang màu xanh dịu mát của cây cỏ vào sâu bên trong gian phòng, tạo nên bầu không khí thư thái, tràn đầy cảm hứng tái tạo năng lượng.",
+      "order": 1,
+      "img": "/images/projects/chavana-boutique-hotel/cover.jpg",
       "gallery": [
-        "/images/projects/chavana/render.jpg",
-        "/images/projects/chavana/bar.jpg"
+        "/images/projects/chavana-boutique-hotel/cover.jpg",
+        "/images/projects/chavana-boutique-hotel/noi-that-1.jpg",
+        "/images/projects/chavana-boutique-hotel/noi-that-2.jpg"
+      ],
+      "architectureGallery": [
+        "/images/projects/chavana-boutique-hotel/cover.jpg"
+      ],
+      "drawingGallery": [],
+      "interiorGallery": [
+        "/images/projects/chavana-boutique-hotel/noi-that-1.jpg",
+        "/images/projects/chavana-boutique-hotel/noi-that-2.jpg"
       ]
     },
     {
-      "title": "Shenzhen Bay Culture Park",
-      "location": "Shenzhen, China",
-      "role": "Design Director",
-      "category": "Architecture",
-      "typology": "Cultural",
-      "completionYear": "2026",
-      "span": "md:col-span-2 md:row-span-2",
-      "img": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
-      "order": 1
-    },
-    {
-      "title": "Harbin Opera House",
-      "location": "Harbin, China",
-      "role": "Project Architect",
-      "category": "Architecture",
-      "typology": "Cultural",
-      "completionYear": "2015",
-      "span": "md:col-span-1 md:row-span-1",
-      "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
-      "order": 2
-    },
-    {
-      "title": "Absolute Towers",
-      "location": "Mississauga, Canada",
-      "role": "Concept Designer",
-      "category": "Computation",
-      "typology": "Residential",
-      "completionYear": "2012",
-      "span": "md:col-span-1 md:row-span-2",
-      "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
-      "order": 3
-    },
-    {
-      "title": "Ordos Museum",
-      "location": "Ordos, China",
-      "role": "Computational Designer",
-      "category": "Computation",
-      "typology": "Museum",
-      "completionYear": "2011",
-      "span": "md:col-span-1 md:row-span-1",
-      "img": "https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=1200&q=80",
-      "order": 4
-    },
-    {
-      "title": "Huzhou Sheraton",
-      "location": "Huzhou, China",
-      "role": "Project Architect",
-      "category": "Architecture",
-      "typology": "Hospitality",
-      "completionYear": "2012",
-      "span": "md:col-span-2 md:row-span-1",
-      "img": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
-      "order": 5
-    },
-    {
-      "title": "Chaoyang Park Plaza",
-      "location": "Beijing, China",
-      "role": "Lead Architect",
-      "category": "Architecture",
-      "typology": "Commercial",
-      "completionYear": "2017",
-      "span": "md:col-span-1 md:row-span-2",
-      "img": "https://images.unsplash.com/photo-1486406146926-c627a92ad1ab?auto=format&fit=crop&w=1200&q=80",
-      "order": 6
-    },
-    {
-      "title": "Huangshan Mountain Village",
-      "location": "Huangshan, China",
-      "role": "Design Director",
+      "title": "Mountain Residences Da Lat",
+      "slug": "mountain-residences-da-lat",
+      "location": "Da Lat, Vietnam",
+      "architect": "",
+      "office": "",
+      "status": "In Progress",
+      "scope": "Architectural Concept & Schematic Design",
+      "role": "",
       "category": "Architecture",
       "typology": "Residential",
-      "completionYear": "2017",
+      "completionYear": "2024",
+      "grossArea": "2750 m²",
       "span": "md:col-span-1 md:row-span-1",
-      "img": "https://images.unsplash.com/photo-1497366216548-37526070297c?auto=format&fit=crop&w=1200&q=80",
-      "order": 7
-    },
-    {
-      "title": "Clover House",
-      "location": "Okazaki, Japan",
-      "role": "Concept Designer",
-      "category": "Computation",
-      "typology": "Educational",
-      "completionYear": "2016",
-      "span": "md:col-span-2 md:row-span-1",
-      "img": "https://images.unsplash.com/photo-1449844908441-8829872d2607?auto=format&fit=crop&w=1200&q=80",
-      "order": 8
-    },
-    {
-      "title": "Nanjing Zendai Himalayas",
-      "location": "Nanjing, China",
-      "role": "Lead Architect",
-      "category": "Computation",
-      "typology": "Mixed-Use",
-      "completionYear": "2020",
-      "span": "md:col-span-1 md:row-span-1",
-      "img": "https://images.unsplash.com/photo-1513694203232-719a280e022f?auto=format&fit=crop&w=1200&q=80",
-      "order": 9
+      "description": "Nestled amidst the iconic pine-covered slopes of Da Lat, Mountain Residences is a residential retreat responding sensitively to the site's natural topography. The stepped architectural massing hugs the hillside contours to maximize panoramic views across the misty valley while channeling temperate mountain breezes and generous daylight into every interior space. Expansive glazing, deep overhanging eaves, and natural local textures compose a tranquil sanctuary that seamlessly connects human habitation with the highland landscape.",
+      "descriptionVi": "Toạ lạc giữa khung cảnh đồi thông đặc trưng của Đà Lạt, Mountain Residences là dự án khu cư trú nghỉ dưỡng khai thác sự tương tác hài hòa giữa hình khối kiến trúc đương đại và địa hình dốc tự nhiên. Ngôn ngữ thiết kế giật cấp men theo sườn đồi giúp tối ưu tầm nhìn bao quát trọn vẹn thung lũng sương mờ, đồng thời đón luồng gió mát lành và nguồn sáng tự nhiên ngập tràn vào các không gian sinh hoạt. Sự kết hợp giữa các diện kính lớn, hệ mái vươn rộng và vật liệu địa phương mộc mạc kiến tạo nên một nơi chốn tĩnh lặng, ấm áp và gắn kết sâu sắc cùng tự nhiên.",
+      "order": 2,
+      "img": "/images/projects/mountain-residences-da-lat/cover.webp",
+      "gallery": [
+        "/images/projects/mountain-residences-da-lat/cover.webp",
+        "/images/projects/mountain-residences-da-lat/2.webp",
+        "/images/projects/mountain-residences-da-lat/6.webp"
+      ],
+      "architectureGallery": [
+        "/images/projects/mountain-residences-da-lat/cover.webp",
+        "/images/projects/mountain-residences-da-lat/2.webp",
+        "/images/projects/mountain-residences-da-lat/6.webp"
+      ],
+      "drawingGallery": [],
+      "interiorGallery": []
     }
   ],
   "logData": {

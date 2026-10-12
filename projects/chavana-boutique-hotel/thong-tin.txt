@@ -1,0 +1,16 @@
+Project Name: Chavana Boutique Hotel
+Location: Da Nang, Vietnam
+Year: 2021
+Role: Lead Architect
+Architect / Office: Studio Duo
+Category: Architecture
+Typology: Hospitality
+Status: Completed
+Gross Floor Area: 12000 sqm
+Order: 1
+
+Description:
+Chavana Boutique Hotel is thoughtfully designed to provide a serene retreat amidst the vibrancy of city life. The architectural philosophy emphasizes seamless transitions between indoor and outdoor spaces, allowing guests to embrace nature's tranquility while enjoying luxurious modern comforts. The design incorporates large, open spaces with expansive glass walls, bringing the lush greenery of the surroundings indoors, making the environment feel both inviting and calming. This tranquil setting offers a perfect balance of contemporary design and natural beauty, creating a sanctuary where guests can relax and rejuvenate.
+
+Description_VI:
+Chavana Boutique Hotel được thiết kế tinh tế nhằm mang đến một chốn dừng chân thanh bình giữa nhịp sống đô thị sôi động. Triết lý kiến trúc nhấn mạnh sự kết nối liền mạch giữa không gian trong nhà và ngoài trời, cho phép du khách hòa mình vào thiên nhiên tĩnh lặng trong khi tận hưởng tiện nghi sang trọng và hiện đại. Không gian mở rộng rãi với các diện vách kính thoáng đãng mang màu xanh dịu mát của cây cỏ vào sâu bên trong gian phòng, tạo nên bầu không khí thư thái, tràn đầy cảm hứng tái tạo năng lượng.

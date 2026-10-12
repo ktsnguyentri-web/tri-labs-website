@@ -1,0 +1,48 @@
+================================================================================
+HƯỚNG DẪN CẬP NHẬT DỰ ÁN MỚI LÊN WEBSITE
+================================================================================
+
+Để thêm một dự án mới vào website, bạn chỉ cần làm theo các bước cực kỳ đơn giản sau:
+
+BƯỚC 1: TẠO THƯ MỤC CHO DỰ ÁN
+- Bên trong thư mục "projects/", hãy tạo một thư mục mới cho dự án của bạn.
+- Tên thư mục nên viết không dấu hoặc cách nhau bằng dấu gạch ngang.
+  Ví dụ: 
+    projects/chavana-boutique-hotel/
+    projects/biet-thu-da-lat/
+    projects/nha-pho-saigon/
+
+BƯỚC 2: THÊM ẢNH VÀO THƯ MỤC
+- Copy tất cả các ảnh của dự án vào thư mục vừa tạo (.jpg, .png, .webp).
+- Quy ước đặt tên ảnh (để web tự động nhận diện thông minh):
+  + Ảnh bìa đại diện: Đặt tên là "cover.jpg", "bia.jpg", hoặc "front.jpg"
+  + Ảnh bản vẽ kỹ thuật (mặt bằng, mặt đứng, mặt cắt): Đặt tên có chữ "ban-ve", "mat-bang", "plan", "draw",...
+  + Ảnh nội thất: Đặt tên có chữ "noi-that", "interior",...
+  + Các ảnh phối cảnh, công trình khác: Đặt tên tuỳ ý (ví dụ anh-1.jpg, anh-2.jpg,...)
+
+BƯỚC 3: TẠO FILE THÔNG TIN DỰ ÁN (thong-tin.txt)
+- Trong thư mục dự án đó, tạo một file text có tên "thong-tin.txt" (hoặc "info.txt").
+- Bạn có thể mở thư mục "_mau_du_an/thong-tin.txt" để copy mẫu.
+- Điền các thông tin của dự án như sau:
+
+--------------------------------------------------------------------------------
+Tên dự án: Chavana Boutique Hotel
+Địa điểm: Đà Nẵng, Việt Nam
+Năm: 2024
+Vai trò: Lead Architect
+Kiến trúc sư / Văn phòng: Studio Duo
+Thể loại: Architecture
+Loại hình: Hospitality
+Tình trạng: Đang thi công
+Quy mô: 1200 m2
+Thứ tự hiển thị: 1
+
+Mô tả:
+Dự án cải tạo một khách sạn cũ tại Đà Nẵng với hệ thống vòm đứng phức hợp...
+--------------------------------------------------------------------------------
+
+BƯỚC 4: CẬP NHẬT LÊN WEB
+- Mỗi khi bạn thêm, sửa hoặc xoá dự án trong thư mục "projects/", bạn chỉ cần nhắn:
+  "Cập nhật dự án" hoặc "Build dự án mới"
+- Hệ thống sẽ tự động quét thư mục này, xử lý ảnh và cập nhật ngay lên website của bạn!
+================================================================================
