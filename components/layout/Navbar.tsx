@@ -89,7 +89,7 @@ export function Navbar() {
   // Prevent hydration mismatch: render a static shell on server/first-pass
   if (!hasMounted) {
     return (
-      <nav className="fixed top-0 left-0 w-full z-50 bg-[#FAFAFA]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-md h-[60px] border-b border-neutral-200/60 dark:border-white/5">
+      <nav className="fixed top-0 left-0 w-full z-50 bg-[#FAFAFA]/80 dark:bg-[#151515]/80 backdrop-blur-md h-[60px] border-b border-neutral-200/60 dark:border-white/5">
         <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 h-full flex items-center justify-between w-full opacity-0">
           <Logo />
         </div>
@@ -103,7 +103,7 @@ export function Navbar() {
         variants={navVariants}
         animate={hidden ? "hidden" : "visible"}
         transition={{ duration: 0.3, ease: "easeInOut" }}
-        className="fixed top-0 left-0 w-full z-50 bg-[#FAFAFA]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-md h-[60px] border-b border-neutral-200/60 dark:border-white/5 transition-colors duration-300"
+        className="fixed top-0 left-0 w-full z-50 bg-[#FAFAFA]/80 dark:bg-[#151515]/80 backdrop-blur-md h-[60px] border-b border-neutral-200/60 dark:border-white/5 transition-colors duration-300"
       >
         <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 h-full flex items-center justify-between w-full relative">
 
@@ -150,7 +150,7 @@ export function Navbar() {
 
       {/* Mobile Menu Dropdown — Solid Opaque per Rule 1 */}
       <div
-        className={`fixed inset-0 z-40 bg-[#FAFAFA] dark:bg-[#0A0A0A] transition-opacity duration-300 md:hidden ${isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
+        className={`fixed inset-0 z-40 bg-[#FAFAFA] dark:bg-[#151515] transition-opacity duration-300 md:hidden ${isMenuOpen ? "opacity-100 pointer-events-auto" : "opacity-0 pointer-events-none"
           }`}
         onClick={() => setIsMenuOpen(false)}
       >

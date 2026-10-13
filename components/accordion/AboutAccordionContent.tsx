@@ -377,7 +377,7 @@ function renderSocialIcon(label: string) {
                         </div>
 
                         {/* Floating Proficiency Bar Tooltip on Hover */}
-                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 pointer-events-none opacity-0 group-hover/tool:opacity-100 -translate-y-0.5 group-hover/tool:-translate-y-1.5 transition-all duration-200 ease-out z-30 min-w-[130px] bg-white dark:bg-[#141414] border border-neutral-200 dark:border-neutral-700/80 rounded-lg p-2.5 shadow-xl shadow-black/10 dark:shadow-black/60">
+                        <div className="absolute bottom-full left-1/2 -translate-x-1/2 mb-2.5 pointer-events-none opacity-0 group-hover/tool:opacity-100 -translate-y-0.5 group-hover/tool:-translate-y-1.5 transition-all duration-200 ease-out z-30 min-w-[130px] bg-white dark:bg-[#151515] border border-neutral-200 dark:border-neutral-700/80 rounded-lg p-2.5 shadow-xl shadow-black/10 dark:shadow-black/60">
                           <div className="flex items-center justify-between gap-3 mb-1.5 font-mono text-[10px]">
                             <span className="text-neutral-400 dark:text-neutral-500 uppercase tracking-wider text-[9px]">Proficiency</span>
                             <span className="font-semibold text-neutral-900 dark:text-neutral-100">{prof}%</span>
@@ -389,7 +389,7 @@ function renderSocialIcon(label: string) {
                             />
                           </div>
                           {/* Downward triangle arrow */}
-                          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-white dark:bg-[#141414] border-b border-r border-neutral-200 dark:border-neutral-700/80 rotate-45" />
+                          <div className="absolute -bottom-1 left-1/2 -translate-x-1/2 w-2 h-2 bg-white dark:bg-[#151515] border-b border-r border-neutral-200 dark:border-neutral-700/80 rotate-45" />
                         </div>
                       </div>
                     );

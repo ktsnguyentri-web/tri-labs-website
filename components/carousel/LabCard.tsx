@@ -18,7 +18,7 @@ export function LabCard({ article, index }: LabCardProps) {
       {/* ── Visual Media / Container (Clickable: opens project) ─────── */}
       <Link
         href={href}
-        className="relative w-full aspect-[16/10] overflow-hidden bg-neutral-100 dark:bg-neutral-950 border border-neutral-200 dark:border-white/10 hover:border-neutral-400 dark:hover:border-white/40 transition-colors duration-500 block cursor-pointer"
+        className="relative w-full aspect-[16/10] overflow-hidden bg-neutral-100 dark:bg-[#151515] border border-neutral-200 dark:border-white/10 hover:border-neutral-400 dark:hover:border-white/40 transition-colors duration-500 block cursor-pointer"
       >
         {article.coverImage ? (
           <Image

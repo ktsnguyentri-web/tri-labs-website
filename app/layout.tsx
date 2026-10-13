@@ -67,7 +67,7 @@ export default function RootLayout({
           }}
         />
       </head>
-      <body className="min-h-full flex flex-col font-sans selection:bg-accent selection:text-black bg-[#FAFAFA] dark:bg-[#0A0A0A] text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
+      <body className="min-h-full flex flex-col font-sans selection:bg-accent selection:text-black bg-[#FAFAFA] dark:bg-[#151515] text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
         <PreloaderProvider>
           <Preloader />
           <main className="flex-grow">

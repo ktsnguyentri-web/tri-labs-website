@@ -48,10 +48,10 @@ export function ArticleModal({ article, onClose }: ArticleModalProps) {
         aria-label="Close modal background"
       />
 
-      <div className="bg-[#FAFAFA] dark:bg-[#0A0A0A] text-neutral-900 dark:text-neutral-100 w-[96vw] max-w-4xl h-[93vh] rounded-2xl sm:rounded-3xl relative overflow-hidden flex flex-col shadow-2xl z-10 scale-in-95 duration-300 border border-neutral-200 dark:border-neutral-800">
+      <div className="bg-[#FAFAFA] dark:bg-[#151515] text-neutral-900 dark:text-neutral-100 w-[96vw] max-w-4xl h-[93vh] rounded-2xl sm:rounded-3xl relative overflow-hidden flex flex-col shadow-2xl z-10 scale-in-95 duration-300 border border-neutral-200 dark:border-neutral-800">
 
         {/* Sticky Header */}
-        <div className="sticky top-0 bg-[#FAFAFA] dark:bg-[#0A0A0A] z-20 px-6 py-3.5 flex justify-between items-center border-b border-neutral-200 dark:border-neutral-800 shrink-0">
+        <div className="sticky top-0 bg-[#FAFAFA] dark:bg-[#151515] z-20 px-6 py-3.5 flex justify-between items-center border-b border-neutral-200 dark:border-neutral-800 shrink-0">
           <div className="flex items-center gap-2 font-mono text-[10px] uppercase tracking-[0.2em] text-neutral-500 dark:text-neutral-400">
             <span>{article.category}</span>
             <span>•</span>

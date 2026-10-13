@@ -13,7 +13,7 @@ export default async function ToolPage() {
   const articles = await getAllResearchInsights();
 
   return (
-    <div className="min-h-screen bg-[#FAFAFA] dark:bg-[#0A0A0A] text-neutral-900 dark:text-neutral-100 font-sans selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-black transition-colors duration-300">
+    <div className="min-h-screen bg-[#FAFAFA] dark:bg-[#151515] text-neutral-900 dark:text-neutral-100 font-sans selection:bg-neutral-900 selection:text-white dark:selection:bg-white dark:selection:text-black transition-colors duration-300">
       <Navbar />
       <main className="w-full pt-[60px]">
         {/* Two-Column Architectural Header (Matching 01 / WORK exactly) */}

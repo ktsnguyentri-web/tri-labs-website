@@ -70,7 +70,7 @@ export function Preloader() {
             opacity: 0,
             transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
           }}
-          className="fixed inset-0 z-50 bg-neutral-950 flex flex-col items-center justify-center pointer-events-auto"
+          className="fixed inset-0 z-50 bg-[#151515] flex flex-col items-center justify-center pointer-events-auto"
         >
           {/* Centered Brand Text with Shared Morphing Layout ID */}
           {!isDocked && (

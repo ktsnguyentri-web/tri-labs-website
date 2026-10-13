@@ -18,11 +18,11 @@ const buttonVariants = cva(
   {
     variants: {
       variant: {
-        default: "bg-neutral-900 text-white hover:bg-neutral-800 dark:bg-neutral-100 dark:text-neutral-950 dark:hover:bg-white shadow-sm hover:shadow-md",
+        default: "bg-neutral-900 text-white hover:bg-neutral-800 dark:bg-neutral-100 dark:text-[#151515] dark:hover:bg-white shadow-sm hover:shadow-md",
         outline: "border border-neutral-300 dark:border-neutral-700 text-neutral-800 dark:text-neutral-200 hover:bg-neutral-100 dark:hover:bg-neutral-800 hover:text-neutral-950 dark:hover:text-white",
         ghost: "text-neutral-700 dark:text-neutral-300 hover:bg-black/5 dark:hover:bg-white/10",
         secondary: "bg-neutral-100 text-neutral-900 hover:bg-neutral-200 dark:bg-neutral-800 dark:text-neutral-100 dark:hover:bg-neutral-700",
-        pill: "bg-neutral-900/90 text-white hover:bg-neutral-900 dark:bg-white/90 dark:text-neutral-950 dark:hover:bg-white backdrop-blur-md shadow-sm",
+        pill: "bg-neutral-900/90 text-white hover:bg-neutral-900 dark:bg-white/90 dark:text-[#151515] dark:hover:bg-white backdrop-blur-md shadow-sm",
       },
       size: {
         default: "px-6 py-2.5 text-[11px]",

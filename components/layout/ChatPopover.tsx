@@ -216,7 +216,7 @@ export function ChatPopover({ isOpen, onClose }: ChatPopoverProps) {
             animate={{ opacity: 1, y: 0, scale: 1 }}
             exit={{ opacity: 0, y: 12, scale: 0.96 }}
             transition={{ type: "spring", stiffness: 350, damping: 25 }}
-            className="absolute bottom-full left-0 mb-3 z-50 w-[calc(100vw-40px)] sm:w-[380px] h-[500px] max-h-[75vh] bg-white/95 dark:bg-[#121212]/95 backdrop-blur-xl border border-neutral-200/80 dark:border-neutral-800/90 flex flex-col overflow-hidden shadow-2xl rounded-[24px] text-neutral-900 dark:text-neutral-100"
+            className="absolute bottom-full left-0 mb-3 z-50 w-[calc(100vw-40px)] sm:w-[380px] h-[500px] max-h-[75vh] bg-white/95 dark:bg-[#181818]/95 backdrop-blur-xl border border-neutral-200/80 dark:border-neutral-800/90 flex flex-col overflow-hidden shadow-2xl rounded-[24px] text-neutral-900 dark:text-neutral-100"
             style={{
               boxShadow: "0 25px 50px -12px rgba(0, 0, 0, 0.25), 0 0 0 1px rgba(0,0,0,0.03)",
             }}
@@ -253,7 +253,7 @@ export function ChatPopover({ isOpen, onClose }: ChatPopoverProps) {
                   <div
                     className={`px-3.5 py-2.5 text-xs sm:text-[13px] leading-relaxed ${
                       msg.sender === "user"
-                        ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-neutral-900 font-normal rounded-[16px] rounded-br-[4px]"
+                        ? "bg-neutral-900 text-white dark:bg-neutral-100 dark:text-[#151515] font-normal rounded-[16px] rounded-br-[4px]"
                         : "bg-neutral-100 text-neutral-800 dark:bg-neutral-800/70 dark:text-neutral-200 border border-neutral-200/60 dark:border-neutral-700/50 rounded-[16px] rounded-bl-[4px]"
                     }`}
                   >

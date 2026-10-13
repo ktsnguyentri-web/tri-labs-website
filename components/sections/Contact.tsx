@@ -25,7 +25,7 @@ export function Contact({ theme = "dark", email = "kts.nguyentri@gmail.com" }: C
   return (
     <footer 
       ref={contactRef}
-      className="w-full bg-[#FAFAFA] dark:bg-[#0A0A0A] border-t border-neutral-200 dark:border-neutral-800/40 py-6 sm:py-8 transition-colors duration-300" 
+      className="w-full bg-[#FAFAFA] dark:bg-[#151515] border-t border-neutral-200 dark:border-neutral-800/40 py-6 sm:py-8 transition-colors duration-300" 
       id="contact"
     >
       <div className="w-full max-w-3xl mx-auto px-5 sm:px-6 md:px-8">

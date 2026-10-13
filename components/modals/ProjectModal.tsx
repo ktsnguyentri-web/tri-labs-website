@@ -163,7 +163,7 @@ export function ProjectModal({
         animate={{ scale: 1, opacity: 1 }}
         exit={{ scale: 0.97, opacity: 0 }}
         transition={{ duration: 0.25, ease: [0.22, 1, 0.36, 1] }}
-        className="w-full max-w-6xl h-[92vh] max-h-[960px] bg-[#FAFAFA] dark:bg-[#0A0A0A] text-neutral-900 dark:text-neutral-100 rounded-xl sm:rounded-2xl border border-neutral-300/90 dark:border-neutral-700/80 shadow-2xl overflow-hidden flex flex-col relative z-10 select-none"
+        className="w-full max-w-6xl h-[92vh] max-h-[960px] bg-[#FAFAFA] dark:bg-[#151515] text-neutral-900 dark:text-neutral-100 rounded-xl sm:rounded-2xl border border-neutral-300/90 dark:border-neutral-700/80 shadow-2xl overflow-hidden flex flex-col relative z-10 select-none"
       >
         {/* Floating Top Right Controls (No full dividing top bar) */}
         <div className="absolute top-4 right-5 sm:right-6 z-40 flex items-center gap-3">
@@ -171,7 +171,7 @@ export function ProjectModal({
             <button
               type="button"
               onClick={() => setObjectFit((prev) => (prev === "cover" ? "contain" : "cover"))}
-              className="font-mono text-[11px] text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-all select-none tracking-wider cursor-pointer bg-[#FAFAFA]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-sm px-3 py-1 rounded-full border border-neutral-200/50 dark:border-neutral-800/60 active:scale-95 shadow-sm"
+              className="font-mono text-[11px] text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-all select-none tracking-wider cursor-pointer bg-[#FAFAFA]/80 dark:bg-[#151515]/80 backdrop-blur-sm px-3 py-1 rounded-full border border-neutral-200/50 dark:border-neutral-800/60 active:scale-95 shadow-sm"
               title={objectFit === "cover" ? "Switch to contain" : "Switch to cover"}
             >
               [{objectFit === "cover" ? "FIT" : "COVER"}]
@@ -182,7 +182,7 @@ export function ProjectModal({
             type="button"
             onClick={handleClose}
             aria-label="Close modal"
-            className="inline-flex items-center gap-1.5 font-mono text-xs text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-all cursor-pointer select-none bg-[#FAFAFA]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-sm px-3 py-1 rounded-full border border-neutral-200/50 dark:border-neutral-800/60 active:scale-95 shadow-sm"
+            className="inline-flex items-center gap-1.5 font-mono text-xs text-neutral-400 hover:text-neutral-900 dark:hover:text-neutral-100 transition-all cursor-pointer select-none bg-[#FAFAFA]/80 dark:bg-[#151515]/80 backdrop-blur-sm px-3 py-1 rounded-full border border-neutral-200/50 dark:border-neutral-800/60 active:scale-95 shadow-sm"
           >
             <span>Close</span>
             <X className="w-3.5 h-3.5" />
@@ -191,7 +191,7 @@ export function ProjectModal({
 
         {/* Floating Top Left Controls when Gallery is Open */}
         {isGalleryOpen && (
-          <div className="absolute top-4 left-5 sm:left-6 z-40 flex items-center gap-3 bg-[#FAFAFA]/80 dark:bg-[#0A0A0A]/80 backdrop-blur-sm px-3 py-1 rounded-full border border-neutral-200/50 dark:border-neutral-800/60 shadow-sm">
+          <div className="absolute top-4 left-5 sm:left-6 z-40 flex items-center gap-3 bg-[#FAFAFA]/80 dark:bg-[#151515]/80 backdrop-blur-sm px-3 py-1 rounded-full border border-neutral-200/50 dark:border-neutral-800/60 shadow-sm">
             <button
               type="button"
               onClick={() => setIsGalleryOpen(false)}
@@ -217,7 +217,7 @@ export function ProjectModal({
         <div className="relative flex-1 w-full h-full overflow-hidden">
           {isGalleryOpen ? (
             /* ── FULL-BLEED GALLERY VIEW ── */
-            <div className="relative w-full h-full flex flex-col justify-between bg-neutral-950 select-none overflow-hidden">
+            <div className="relative w-full h-full flex flex-col justify-between bg-[#151515] select-none overflow-hidden">
               {/* Full-Bleed Image Area */}
               <div className="relative flex-1 w-full h-full overflow-hidden">
                 <AnimatePresence mode="wait">

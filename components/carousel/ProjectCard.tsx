@@ -22,7 +22,7 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       <Link
         href={projectHref}
         scroll={false}
-        className="relative w-full aspect-[16/10] overflow-hidden bg-neutral-100 dark:bg-neutral-900 border border-neutral-200 dark:border-white/10 hover:border-neutral-400 dark:hover:border-white/40 transition-colors duration-300 rounded-none shadow-none cursor-pointer block"
+        className="relative w-full aspect-[16/10] overflow-hidden bg-neutral-100 dark:bg-[#151515] border border-neutral-200 dark:border-white/10 hover:border-neutral-400 dark:hover:border-white/40 transition-colors duration-300 rounded-none shadow-none cursor-pointer block"
       >
         {project.heroImage ? (
           <Image
