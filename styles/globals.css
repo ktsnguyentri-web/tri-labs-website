@@ -143,6 +143,16 @@
     position: relative;
   }
 
+  /* Preloader Zero-Frame FOUC Prevention */
+  html.preloader-active #main-content {
+    opacity: 0 !important;
+    pointer-events: none !important;
+  }
+
+  html.preloader-done #preloader-root {
+    display: none !important;
+  }
+
   img {
     @apply rounded-none;
   }

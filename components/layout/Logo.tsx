@@ -64,10 +64,10 @@ export function Logo({ className, pathname: propPathname, onHomeClick }: LogoPro
       <Link
         href="/"
         onClick={onHomeClick}
-        className="font-semibold text-neutral-900 dark:text-white hover:opacity-70 transition-opacity whitespace-nowrap inline-flex items-center"
+        className="font-medium text-sm sm:text-base tracking-tight text-neutral-900 dark:text-neutral-100 hover:opacity-70 transition-opacity whitespace-nowrap inline-flex items-center"
       >
         {isDocked ? (
-          <motion.span
+          <motion.div
             layoutId="brand-logo"
             transition={{
               type: "spring",
@@ -77,11 +77,11 @@ export function Logo({ className, pathname: propPathname, onHomeClick }: LogoPro
             className="inline-block"
           >
             tri-labs
-          </motion.span>
+          </motion.div>
         ) : (
-          <span className="opacity-0 inline-block select-none pointer-events-none">
+          <div className="opacity-0 inline-block select-none pointer-events-none">
             tri-labs
-          </span>
+          </div>
         )}
       </Link>
 

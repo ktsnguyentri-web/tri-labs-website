@@ -19,7 +19,7 @@ export function HeroPersonal({ profile }: HeroPersonalProps) {
       <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8">
         <div className="flex flex-col-reverse sm:flex-row sm:items-center justify-between gap-6 md:gap-8">
           {/* ── Left Column: Identity & Bio ──────────────────────────── */}
-          <div className="flex-1 flex flex-col items-start gap-4">
+          <div className="flex-1 flex flex-col items-start">
             {/* 1. Live Status Pill */}
             <motion.div
               initial={hasLoadedBefore ? false : { opacity: 0, y: 10 }}
@@ -29,9 +29,12 @@ export function HeroPersonal({ profile }: HeroPersonalProps) {
                 delay: hasLoadedBefore ? 0 : 0.1,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="flex items-center"
+              className="flex items-center mb-3"
             >
-              <LiveStatusPill manualStatus={profile?.status?.manualOverride} />
+              <LiveStatusPill
+                manualStatus={profile?.status?.manualOverride}
+                className="font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-500 dark:text-[#787672]"
+              />
             </motion.div>
 
             {/* 2. Name & Title */}
@@ -43,12 +46,12 @@ export function HeroPersonal({ profile }: HeroPersonalProps) {
                 delay: hasLoadedBefore ? 0 : 0.18,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="flex flex-col gap-1.5"
+              className="flex flex-col"
             >
-              <h1 className="font-sans font-medium text-3xl sm:text-4xl tracking-tight text-neutral-900 dark:text-neutral-100">
+              <h1 className="font-sans font-normal text-3xl sm:text-[36px] tracking-[-0.025em] leading-[1.15] text-neutral-900 dark:text-[#EAE8E1]">
                 {profile.name || "Tri Nguyen Minh"}
               </h1>
-              <p className="font-mono text-xs sm:text-[13px] text-neutral-500 dark:text-neutral-400 tracking-normal">
+              <p className="font-mono text-[13px] tracking-[-0.01em] text-neutral-600 dark:text-[#B5B3AD] mt-1.5">
                 {profile?.title || "Architect · Tinkerer"}
               </p>
             </motion.div>
@@ -62,7 +65,7 @@ export function HeroPersonal({ profile }: HeroPersonalProps) {
                 delay: hasLoadedBefore ? 0 : 0.26,
                 ease: [0.22, 1, 0.36, 1],
               }}
-              className="text-base sm:text-lg text-neutral-700 dark:text-neutral-300 font-sans leading-snug mt-1.5 max-w-xl"
+              className="font-sans font-normal text-[15px] leading-relaxed text-neutral-500 dark:text-[#787672] mt-5 max-w-xl"
             >
               &ldquo;Do what you love. Love what you do.&rdquo;
             </motion.p>

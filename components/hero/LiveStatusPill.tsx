@@ -87,7 +87,7 @@ export function LiveStatusPill({ manualStatus, className = "" }: LiveStatusPillP
   return (
     <div
       suppressHydrationWarning
-      className={`inline-flex items-center gap-2 font-mono text-xs text-neutral-400 tracking-wider select-none ${className}`}
+      className={`inline-flex items-center gap-2 font-mono text-[11px] uppercase tracking-[0.14em] text-neutral-500 dark:text-[#787672] select-none ${className}`}
     >
       <span
         className="w-1.5 h-1.5 rounded-full animate-pulse flex-shrink-0"

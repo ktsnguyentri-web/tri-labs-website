@@ -38,10 +38,10 @@ export function AccordionItem({
         >
           <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 flex items-center justify-between w-full">
             <div className="flex items-center min-w-0">
-              <span className="font-mono text-xs text-neutral-400 mr-4 flex-shrink-0">
+              <span className="font-mono text-[11px] tracking-[0.08em] text-neutral-400 dark:text-[#686662] w-8 flex-shrink-0">
                 {number}
               </span>
-              <h2 className="font-sans text-base sm:text-lg font-normal tracking-normal text-neutral-900 dark:text-neutral-100 truncate transition-colors group-hover:text-neutral-600 dark:group-hover:text-neutral-100">
+              <h2 className="font-sans font-normal text-[17px] tracking-[-0.015em] text-neutral-900 dark:text-[#EAE8E1] truncate transition-colors group-hover:text-neutral-600 dark:group-hover:text-white">
                 {title}
               </h2>
             </div>
@@ -55,6 +55,11 @@ export function AccordionItem({
             </div>
           </div>
         </Link>
+        {!hideBottomDivider && (
+          <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 w-full">
+            <div className="border-b border-black/[0.08] dark:border-white/[0.08] w-full" />
+          </div>
+        )}
       </div>
     );
   }
@@ -73,10 +78,10 @@ export function AccordionItem({
             aria-controls={`accordion-content-${id}`}
             className="flex-1 py-4 sm:py-5 flex items-center min-w-0 text-left cursor-pointer select-none transition-colors"
           >
-            <span className="font-mono text-xs text-neutral-400 mr-4 flex-shrink-0">
+            <span className="font-mono text-[11px] tracking-[0.08em] text-neutral-400 dark:text-[#686662] w-8 flex-shrink-0">
               {number}
             </span>
-            <h2 className="font-sans text-base sm:text-lg font-normal tracking-normal text-neutral-900 dark:text-neutral-100 truncate transition-colors group-hover:text-neutral-600 dark:group-hover:text-neutral-100">
+            <h2 className="font-sans font-normal text-[17px] tracking-[-0.015em] text-neutral-900 dark:text-[#EAE8E1] truncate transition-colors group-hover:text-neutral-600 dark:group-hover:text-white">
               {title}
             </h2>
           </button>
@@ -131,6 +136,13 @@ export function AccordionItem({
           </motion.div>
         )}
       </AnimatePresence>
+
+      {/* ── Bottom Divider Line (Constrained to inner grid) ──────── */}
+      {!hideBottomDivider && (
+        <div className="max-w-3xl mx-auto px-5 sm:px-6 md:px-8 w-full">
+          <div className="border-b border-black/[0.08] dark:border-white/[0.08] w-full" />
+        </div>
+      )}
     </div>
   );
 }

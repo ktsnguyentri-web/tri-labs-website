@@ -26,48 +26,33 @@ const PreloaderContext = createContext<PreloaderContextValue>({
 });
 
 export function PreloaderProvider({ children }: { children: ReactNode }) {
-  // Synchronous lazy initialization on client avoids flash of content
-  const [hasLoadedBefore, setHasLoadedBefore] = useState<boolean>(() => {
-    if (typeof window === "undefined") return true;
-    try {
-      const search = window.location.search;
-      if (search.includes("preload=true")) {
-        sessionStorage.removeItem(SESSION_KEY);
-        return false;
-      }
-      return sessionStorage.getItem(SESSION_KEY) === "true";
-    } catch {
-      return true;
-    }
-  });
-
-  const [isLoading, setIsLoading] = useState<boolean>(() => {
-    if (typeof window === "undefined") return false;
-    try {
-      const search = window.location.search;
-      if (search.includes("preload=true")) {
-        return true;
-      }
-      return sessionStorage.getItem(SESSION_KEY) !== "true";
-    } catch {
-      return false;
-    }
-  });
-
-  const [isDocked, setIsDocked] = useState<boolean>(() => {
-    if (typeof window === "undefined") return true;
-    try {
-      const search = window.location.search;
-      if (search.includes("preload=true")) {
-        return false;
-      }
-      return sessionStorage.getItem(SESSION_KEY) === "true";
-    } catch {
-      return true;
-    }
-  });
+  // Initialize loading as true by default per specification so SSR renders preloader overlay
+  const [hasLoadedBefore, setHasLoadedBefore] = useState<boolean>(false);
+  const [isLoading, setIsLoading] = useState<boolean>(true);
+  const [isDocked, setIsDocked] = useState<boolean>(false);
 
   useEffect(() => {
+    try {
+      const search = window.location.search;
+      const isForced = search.includes("preload=true");
+      if (isForced) {
+        sessionStorage.removeItem(SESSION_KEY);
+        setHasLoadedBefore(false);
+        setIsLoading(true);
+        setIsDocked(false);
+        document.documentElement.classList.add("preloader-active");
+        document.documentElement.classList.remove("preloader-done");
+      } else if (sessionStorage.getItem(SESSION_KEY) === "true") {
+        setHasLoadedBefore(true);
+        setIsLoading(false);
+        setIsDocked(true);
+        document.documentElement.classList.remove("preloader-active");
+        document.documentElement.classList.add("preloader-done");
+      }
+    } catch {
+      // ignore
+    }
+
     // Expose convenient test helper in dev
     if (typeof window !== "undefined") {
       (window as unknown as { __replayPreloader?: () => void }).__replayPreloader = () => {
@@ -83,6 +68,7 @@ export function PreloaderProvider({ children }: { children: ReactNode }) {
     try {
       sessionStorage.setItem(SESSION_KEY, "true");
       document.documentElement.classList.remove("preloader-active");
+      document.documentElement.classList.add("preloader-done");
     } catch {
       // ignore
     }

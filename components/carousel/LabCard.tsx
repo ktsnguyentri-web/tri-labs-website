@@ -59,18 +59,19 @@ export function LabCard({ article, index }: LabCardProps) {
       </Link>
 
       {/* ── Meta Info ──────────────────────────────────────────────── */}
-      <div className="mt-2.5 flex flex-col gap-0.5">
+      <div className="mt-2.5 flex flex-col">
+        {/* Top Caption Row */}
         <Link href={href} className="cursor-pointer group/title inline-block w-fit">
-          <h3 className="font-sans font-medium text-sm text-neutral-900 dark:text-[#EDEDED] group-hover/title:text-black dark:group-hover/title:text-white group-hover/title:underline underline-offset-4 decoration-neutral-400 dark:decoration-neutral-400 transition-colors line-clamp-1">
+          <h3 className="font-sans font-normal text-[14px] tracking-[-0.01em] text-neutral-900 dark:text-[#EAE8E1] group-hover/title:underline underline-offset-4 decoration-neutral-400 dark:decoration-neutral-500 transition-colors line-clamp-1">
             {article.title}
           </h3>
         </Link>
-        <p className="text-xs text-neutral-500 dark:text-neutral-400 line-clamp-2 font-sans leading-relaxed">
+        <p className="text-xs text-neutral-600 dark:text-[#A3A19A] line-clamp-2 font-sans leading-relaxed mt-1">
           {article.excerpt}
         </p>
-        <div className="mt-0.5 flex items-center justify-between font-mono text-[11px] text-neutral-400 dark:text-neutral-500 tracking-normal">
+        <div className="mt-1 flex items-center justify-between font-mono text-[10px] uppercase tracking-[0.1em] text-neutral-400 dark:text-[#686662]">
           <span>{article.date}</span>
-          <span>{article.category === "Tool" ? "Tool" : "Insight"}</span>
+          <span className="font-mono text-[11px] normal-case tracking-normal text-neutral-500 dark:text-[#8A8884]">{article.category === "Tool" ? "Tool" : "Insight"}</span>
         </div>
       </div>
     </div>

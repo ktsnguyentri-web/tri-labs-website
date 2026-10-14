@@ -3,6 +3,7 @@ import { Inter, Newsreader, JetBrains_Mono } from "next/font/google";
 import "@/styles/globals.css";
 import { PreloaderProvider } from "@/lib/preloader-context";
 import { Preloader } from "@/components/preloader/Preloader";
+import { MainContentWrapper } from "@/components/preloader/MainContentWrapper";
 
 const inter = Inter({
   variable: "--font-inter",
@@ -59,8 +60,13 @@ export default function RootLayout({
                   document.documentElement.classList.add('dark');
                 }
                 var hasLoaded = sessionStorage.getItem('hasLoadedBefore');
-                if (hasLoaded !== 'true') {
+                var isPreloadForced = window.location.search.indexOf('preload=true') !== -1;
+                if (hasLoaded === 'true' && !isPreloadForced) {
+                  document.documentElement.classList.add('preloader-done');
+                  document.documentElement.classList.remove('preloader-active');
+                } else {
                   document.documentElement.classList.add('preloader-active');
+                  document.documentElement.classList.remove('preloader-done');
                 }
               } catch (e) {}
             })()`,
@@ -70,9 +76,9 @@ export default function RootLayout({
       <body className="min-h-full flex flex-col font-sans selection:bg-accent selection:text-black bg-[#FAFAFA] dark:bg-[#151515] text-neutral-900 dark:text-neutral-100 transition-colors duration-300">
         <PreloaderProvider>
           <Preloader />
-          <main className="flex-grow">
+          <MainContentWrapper>
             {children}
-          </main>
+          </MainContentWrapper>
         </PreloaderProvider>
       </body>
     </html>

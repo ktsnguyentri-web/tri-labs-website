@@ -6,16 +6,11 @@ import { usePreloader } from "@/lib/preloader-context";
 
 export function Preloader() {
   const { isLoading, isDocked, hasLoadedBefore, completePreloader } = usePreloader();
-  const [hasMounted, setHasMounted] = useState(false);
   const [counter, setCounter] = useState(0);
   const [isCounterVisible, setIsCounterVisible] = useState(true);
 
   useEffect(() => {
-    setHasMounted(true);
-  }, []);
-
-  useEffect(() => {
-    if (!hasMounted || hasLoadedBefore || !isLoading) return;
+    if (hasLoadedBefore || !isLoading) return;
 
     const duration = 1000; // ~1.0 second
     let startTimestamp: number | null = null;
@@ -35,14 +30,14 @@ export function Preloader() {
         rafId = requestAnimationFrame(step);
       } else {
         setCounter(100);
-        // Step 1: Once counter hits 100%, fade out the percentage counter
+        // Hold for 150ms so the user sees the fully lit "tri-labs" text
         setTimeout(() => {
+          // Fade out the 100% counter
           setIsCounterVisible(false);
-          // Step 2: Trigger morphing exit transition to Navbar
-          setTimeout(() => {
-            completePreloader();
-          }, 80);
-        }, 60);
+
+          // Morph brand-logo into Navbar and fade out dark overlay
+          completePreloader();
+        }, 150);
       }
     };
 
@@ -51,9 +46,9 @@ export function Preloader() {
     return () => {
       cancelAnimationFrame(rafId);
     };
-  }, [hasMounted, hasLoadedBefore, isLoading, completePreloader]);
+  }, [hasLoadedBefore, isLoading, completePreloader]);
 
-  if (!hasMounted || hasLoadedBefore) {
+  if (hasLoadedBefore) {
     return null;
   }
 
@@ -64,27 +59,40 @@ export function Preloader() {
     <AnimatePresence mode="wait">
       {isLoading && (
         <motion.div
+          id="preloader-root"
           key="preloader-overlay"
           initial={{ opacity: 1 }}
           exit={{
             opacity: 0,
             transition: { duration: 0.6, ease: [0.22, 1, 0.36, 1] },
           }}
-          className="fixed inset-0 z-50 bg-[#151515] flex flex-col items-center justify-center pointer-events-auto"
+          className="fixed inset-0 z-[100] bg-[#151515] flex flex-col items-center justify-center pointer-events-auto"
         >
-          {/* Centered Brand Text with Shared Morphing Layout ID */}
+          {/* Centered Brand Text with Text-Fill Progress Bar & Shared Morphing Layout ID */}
           {!isDocked && (
-            <motion.span
+            <motion.div
               layoutId="brand-logo"
               transition={{
                 type: "spring",
                 stiffness: 260,
                 damping: 28,
               }}
-              className="font-sans font-medium text-3xl sm:text-4xl text-neutral-100 tracking-tight select-none inline-block"
+              className="relative inline-block select-none"
             >
-              tri-labs
-            </motion.span>
+              {/* Base Layer (Unfilled): dim muted tone */}
+              <span className="font-sans font-medium text-4xl sm:text-5xl text-neutral-800 dark:text-neutral-800 tracking-tight select-none block">
+                tri-labs
+              </span>
+
+              {/* Foreground Layer (Filling): dynamically masked left-to-right based on counter */}
+              <span
+                aria-hidden="true"
+                style={{ clipPath: `inset(0 ${100 - counter}% 0 0)` }}
+                className="absolute inset-0 font-sans font-medium text-4xl sm:text-5xl text-neutral-100 tracking-tight select-none block"
+              >
+                tri-labs
+              </span>
+            </motion.div>
           )}
 
           {/* Progress Counter Directly Below */}

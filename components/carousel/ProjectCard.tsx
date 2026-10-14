@@ -41,10 +41,10 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
       </Link>
 
       {/* ── Meta Info ──────────────────────────────────────────────── */}
-      <div className="mt-2.5 flex flex-col gap-1">
-        {/* Line 1: [01] (font-mono text-xs) + [Project Title] (Clickable with underline on hover) */}
-        <div className="flex items-baseline gap-2 min-w-0">
-          <span className="font-mono text-xs text-neutral-400 dark:text-neutral-500 flex-shrink-0">
+      <div className="mt-2.5 flex flex-col">
+        {/* Top Caption Row (Index + Project Name) */}
+        <div className="flex items-baseline min-w-0">
+          <span className="font-mono text-[11px] text-neutral-400 dark:text-[#686662] mr-2 flex-shrink-0">
             {formattedIndex}
           </span>
           <Link
@@ -52,18 +52,18 @@ export function ProjectCard({ project, index }: ProjectCardProps) {
             scroll={false}
             className="cursor-pointer group/title min-w-0 truncate"
           >
-            <h3 className="font-sans font-medium text-sm text-neutral-900 dark:text-[#EDEDED] group-hover/title:text-black dark:group-hover/title:text-white group-hover/title:underline underline-offset-4 decoration-neutral-400 dark:decoration-neutral-400 transition-colors truncate">
+            <h3 className="font-sans font-normal text-[14px] tracking-[-0.01em] text-neutral-900 dark:text-[#EAE8E1] group-hover/title:underline underline-offset-4 decoration-neutral-400 dark:decoration-neutral-500 transition-colors truncate">
               {project.title}
             </h3>
           </Link>
         </div>
 
-        {/* Line 2: [LOCATION] (font-mono text-[11px] text-neutral-400) + [Role] (font-sans text-[11px] text-neutral-500) */}
-        <div className="flex items-center justify-between gap-2">
-          <span className="font-mono text-[11px] text-neutral-400 uppercase truncate">
+        {/* Bottom Caption Row (Location + Role) */}
+        <div className="mt-1 flex items-center justify-between gap-2">
+          <span className="font-mono text-[10px] uppercase tracking-[0.1em] text-neutral-400 dark:text-[#686662] truncate">
             {project.location}
           </span>
-          <span className="font-sans text-[11px] text-neutral-500 truncate flex-shrink-0">
+          <span className="font-mono text-[11px] text-neutral-500 dark:text-[#8A8884] truncate flex-shrink-0">
             {project.role || project.status}
           </span>
         </div>
